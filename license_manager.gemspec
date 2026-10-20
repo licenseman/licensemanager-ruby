@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.email       = ["bot@licensemanager.dev"]
   s.homepage    = "https://licensemanager.dev"
   s.summary     = "Ruby client for the LicenseManager API"
-  s.description = "Ruby client for the LicenseManager API: products"
+  s.description = "Ruby client for the LicenseManager API: products, policies, customers, licenses, machines and releases."
   s.license     = "Unlicense"
   s.required_ruby_version = ">= 3.1"
   s.metadata    = {}
