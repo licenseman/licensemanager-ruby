@@ -25,6 +25,8 @@ module LicenseManager
 
     attr_accessor :price
 
+    attr_accessor :recurring
+
     # Whether the price already creates licenses of a product.
     attr_accessor :mapped
 
@@ -36,6 +38,7 @@ module LicenseManager
         :'product_name' => :'productName',
         :'nickname' => :'nickname',
         :'price' => :'price',
+        :'recurring' => :'recurring',
         :'mapped' => :'mapped'
       }
     end
@@ -58,6 +61,7 @@ module LicenseManager
         :'product_name' => :'String',
         :'nickname' => :'String',
         :'price' => :'Price',
+        :'recurring' => :'StripePriceRecurring',
         :'mapped' => :'Boolean'
       }
     end
@@ -67,6 +71,7 @@ module LicenseManager
       Set.new([
         :'nickname',
         :'price',
+        :'recurring',
       ])
     end
 
@@ -124,6 +129,12 @@ module LicenseManager
         self.price = attributes[:'price']
       else
         self.price = nil
+      end
+
+      if attributes.key?(:'recurring')
+        self.recurring = attributes[:'recurring']
+      else
+        self.recurring = nil
       end
 
       if attributes.key?(:'mapped')
@@ -218,6 +229,7 @@ module LicenseManager
           product_name == o.product_name &&
           nickname == o.nickname &&
           price == o.price &&
+          recurring == o.recurring &&
           mapped == o.mapped
     end
 
@@ -230,7 +242,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, product_id, product_name, nickname, price, mapped].hash
+      [id, product_id, product_name, nickname, price, recurring, mapped].hash
     end
 
     # Builds the object from hash

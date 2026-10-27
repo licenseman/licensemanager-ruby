@@ -9,6 +9,7 @@
 | **product_name** | **String** |  |  |
 | **nickname** | **String** |  |  |
 | **price** | [**Price**](Price.md) |  |  |
+| **recurring** | [**StripePriceRecurring**](StripePriceRecurring.md) |  |  |
 | **mapped** | **Boolean** | Whether the price already creates licenses of a product. |  |
 
 ## Example
@@ -22,6 +23,7 @@ instance = LicenseManager::StripePrice.new(
   product_name: Acme Pro,
   nickname: Launch price,
   price: null,
+  recurring: null,
   mapped: null
 )
 ```

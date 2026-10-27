@@ -5,6 +5,7 @@
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **auto_refund** | **Boolean** | Whether canceling a license bought through Stripe refunds its payment. Can only be turned on when the integration&#39;s &#x60;canRefund&#x60; is true: the API key has the Refunds: Write permission. | [optional] |
+| **subscription_grace_days** | **Integer** | Days a subscription license stays valid after its period ends while its renewal is unpaid, as Stripe retries the payment. | [optional] |
 
 ## Example
 
@@ -12,7 +13,8 @@
 require 'license_manager'
 
 instance = LicenseManager::UpdateIntegration.new(
-  auto_refund: false
+  auto_refund: false,
+  subscription_grace_days: 7
 )
 ```
 

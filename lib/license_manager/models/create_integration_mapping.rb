@@ -15,7 +15,7 @@ require 'time'
 
 module LicenseManager
   class CreateIntegrationMapping < ApiModelBase
-    # Active one-time price of the Stripe account.
+    # Active one-time or licensed recurring price of the Stripe account.
     attr_accessor :stripe_price_id
 
     attr_accessor :policy_id

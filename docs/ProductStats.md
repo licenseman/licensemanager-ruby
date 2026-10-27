@@ -20,6 +20,7 @@
 | **new_licenses_by_month** | **Array&lt;Integer&gt;** | Number of licenses created each month, aligned on &#x60;months&#x60;. |  |
 | **new_licenses_by_policy** | [**Array&lt;ProductStatsNewLicensesByPolicyInner&gt;**](ProductStatsNewLicensesByPolicyInner.md) | Number of licenses of each policy created each day and each month, for the policies with licenses created over the covered months. |  |
 | **cancellation** | [**CancellationStats**](CancellationStats.md) | Cancellations of the licenses with a money back guarantee. &#x60;null&#x60; when no license of the product has one. |  |
+| **subscriptions** | [**SubscriptionStats**](SubscriptionStats.md) | Subscriptions of the product. &#x60;null&#x60; when it has never had one. |  |
 | **revenue** | [**Array&lt;Revenue&gt;**](Revenue.md) | Revenue in each currency licenses were sold in, from the one with the most licenses sold. Amounts aren&#39;t converted between currencies. |  |
 | **activations_by_version** | [**Array&lt;ProductStatsActivationsByVersionInner&gt;**](ProductStatsActivationsByVersionInner.md) | Successful activations of the licenses of the product each day, per version of the application, from the most recent one. |  |
 | **active_machines_by_version** | [**Array&lt;ProductStatsActiveMachinesByVersionInner&gt;**](ProductStatsActiveMachinesByVersionInner.md) | Number of active machines running each version of the application, from the most recent one. |  |
@@ -47,6 +48,7 @@ instance = LicenseManager::ProductStats.new(
   new_licenses_by_month: [4, 9, 12],
   new_licenses_by_policy: null,
   cancellation: null,
+  subscriptions: null,
   revenue: null,
   activations_by_version: null,
   active_machines_by_version: null,

@@ -4,10 +4,89 @@ All URIs are relative to *https://api.licensemanager.dev*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
+| [**create_billing_portal_session**](PortalApi.md#create_billing_portal_session) | **POST** /v1/customers/{id}/billing-portal-sessions | Open the Stripe customer portal of a customer |
 | [**create_portal_link**](PortalApi.md#create_portal_link) | **POST** /v1/customers/{id}/portal-links | Create a link to the customer portal |
 | [**get_portal**](PortalApi.md#get_portal) | **GET** /v1/portal/{productId} | Get the customer portal of a product |
 | [**request_portal_link**](PortalApi.md#request_portal_link) | **POST** /v1/portal/{productId}/request-link | Email a link to the customer portal |
 | [**send_portal_link**](PortalApi.md#send_portal_link) | **POST** /v1/customers/{id}/portal-links/send | Email a link to the customer portal to the customer |
+
+
+## create_billing_portal_session
+
+> <BillingPortalSession> create_billing_portal_session(id, opts)
+
+Open the Stripe customer portal of a customer
+
+Link to the Stripe customer portal of the customer's Stripe customer, where they manage their subscriptions: change their plan or payment method, see their invoices, cancel. Needs the Stripe integration's `canBillingPortal`, and the customer portal configured in the Stripe account's settings. The changes come back through the integration's webhook, keeping the subscription licenses in line.  **Token access**: customer tokens with the `customer:billing` permission (or the matching write one). A customer token reaches its own customer.  **Required role permission**: `portalLink:create` when called with a session, granted by the member's role. API keys aren't limited by roles.
+
+### Examples
+
+```ruby
+require 'time'
+require 'license_manager'
+# setup authorization
+LicenseManager.configure do |config|
+  # Configure API key authorization: apiKey
+  config.api_key['x-api-key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['x-api-key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): token
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LicenseManager::PortalApi.new
+id = 'c9Wd3RtE' # String | 
+opts = {
+  create_billing_portal_session: LicenseManager::CreateBillingPortalSession.new # CreateBillingPortalSession | 
+}
+
+begin
+  # Open the Stripe customer portal of a customer
+  result = api_instance.create_billing_portal_session(id, opts)
+  p result
+rescue LicenseManager::ApiError => e
+  puts "Error when calling PortalApi->create_billing_portal_session: #{e}"
+end
+```
+
+#### Using the create_billing_portal_session_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<BillingPortalSession>, Integer, Hash)> create_billing_portal_session_with_http_info(id, opts)
+
+```ruby
+begin
+  # Open the Stripe customer portal of a customer
+  data, status_code, headers = api_instance.create_billing_portal_session_with_http_info(id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <BillingPortalSession>
+rescue LicenseManager::ApiError => e
+  puts "Error when calling PortalApi->create_billing_portal_session_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **create_billing_portal_session** | [**CreateBillingPortalSession**](CreateBillingPortalSession.md) |  | [optional] |
+
+### Return type
+
+[**BillingPortalSession**](BillingPortalSession.md)
+
+### Authorization
+
+[apiKey](../README.md#apiKey), [token](../README.md#token)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 
 ## create_portal_link

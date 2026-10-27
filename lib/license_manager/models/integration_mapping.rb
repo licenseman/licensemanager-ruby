@@ -32,6 +32,8 @@ module LicenseManager
 
     attr_accessor :price
 
+    attr_accessor :recurring
+
     # `error` when the price can no longer be paid, explained by `statusReason`.
     attr_accessor :status
 
@@ -72,6 +74,7 @@ module LicenseManager
         :'stripe_price_id' => :'stripePriceId',
         :'product_name' => :'productName',
         :'price' => :'price',
+        :'recurring' => :'recurring',
         :'status' => :'status',
         :'status_reason' => :'statusReason',
         :'created_at' => :'createdAt'
@@ -99,6 +102,7 @@ module LicenseManager
         :'stripe_price_id' => :'String',
         :'product_name' => :'String',
         :'price' => :'Price',
+        :'recurring' => :'IntegrationMappingRecurring',
         :'status' => :'String',
         :'status_reason' => :'String',
         :'created_at' => :'Time'
@@ -109,6 +113,7 @@ module LicenseManager
     def self.openapi_nullable
       Set.new([
         :'price',
+        :'recurring',
         :'status_reason',
       ])
     end
@@ -185,6 +190,12 @@ module LicenseManager
         self.price = attributes[:'price']
       else
         self.price = nil
+      end
+
+      if attributes.key?(:'recurring')
+        self.recurring = attributes[:'recurring']
+      else
+        self.recurring = nil
       end
 
       if attributes.key?(:'status')
@@ -371,6 +382,7 @@ module LicenseManager
           stripe_price_id == o.stripe_price_id &&
           product_name == o.product_name &&
           price == o.price &&
+          recurring == o.recurring &&
           status == o.status &&
           status_reason == o.status_reason &&
           created_at == o.created_at
@@ -385,7 +397,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, integration_id, product_id, policy_id, stripe_product_id, stripe_price_id, product_name, price, status, status_reason, created_at].hash
+      [id, integration_id, product_id, policy_id, stripe_product_id, stripe_price_id, product_name, price, recurring, status, status_reason, created_at].hash
     end
 
     # Builds the object from hash

@@ -77,7 +77,7 @@ Every method is documented, with its parameters and responses, in the [`docs`](d
 | Class | Methods |
 | --- | --- |
 | [`LicensesApi`](docs/LicensesApi.md) | `validate_key`, `list_licenses`, `create_license`, `list_customer_licenses`, `get_license`, `delete_license`, `update_license`, `get_license_stats`, `cancel_license`, `send_license_keys`, `get_signing_key` |
-| [`PortalApi`](docs/PortalApi.md) | `get_portal`, `request_portal_link`, `create_portal_link`, `send_portal_link` |
+| [`PortalApi`](docs/PortalApi.md) | `get_portal`, `request_portal_link`, `create_portal_link`, `create_billing_portal_session`, `send_portal_link` |
 | [`ProductsApi`](docs/ProductsApi.md) | `list_products`, `create_product`, `get_product`, `delete_product`, `update_product`, `reset_product`, `upload_product_logo`, `delete_product_logo`, `get_product_stats` |
 | [`PoliciesApi`](docs/PoliciesApi.md) | `list_policies`, `create_policy`, `get_policy`, `delete_policy`, `update_policy` |
 | [`CustomersApi`](docs/CustomersApi.md) | `list_customers`, `create_customer`, `get_customer`, `delete_customer`, `update_customer` |

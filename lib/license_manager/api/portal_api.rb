@@ -19,6 +19,76 @@ module LicenseManager
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
+    # Open the Stripe customer portal of a customer
+    # Link to the Stripe customer portal of the customer's Stripe customer, where they manage their subscriptions: change their plan or payment method, see their invoices, cancel. Needs the Stripe integration's `canBillingPortal`, and the customer portal configured in the Stripe account's settings. The changes come back through the integration's webhook, keeping the subscription licenses in line.  **Token access**: customer tokens with the `customer:billing` permission (or the matching write one). A customer token reaches its own customer.  **Required role permission**: `portalLink:create` when called with a session, granted by the member's role. API keys aren't limited by roles.
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [CreateBillingPortalSession] :create_billing_portal_session 
+    # @return [BillingPortalSession]
+    def create_billing_portal_session(id, opts = {})
+      data, _status_code, _headers = create_billing_portal_session_with_http_info(id, opts)
+      data
+    end
+
+    # Open the Stripe customer portal of a customer
+    # Link to the Stripe customer portal of the customer&#39;s Stripe customer, where they manage their subscriptions: change their plan or payment method, see their invoices, cancel. Needs the Stripe integration&#39;s &#x60;canBillingPortal&#x60;, and the customer portal configured in the Stripe account&#39;s settings. The changes come back through the integration&#39;s webhook, keeping the subscription licenses in line.  **Token access**: customer tokens with the &#x60;customer:billing&#x60; permission (or the matching write one). A customer token reaches its own customer.  **Required role permission**: &#x60;portalLink:create&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @option opts [CreateBillingPortalSession] :create_billing_portal_session 
+    # @return [Array<(BillingPortalSession, Integer, Hash)>] BillingPortalSession data, response status code and response headers
+    def create_billing_portal_session_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: PortalApi.create_billing_portal_session ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling PortalApi.create_billing_portal_session"
+      end
+      # resource path
+      local_var_path = '/v1/customers/{id}/billing-portal-sessions'.sub('{id}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'create_billing_portal_session'])
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'BillingPortalSession'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['apiKey', 'token']
+
+      new_options = opts.merge(
+        :operation => :"PortalApi.create_billing_portal_session",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: PortalApi#create_billing_portal_session\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Create a link to the customer portal
     # Link letting the customer see their licenses, cancel them during their money back guarantee, and deactivate their machines in the customer portal, without signing in. Anyone with the link can, until it expires or the customer is deleted: it can't be revoked otherwise. The token also works with the API endpoints that accept customer tokens.  Links can be created while the product's customer portal is disabled, but the portal answers `404` until it's enabled, and `sendPortalLink` refuses to email them.  **Required role permission**: `portalLink:create` when called with a session, granted by the member's role. API keys aren't limited by roles.
     # @param id [String] 

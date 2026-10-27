@@ -32,6 +32,19 @@ describe 'PortalApi' do
     end
   end
 
+  # unit tests for create_billing_portal_session
+  # Open the Stripe customer portal of a customer
+  # Link to the Stripe customer portal of the customer&#39;s Stripe customer, where they manage their subscriptions: change their plan or payment method, see their invoices, cancel. Needs the Stripe integration&#39;s &#x60;canBillingPortal&#x60;, and the customer portal configured in the Stripe account&#39;s settings. The changes come back through the integration&#39;s webhook, keeping the subscription licenses in line.  **Token access**: customer tokens with the &#x60;customer:billing&#x60; permission (or the matching write one). A customer token reaches its own customer.  **Required role permission**: &#x60;portalLink:create&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @option opts [CreateBillingPortalSession] :create_billing_portal_session 
+  # @return [BillingPortalSession]
+  describe 'create_billing_portal_session test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   # unit tests for create_portal_link
   # Create a link to the customer portal
   # Link letting the customer see their licenses, cancel them during their money back guarantee, and deactivate their machines in the customer portal, without signing in. Anyone with the link can, until it expires or the customer is deleted: it can&#39;t be revoked otherwise. The token also works with the API endpoints that accept customer tokens.  Links can be created while the product&#39;s customer portal is disabled, but the portal answers &#x60;404&#x60; until it&#39;s enabled, and &#x60;sendPortalLink&#x60; refuses to email them.  **Required role permission**: &#x60;portalLink:create&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.

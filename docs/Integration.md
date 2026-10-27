@@ -16,6 +16,9 @@
 | **last_event_at** | **Time** | Last time it received an event from the provider. |  |
 | **auto_refund** | **Boolean** | Whether canceling a license bought through Stripe refunds its payment. On by default, always off when &#x60;canRefund&#x60; is false. |  |
 | **can_refund** | **Boolean** | Whether the API key has the optional Refunds: Write permission, checked when connecting and every day. Without it, canceled licenses aren&#39;t refunded: refund their payments from Stripe. |  |
+| **can_manage_subscriptions** | **Boolean** | Whether the API key has the optional Subscriptions: Write permission, checked when connecting and every day. Without it, subscription licenses can&#39;t be canceled from the app: cancel their subscriptions from Stripe. |  |
+| **can_billing_portal** | **Boolean** | Whether the API key has the optional Customer portal: Write permission, checked when connecting and every day. Without it, the license portal doesn&#39;t link to the Stripe customer portal. |  |
+| **subscription_grace_days** | **Integer** | Days a subscription license stays valid after its period ends while its renewal is unpaid, as Stripe retries the payment. 7 by default. |  |
 | **created_at** | **Time** |  |  |
 
 ## Example
@@ -36,6 +39,9 @@ instance = LicenseManager::Integration.new(
   last_event_at: null,
   auto_refund: true,
   can_refund: true,
+  can_manage_subscriptions: true,
+  can_billing_portal: true,
+  subscription_grace_days: 7,
   created_at: null
 )
 ```

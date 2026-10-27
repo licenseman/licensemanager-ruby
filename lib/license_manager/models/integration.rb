@@ -48,6 +48,15 @@ module LicenseManager
     # Whether the API key has the optional Refunds: Write permission, checked when connecting and every day. Without it, canceled licenses aren't refunded: refund their payments from Stripe.
     attr_accessor :can_refund
 
+    # Whether the API key has the optional Subscriptions: Write permission, checked when connecting and every day. Without it, subscription licenses can't be canceled from the app: cancel their subscriptions from Stripe.
+    attr_accessor :can_manage_subscriptions
+
+    # Whether the API key has the optional Customer portal: Write permission, checked when connecting and every day. Without it, the license portal doesn't link to the Stripe customer portal.
+    attr_accessor :can_billing_portal
+
+    # Days a subscription license stays valid after its period ends while its renewal is unpaid, as Stripe retries the payment. 7 by default.
+    attr_accessor :subscription_grace_days
+
     attr_accessor :created_at
 
     class EnumAttributeValidator
@@ -87,6 +96,9 @@ module LicenseManager
         :'last_event_at' => :'lastEventAt',
         :'auto_refund' => :'autoRefund',
         :'can_refund' => :'canRefund',
+        :'can_manage_subscriptions' => :'canManageSubscriptions',
+        :'can_billing_portal' => :'canBillingPortal',
+        :'subscription_grace_days' => :'subscriptionGraceDays',
         :'created_at' => :'createdAt'
       }
     end
@@ -116,6 +128,9 @@ module LicenseManager
         :'last_event_at' => :'Time',
         :'auto_refund' => :'Boolean',
         :'can_refund' => :'Boolean',
+        :'can_manage_subscriptions' => :'Boolean',
+        :'can_billing_portal' => :'Boolean',
+        :'subscription_grace_days' => :'Integer',
         :'created_at' => :'Time'
       }
     end
@@ -228,6 +243,24 @@ module LicenseManager
         self.can_refund = nil
       end
 
+      if attributes.key?(:'can_manage_subscriptions')
+        self.can_manage_subscriptions = attributes[:'can_manage_subscriptions']
+      else
+        self.can_manage_subscriptions = nil
+      end
+
+      if attributes.key?(:'can_billing_portal')
+        self.can_billing_portal = attributes[:'can_billing_portal']
+      else
+        self.can_billing_portal = nil
+      end
+
+      if attributes.key?(:'subscription_grace_days')
+        self.subscription_grace_days = attributes[:'subscription_grace_days']
+      else
+        self.subscription_grace_days = nil
+      end
+
       if attributes.key?(:'created_at')
         self.created_at = attributes[:'created_at']
       else
@@ -272,6 +305,18 @@ module LicenseManager
         invalid_properties.push('invalid value for "can_refund", can_refund cannot be nil.')
       end
 
+      if @can_manage_subscriptions.nil?
+        invalid_properties.push('invalid value for "can_manage_subscriptions", can_manage_subscriptions cannot be nil.')
+      end
+
+      if @can_billing_portal.nil?
+        invalid_properties.push('invalid value for "can_billing_portal", can_billing_portal cannot be nil.')
+      end
+
+      if @subscription_grace_days.nil?
+        invalid_properties.push('invalid value for "subscription_grace_days", subscription_grace_days cannot be nil.')
+      end
+
       if @created_at.nil?
         invalid_properties.push('invalid value for "created_at", created_at cannot be nil.')
       end
@@ -293,6 +338,9 @@ module LicenseManager
       return false if @status.nil?
       return false if @auto_refund.nil?
       return false if @can_refund.nil?
+      return false if @can_manage_subscriptions.nil?
+      return false if @can_billing_portal.nil?
+      return false if @subscription_grace_days.nil?
       return false if @created_at.nil?
       true
     end
@@ -378,6 +426,36 @@ module LicenseManager
     end
 
     # Custom attribute writer method with validation
+    # @param [Object] can_manage_subscriptions Value to be assigned
+    def can_manage_subscriptions=(can_manage_subscriptions)
+      if can_manage_subscriptions.nil?
+        fail ArgumentError, 'can_manage_subscriptions cannot be nil'
+      end
+
+      @can_manage_subscriptions = can_manage_subscriptions
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] can_billing_portal Value to be assigned
+    def can_billing_portal=(can_billing_portal)
+      if can_billing_portal.nil?
+        fail ArgumentError, 'can_billing_portal cannot be nil'
+      end
+
+      @can_billing_portal = can_billing_portal
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] subscription_grace_days Value to be assigned
+    def subscription_grace_days=(subscription_grace_days)
+      if subscription_grace_days.nil?
+        fail ArgumentError, 'subscription_grace_days cannot be nil'
+      end
+
+      @subscription_grace_days = subscription_grace_days
+    end
+
+    # Custom attribute writer method with validation
     # @param [Object] created_at Value to be assigned
     def created_at=(created_at)
       if created_at.nil?
@@ -404,6 +482,9 @@ module LicenseManager
           last_event_at == o.last_event_at &&
           auto_refund == o.auto_refund &&
           can_refund == o.can_refund &&
+          can_manage_subscriptions == o.can_manage_subscriptions &&
+          can_billing_portal == o.can_billing_portal &&
+          subscription_grace_days == o.subscription_grace_days &&
           created_at == o.created_at
     end
 
@@ -416,7 +497,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, provider, livemode, account_name, api_key_hint, webhook_url, status, status_reason, last_checked_at, last_event_at, auto_refund, can_refund, created_at].hash
+      [id, provider, livemode, account_name, api_key_hint, webhook_url, status, status_reason, last_checked_at, last_event_at, auto_refund, can_refund, can_manage_subscriptions, can_billing_portal, subscription_grace_days, created_at].hash
     end
 
     # Builds the object from hash

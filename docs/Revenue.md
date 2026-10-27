@@ -5,10 +5,12 @@
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **currency** | **String** | ISO 4217 code of the currency of the revenue. |  |
-| **license_count** | **Integer** | Number of licenses sold in the currency, free ones included, canceled ones left out. |  |
-| **total** | **Float** | Sum of the prices of the licenses sold in the currency, in major units, canceled ones left out. |  |
-| **canceled_license_count** | **Integer** | Number of canceled licenses sold in the currency. |  |
-| **canceled_total** | **Float** | Sum of the prices of the canceled licenses sold in the currency, in major units: revenue lost to cancellations. |  |
+| **license_count** | **Integer** | Number of licenses sold once in the currency, free ones included, canceled ones and subscription licenses left out. |  |
+| **total** | **Float** | Revenue in the currency, in major units: the prices of the licenses sold once, canceled ones left out, plus the payments of the subscriptions, &#x60;subscriptionTotal&#x60;. |  |
+| **subscription_total** | **Float** | Sum of the payments of the subscription licenses in the currency, before taxes, in major units. |  |
+| **payment_count** | **Integer** | Number of payments of the subscription licenses in the currency. |  |
+| **canceled_license_count** | **Integer** | Number of canceled licenses sold once in the currency. |  |
+| **canceled_total** | **Float** | Sum of the prices of the canceled licenses sold once in the currency, in major units: revenue lost to cancellations. |  |
 | **this_month** | **Float** | Revenue of the current month, in UTC. |  |
 | **last_month** | **Float** | Revenue of the previous month, in UTC. |  |
 | **last30_days** | **Float** | Revenue of the last 30 days, today included, in UTC. |  |
@@ -25,6 +27,8 @@ instance = LicenseManager::Revenue.new(
   currency: USD,
   license_count: 42,
   total: 2099.58,
+  subscription_total: 480,
+  payment_count: 48,
   canceled_license_count: 2,
   canceled_total: 99.98,
   this_month: 349.93,

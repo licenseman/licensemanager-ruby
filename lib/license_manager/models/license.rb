@@ -63,6 +63,8 @@ module LicenseManager
 
     attr_accessor :cancellation_reason
 
+    attr_accessor :subscription
+
     # Comment given when the license was canceled. `null` when there's none.
     attr_accessor :cancellation_comment
 
@@ -116,6 +118,7 @@ module LicenseManager
         :'cancellable_until' => :'cancellableUntil',
         :'canceled_at' => :'canceledAt',
         :'cancellation_reason' => :'cancellationReason',
+        :'subscription' => :'subscription',
         :'cancellation_comment' => :'cancellationComment',
         :'stripe_refund_id' => :'stripeRefundId',
         :'updated_at' => :'updatedAt'
@@ -154,6 +157,7 @@ module LicenseManager
         :'cancellable_until' => :'Time',
         :'canceled_at' => :'Time',
         :'cancellation_reason' => :'CancellationReason',
+        :'subscription' => :'LicenseSubscription',
         :'cancellation_comment' => :'String',
         :'stripe_refund_id' => :'String',
         :'updated_at' => :'Time'
@@ -171,6 +175,7 @@ module LicenseManager
         :'price',
         :'cancellable_until',
         :'canceled_at',
+        :'subscription',
         :'cancellation_comment',
         :'stripe_refund_id',
       ])
@@ -316,6 +321,12 @@ module LicenseManager
         self.cancellation_reason = attributes[:'cancellation_reason']
       else
         self.cancellation_reason = nil
+      end
+
+      if attributes.key?(:'subscription')
+        self.subscription = attributes[:'subscription']
+      else
+        self.subscription = nil
       end
 
       if attributes.key?(:'cancellation_comment')
@@ -556,6 +567,7 @@ module LicenseManager
           cancellable_until == o.cancellable_until &&
           canceled_at == o.canceled_at &&
           cancellation_reason == o.cancellation_reason &&
+          subscription == o.subscription &&
           cancellation_comment == o.cancellation_comment &&
           stripe_refund_id == o.stripe_refund_id &&
           updated_at == o.updated_at
@@ -570,7 +582,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, product_id, policy_id, customer_id, key, created_at, expires_at, meta, stripe_payment_intent_id, max_machines, max_offline_duration_seconds, active_machine_count, last_activated_at, max_version, price, status, cancellable_until, canceled_at, cancellation_reason, cancellation_comment, stripe_refund_id, updated_at].hash
+      [id, product_id, policy_id, customer_id, key, created_at, expires_at, meta, stripe_payment_intent_id, max_machines, max_offline_duration_seconds, active_machine_count, last_activated_at, max_version, price, status, cancellable_until, canceled_at, cancellation_reason, subscription, cancellation_comment, stripe_refund_id, updated_at].hash
     end
 
     # Builds the object from hash

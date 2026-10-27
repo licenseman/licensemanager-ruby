@@ -18,10 +18,14 @@ module LicenseManager
     # Whether canceling a license bought through Stripe refunds its payment. Can only be turned on when the integration's `canRefund` is true: the API key has the Refunds: Write permission.
     attr_accessor :auto_refund
 
+    # Days a subscription license stays valid after its period ends while its renewal is unpaid, as Stripe retries the payment.
+    attr_accessor :subscription_grace_days
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'auto_refund' => :'autoRefund'
+        :'auto_refund' => :'autoRefund',
+        :'subscription_grace_days' => :'subscriptionGraceDays'
       }
     end
 
@@ -38,7 +42,8 @@ module LicenseManager
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'auto_refund' => :'Boolean'
+        :'auto_refund' => :'Boolean',
+        :'subscription_grace_days' => :'Integer'
       }
     end
 
@@ -77,6 +82,10 @@ module LicenseManager
       if attributes.key?(:'auto_refund')
         self.auto_refund = attributes[:'auto_refund']
       end
+
+      if attributes.key?(:'subscription_grace_days')
+        self.subscription_grace_days = attributes[:'subscription_grace_days']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -84,6 +93,14 @@ module LicenseManager
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if !@subscription_grace_days.nil? && @subscription_grace_days > 60
+        invalid_properties.push('invalid value for "subscription_grace_days", must be smaller than or equal to 60.')
+      end
+
+      if !@subscription_grace_days.nil? && @subscription_grace_days < 0
+        invalid_properties.push('invalid value for "subscription_grace_days", must be greater than or equal to 0.')
+      end
+
       invalid_properties
     end
 
@@ -91,7 +108,27 @@ module LicenseManager
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      return false if !@subscription_grace_days.nil? && @subscription_grace_days > 60
+      return false if !@subscription_grace_days.nil? && @subscription_grace_days < 0
       true
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] subscription_grace_days Value to be assigned
+    def subscription_grace_days=(subscription_grace_days)
+      if subscription_grace_days.nil?
+        fail ArgumentError, 'subscription_grace_days cannot be nil'
+      end
+
+      if subscription_grace_days > 60
+        fail ArgumentError, 'invalid value for "subscription_grace_days", must be smaller than or equal to 60.'
+      end
+
+      if subscription_grace_days < 0
+        fail ArgumentError, 'invalid value for "subscription_grace_days", must be greater than or equal to 0.'
+      end
+
+      @subscription_grace_days = subscription_grace_days
     end
 
     # Checks equality by comparing each attribute.
@@ -99,7 +136,8 @@ module LicenseManager
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          auto_refund == o.auto_refund
+          auto_refund == o.auto_refund &&
+          subscription_grace_days == o.subscription_grace_days
     end
 
     # @see the `==` method
@@ -111,7 +149,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [auto_refund].hash
+      [auto_refund, subscription_grace_days].hash
     end
 
     # Builds the object from hash

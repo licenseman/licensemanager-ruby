@@ -63,6 +63,9 @@ module LicenseManager
     # Cancellations of the licenses with a money back guarantee. `null` when no license of the product has one.
     attr_accessor :cancellation
 
+    # Subscriptions of the product. `null` when it has never had one.
+    attr_accessor :subscriptions
+
     # Revenue in each currency licenses were sold in, from the one with the most licenses sold. Amounts aren't converted between currencies.
     attr_accessor :revenue
 
@@ -94,6 +97,7 @@ module LicenseManager
         :'new_licenses_by_month' => :'newLicensesByMonth',
         :'new_licenses_by_policy' => :'newLicensesByPolicy',
         :'cancellation' => :'cancellation',
+        :'subscriptions' => :'subscriptions',
         :'revenue' => :'revenue',
         :'activations_by_version' => :'activationsByVersion',
         :'active_machines_by_version' => :'activeMachinesByVersion',
@@ -130,6 +134,7 @@ module LicenseManager
         :'new_licenses_by_month' => :'Array<Integer>',
         :'new_licenses_by_policy' => :'Array<ProductStatsNewLicensesByPolicyInner>',
         :'cancellation' => :'CancellationStats',
+        :'subscriptions' => :'SubscriptionStats',
         :'revenue' => :'Array<Revenue>',
         :'activations_by_version' => :'Array<ProductStatsActivationsByVersionInner>',
         :'active_machines_by_version' => :'Array<ProductStatsActiveMachinesByVersionInner>',
@@ -141,6 +146,7 @@ module LicenseManager
     def self.openapi_nullable
       Set.new([
         :'cancellation',
+        :'subscriptions',
       ])
     end
 
@@ -274,6 +280,12 @@ module LicenseManager
         self.cancellation = attributes[:'cancellation']
       else
         self.cancellation = nil
+      end
+
+      if attributes.key?(:'subscriptions')
+        self.subscriptions = attributes[:'subscriptions']
+      else
+        self.subscriptions = nil
       end
 
       if attributes.key?(:'revenue')
@@ -630,6 +642,7 @@ module LicenseManager
           new_licenses_by_month == o.new_licenses_by_month &&
           new_licenses_by_policy == o.new_licenses_by_policy &&
           cancellation == o.cancellation &&
+          subscriptions == o.subscriptions &&
           revenue == o.revenue &&
           activations_by_version == o.activations_by_version &&
           active_machines_by_version == o.active_machines_by_version &&
@@ -645,7 +658,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [license_count, active_license_count, new_license_count, expiring_license_count, expired_license_count, active_machine_count, in_use_license_count, seat_count, used_seat_count, full_license_count, days, months, new_licenses_by_day, new_licenses_by_month, new_licenses_by_policy, cancellation, revenue, activations_by_version, active_machines_by_version, active_machines_by_platform].hash
+      [license_count, active_license_count, new_license_count, expiring_license_count, expired_license_count, active_machine_count, in_use_license_count, seat_count, used_seat_count, full_license_count, days, months, new_licenses_by_day, new_licenses_by_month, new_licenses_by_policy, cancellation, subscriptions, revenue, activations_by_version, active_machines_by_version, active_machines_by_platform].hash
     end
 
     # Builds the object from hash

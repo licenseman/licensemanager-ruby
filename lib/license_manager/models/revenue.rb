@@ -14,21 +14,27 @@ require 'date'
 require 'time'
 
 module LicenseManager
-  # Revenue of the licenses sold in one currency, each license counting on the day it was created. Licenses without a price are left out, and so are canceled ones, but in `canceledLicenseCount` and `canceledTotal`.
+  # Revenue in one currency: the licenses sold once, each counting on the day it was created, and the payments of the subscription licenses, each counting on the day it was paid, with the license's policy. Licenses without a price are left out, and so are canceled ones, but in `canceledLicenseCount` and `canceledTotal`.
   class Revenue < ApiModelBase
     # ISO 4217 code of the currency of the revenue.
     attr_accessor :currency
 
-    # Number of licenses sold in the currency, free ones included, canceled ones left out.
+    # Number of licenses sold once in the currency, free ones included, canceled ones and subscription licenses left out.
     attr_accessor :license_count
 
-    # Sum of the prices of the licenses sold in the currency, in major units, canceled ones left out.
+    # Revenue in the currency, in major units: the prices of the licenses sold once, canceled ones left out, plus the payments of the subscriptions, `subscriptionTotal`.
     attr_accessor :total
 
-    # Number of canceled licenses sold in the currency.
+    # Sum of the payments of the subscription licenses in the currency, before taxes, in major units.
+    attr_accessor :subscription_total
+
+    # Number of payments of the subscription licenses in the currency.
+    attr_accessor :payment_count
+
+    # Number of canceled licenses sold once in the currency.
     attr_accessor :canceled_license_count
 
-    # Sum of the prices of the canceled licenses sold in the currency, in major units: revenue lost to cancellations.
+    # Sum of the prices of the canceled licenses sold once in the currency, in major units: revenue lost to cancellations.
     attr_accessor :canceled_total
 
     # Revenue of the current month, in UTC.
@@ -55,6 +61,8 @@ module LicenseManager
         :'currency' => :'currency',
         :'license_count' => :'licenseCount',
         :'total' => :'total',
+        :'subscription_total' => :'subscriptionTotal',
+        :'payment_count' => :'paymentCount',
         :'canceled_license_count' => :'canceledLicenseCount',
         :'canceled_total' => :'canceledTotal',
         :'this_month' => :'thisMonth',
@@ -82,6 +90,8 @@ module LicenseManager
         :'currency' => :'String',
         :'license_count' => :'Integer',
         :'total' => :'Float',
+        :'subscription_total' => :'Float',
+        :'payment_count' => :'Integer',
         :'canceled_license_count' => :'Integer',
         :'canceled_total' => :'Float',
         :'this_month' => :'Float',
@@ -141,6 +151,18 @@ module LicenseManager
         self.total = attributes[:'total']
       else
         self.total = nil
+      end
+
+      if attributes.key?(:'subscription_total')
+        self.subscription_total = attributes[:'subscription_total']
+      else
+        self.subscription_total = nil
+      end
+
+      if attributes.key?(:'payment_count')
+        self.payment_count = attributes[:'payment_count']
+      else
+        self.payment_count = nil
       end
 
       if attributes.key?(:'canceled_license_count')
@@ -215,6 +237,14 @@ module LicenseManager
         invalid_properties.push('invalid value for "total", total cannot be nil.')
       end
 
+      if @subscription_total.nil?
+        invalid_properties.push('invalid value for "subscription_total", subscription_total cannot be nil.')
+      end
+
+      if @payment_count.nil?
+        invalid_properties.push('invalid value for "payment_count", payment_count cannot be nil.')
+      end
+
       if @canceled_license_count.nil?
         invalid_properties.push('invalid value for "canceled_license_count", canceled_license_count cannot be nil.')
       end
@@ -257,6 +287,8 @@ module LicenseManager
       return false if @currency.nil?
       return false if @license_count.nil?
       return false if @total.nil?
+      return false if @subscription_total.nil?
+      return false if @payment_count.nil?
       return false if @canceled_license_count.nil?
       return false if @canceled_total.nil?
       return false if @this_month.nil?
@@ -296,6 +328,26 @@ module LicenseManager
       end
 
       @total = total
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] subscription_total Value to be assigned
+    def subscription_total=(subscription_total)
+      if subscription_total.nil?
+        fail ArgumentError, 'subscription_total cannot be nil'
+      end
+
+      @subscription_total = subscription_total
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] payment_count Value to be assigned
+    def payment_count=(payment_count)
+      if payment_count.nil?
+        fail ArgumentError, 'payment_count cannot be nil'
+      end
+
+      @payment_count = payment_count
     end
 
     # Custom attribute writer method with validation
@@ -386,6 +438,8 @@ module LicenseManager
           currency == o.currency &&
           license_count == o.license_count &&
           total == o.total &&
+          subscription_total == o.subscription_total &&
+          payment_count == o.payment_count &&
           canceled_license_count == o.canceled_license_count &&
           canceled_total == o.canceled_total &&
           this_month == o.this_month &&
@@ -405,7 +459,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [currency, license_count, total, canceled_license_count, canceled_total, this_month, last_month, last30_days, by_day, by_month, by_policy].hash
+      [currency, license_count, total, subscription_total, payment_count, canceled_license_count, canceled_total, this_month, last_month, last30_days, by_day, by_month, by_policy].hash
     end
 
     # Builds the object from hash
