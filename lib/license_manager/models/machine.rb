@@ -26,11 +26,14 @@ module LicenseManager
 
     attr_accessor :name
 
-    # Whether the machine counts as using the license.
+    # Whether the machine counts as using the license. A `locked` machine doesn't, and its validations are refused with `machine_locked`: it overrode a machine that came back. See `validateKey`.
     attr_accessor :status
 
     # Version of the application last validated on the machine.
     attr_accessor :version
+
+    # For a machine deactivated or locked by automatic machine changes, the machine that took its place. Validating the key on a deactivated machine that has one takes its place back. `null` otherwise.
+    attr_accessor :overridden_by_machine_id
 
     # When the license was last validated on the machine.
     attr_accessor :last_validated_at
@@ -71,6 +74,7 @@ module LicenseManager
         :'name' => :'name',
         :'status' => :'status',
         :'version' => :'version',
+        :'overridden_by_machine_id' => :'overriddenByMachineId',
         :'last_validated_at' => :'lastValidatedAt',
         :'created_at' => :'createdAt',
         :'updated_at' => :'updatedAt'
@@ -97,6 +101,7 @@ module LicenseManager
         :'name' => :'String',
         :'status' => :'String',
         :'version' => :'String',
+        :'overridden_by_machine_id' => :'String',
         :'last_validated_at' => :'Time',
         :'created_at' => :'Time',
         :'updated_at' => :'Time'
@@ -109,6 +114,7 @@ module LicenseManager
         :'platform',
         :'name',
         :'version',
+        :'overridden_by_machine_id',
         :'last_validated_at',
       ])
     end
@@ -181,6 +187,12 @@ module LicenseManager
         self.version = nil
       end
 
+      if attributes.key?(:'overridden_by_machine_id')
+        self.overridden_by_machine_id = attributes[:'overridden_by_machine_id']
+      else
+        self.overridden_by_machine_id = nil
+      end
+
       if attributes.key?(:'last_validated_at')
         self.last_validated_at = attributes[:'last_validated_at']
       else
@@ -240,7 +252,7 @@ module LicenseManager
       return false if @license_id.nil?
       return false if @fingerprint.nil?
       return false if @status.nil?
-      status_validator = EnumAttributeValidator.new('String', ["active", "deactivated", "unknown_default_open_api"])
+      status_validator = EnumAttributeValidator.new('String', ["active", "deactivated", "locked", "unknown_default_open_api"])
       return false unless status_validator.valid?(@status)
       return false if @created_at.nil?
       return false if @updated_at.nil?
@@ -280,7 +292,7 @@ module LicenseManager
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] status Object to be assigned
     def status=(status)
-      validator = EnumAttributeValidator.new('String', ["active", "deactivated", "unknown_default_open_api"])
+      validator = EnumAttributeValidator.new('String', ["active", "deactivated", "locked", "unknown_default_open_api"])
       unless validator.valid?(status)
         fail ArgumentError, "invalid value for \"status\", must be one of #{validator.allowable_values}."
       end
@@ -319,6 +331,7 @@ module LicenseManager
           name == o.name &&
           status == o.status &&
           version == o.version &&
+          overridden_by_machine_id == o.overridden_by_machine_id &&
           last_validated_at == o.last_validated_at &&
           created_at == o.created_at &&
           updated_at == o.updated_at
@@ -333,7 +346,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, license_id, fingerprint, platform, name, status, version, last_validated_at, created_at, updated_at].hash
+      [id, license_id, fingerprint, platform, name, status, version, overridden_by_machine_id, last_validated_at, created_at, updated_at].hash
     end
 
     # Builds the object from hash

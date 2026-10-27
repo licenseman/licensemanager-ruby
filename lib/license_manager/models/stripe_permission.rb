@@ -21,6 +21,9 @@ module LicenseManager
 
     attr_accessor :reason
 
+    # Whether the key can connect without it, losing what it's for, explained by `reason`.
+    attr_accessor :optional
+
     class EnumAttributeValidator
       attr_reader :datatype
       attr_reader :allowable_values
@@ -48,7 +51,8 @@ module LicenseManager
       {
         :'resource' => :'resource',
         :'access' => :'access',
-        :'reason' => :'reason'
+        :'reason' => :'reason',
+        :'optional' => :'optional'
       }
     end
 
@@ -67,7 +71,8 @@ module LicenseManager
       {
         :'resource' => :'String',
         :'access' => :'String',
-        :'reason' => :'String'
+        :'reason' => :'String',
+        :'optional' => :'Boolean'
       }
     end
 
@@ -120,6 +125,12 @@ module LicenseManager
       else
         self.reason = nil
       end
+
+      if attributes.key?(:'optional')
+        self.optional = attributes[:'optional']
+      else
+        self.optional = nil
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -139,6 +150,10 @@ module LicenseManager
         invalid_properties.push('invalid value for "reason", reason cannot be nil.')
       end
 
+      if @optional.nil?
+        invalid_properties.push('invalid value for "optional", optional cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -151,6 +166,7 @@ module LicenseManager
       access_validator = EnumAttributeValidator.new('String', ["Read", "Write", "unknown_default_open_api"])
       return false unless access_validator.valid?(@access)
       return false if @reason.nil?
+      return false if @optional.nil?
       true
     end
 
@@ -184,6 +200,16 @@ module LicenseManager
       @reason = reason
     end
 
+    # Custom attribute writer method with validation
+    # @param [Object] optional Value to be assigned
+    def optional=(optional)
+      if optional.nil?
+        fail ArgumentError, 'optional cannot be nil'
+      end
+
+      @optional = optional
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -191,7 +217,8 @@ module LicenseManager
       self.class == o.class &&
           resource == o.resource &&
           access == o.access &&
-          reason == o.reason
+          reason == o.reason &&
+          optional == o.optional
     end
 
     # @see the `==` method
@@ -203,7 +230,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [resource, access, reason].hash
+      [resource, access, reason, optional].hash
     end
 
     # Builds the object from hash

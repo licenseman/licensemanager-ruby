@@ -4,6 +4,7 @@ All URIs are relative to *https://api.licensemanager.dev*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
+| [**cancel_license**](LicensesApi.md#cancel_license) | **POST** /v1/licenses/{id}/cancel | Cancel a license |
 | [**create_license**](LicensesApi.md#create_license) | **POST** /v1/products/{productId}/licenses | Create a license |
 | [**delete_license**](LicensesApi.md#delete_license) | **DELETE** /v1/licenses/{id} | Delete a license |
 | [**get_license**](LicensesApi.md#get_license) | **GET** /v1/licenses/{id} | Get a license |
@@ -16,13 +17,89 @@ All URIs are relative to *https://api.licensemanager.dev*
 | [**validate_key**](LicensesApi.md#validate_key) | **POST** /v1/products/{productId}/validate-key | Validate a license key |
 
 
+## cancel_license
+
+> <License> cancel_license(id, cancel_license)
+
+Cancel a license
+
+Cancels the license right away: validating its key then fails with `license_expired`, like an expired license, and its status is `canceled`. A cancellation can't be undone.  Customers can cancel their licenses until their `cancellableUntil`, the end of their money back guarantee: tokens can't cancel a license past it, or without one. API keys and sessions can cancel any license.  When the license was bought through the Stripe integration, its payment is refunded in the background, unless the integration disables `autoRefund`, its API key lacks the optional Refunds: Write permission (`canRefund`), or `refund` is `false`: the refund is its price paid, taxes included, and its id is set as `stripeRefundId`. The customer is emailed a confirmation, and the owners and admins of the organization are told about the cancellation and its refund. In test products, the customer is only emailed when their email is a member's of the organization.  Records a `license.canceled` event, then a `license.refunded` or `license.refund_failed` one once the refund is done.  **Token access**: customer, license tokens with the `license:cancel` permission (or the matching write one). A token reaches the license it's scoped to, or the licenses of its customer.  **Required role permission**: `license:cancel` when called with a session, granted by the member's role. API keys aren't limited by roles.
+
+### Examples
+
+```ruby
+require 'time'
+require 'license_manager'
+# setup authorization
+LicenseManager.configure do |config|
+  # Configure API key authorization: apiKey
+  config.api_key['x-api-key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['x-api-key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): token
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LicenseManager::LicensesApi.new
+id = 'l3Nv8KwB' # String | 
+cancel_license = LicenseManager::CancelLicense.new({reason: LicenseManager::CancellationReason::TOO_EXPENSIVE}) # CancelLicense | 
+
+begin
+  # Cancel a license
+  result = api_instance.cancel_license(id, cancel_license)
+  p result
+rescue LicenseManager::ApiError => e
+  puts "Error when calling LicensesApi->cancel_license: #{e}"
+end
+```
+
+#### Using the cancel_license_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<License>, Integer, Hash)> cancel_license_with_http_info(id, cancel_license)
+
+```ruby
+begin
+  # Cancel a license
+  data, status_code, headers = api_instance.cancel_license_with_http_info(id, cancel_license)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <License>
+rescue LicenseManager::ApiError => e
+  puts "Error when calling LicensesApi->cancel_license_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **cancel_license** | [**CancelLicense**](CancelLicense.md) |  |  |
+
+### Return type
+
+[**License**](License.md)
+
+### Authorization
+
+[apiKey](../README.md#apiKey), [token](../README.md#token)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+
 ## create_license
 
 > <License> create_license(product_id, create_license)
 
 Create a license
 
-Without a `key`, the license gets a random one, like `7KQ2M-X9ZPA-H4TRC-WN6EY-B3JDF`: 5 groups of 5 characters separated by dashes, each character an upper case letter or a digit other than `O`, `0`, `I` and `1`. That's 32 possible characters encoding 5 bits each, for 125 random bits.  Without a `policyId`, the license follows the product's default policy.  Without an `expiresAt`, the license expires after the duration of its policy, or never when the policy has none. `expiresAt: null` makes it never expire.  Without a `price`, the price paid for the license is unknown: it's left out of the revenue stats.  The values of `maxVersion` left out are taken from the max version of the policy: its hard-coded version, or the times after the creation of the license its versions lock.  The license belongs to the product's customer with the given `email`, which is created when there's none.  With `sendKey: true`, the key is emailed to the customer once the license is created.  The license copies the settings of its policy when it's created: later changes to the policy don't affect it. Its key, policy and customer can't be changed afterwards.  **Required role permission**: `license:create` when called with a session, granted by the member's role. API keys aren't limited by roles.
+Without a `key`, the license gets a random one, like `7KQ2M-X9ZPA-H4TRC-WN6EY-B3JDF`: 5 groups of 5 characters separated by dashes, each character an upper case letter or a digit other than `O`, `0`, `I` and `1`. That's 32 possible characters encoding 5 bits each, for 125 random bits.  Without a `policyId`, the license follows the product's default policy.  Without an `expiresAt`, the license expires after the duration of its policy, or never when the policy has none. `expiresAt: null` makes it never expire.  Without a `price`, the price paid for the license is unknown: it's left out of the revenue stats.  Without a `cancellableUntil`, the customer can cancel the license during the policy's `moneyBackGuaranteeDays` after its creation, or never when the policy has none.  The values of `maxVersion` left out are taken from the max version of the policy: its hard-coded version, or the times after the creation of the license its versions lock.  The license belongs to the product's customer with the given `email`, which is created when there's none.  With `sendKey: true`, the key is emailed to the customer once the license is created.  The license copies the settings of its policy when it's created: later changes to the policy don't affect it. Its key, policy and customer can't be changed afterwards.  **Required role permission**: `license:create` when called with a session, granted by the member's role. API keys aren't limited by roles.
 
 ### Examples
 
@@ -683,7 +760,7 @@ nil (empty response body)
 
 Update a license
 
-The key, policy and customer of a license can't be changed: sending them does nothing.  The changes apply to the next validations of the key, not to the license tokens `validateKey` already returned, which stay valid until they expire. Lowering `maxMachines` doesn't deactivate machines: the ones already active keep validating, and new ones are refused until enough are deactivated.  **Required role permission**: `license:update` when called with a session, granted by the member's role. API keys aren't limited by roles.
+The key, policy and customer of a license can't be changed: sending them does nothing.  The changes apply to the next validations of the key, not to the license tokens `validateKey` already returned, which stay valid until they expire. Lowering `maxMachines` doesn't deactivate machines: the ones already active keep validating, and new ones replace them one at a time when the product has `autoMachineChange`, or are refused until enough are deactivated.  **Required role permission**: `license:update` when called with a session, granted by the member's role. API keys aren't limited by roles.
 
 ### Examples
 
@@ -756,7 +833,7 @@ end
 
 Validate a license key
 
-Checks the license key of the product on a machine and returns a token the application can verify offline with the organization's public key. Doesn't need authentication.  The license must allow the `version`: up to its `maxVersion.version` when it has one, like `\"2.3\"` for every 2.3.z version and older. Its `maxVersion.lockMajorAt` and `maxVersion.lockMinorAt` are enforced once they hard-code `maxVersion.version`, within the hour they're reached. When it doesn't, the error's `latestAllowedVersion` is the latest release of the product the license allows, so the application can offer to install it.  The machine with the `fingerprint` is created when the license has none, and activated when it's deactivated, unless the license is already active on its maximum number of machines. A machine that's already active is never refused for the maximum number of machines, even when it was lowered below the number of active machines. Its `version`, and its `name` and `platform` when given, are updated: they can't be cleared.  The checks run in this order, and the first one failing answers: the license has expired, then it doesn't allow the version, then it's on its maximum number of machines. Each failure is recorded as a `license.validation_failed` event, except for keys that don't exist.  Changes to the license, like deactivating the machine or shortening its expiration, don't revoke the tokens already returned: the application only sees them when it validates its key again, at the latest when its token expires.
+Checks the license key of the product on a machine and returns a token the application can verify offline with the organization's public key. Doesn't need authentication.  The license must allow the `version`: up to its `maxVersion.version` when it has one, like `\"2.3\"` for every 2.3.z version and older. Its `maxVersion.lockMajorAt` and `maxVersion.lockMinorAt` are enforced once they hard-code `maxVersion.version`, within the hour they're reached. When it doesn't, the error's `latestAllowedVersion` is the latest release of the product the license allows, so the application can offer to install it.  The machine with the `fingerprint` is created when the license has none, and activated when it's deactivated, unless the license is already active on its maximum number of machines. A machine that's already active is never refused for the maximum number of machines, even when it was lowered below the number of active machines. Its `version`, and its `name` and `platform` when given, are updated: they can't be cleared.  Unless the product disables `autoMachineChange`, a new machine isn't refused when the license is on its maximum number of machines: it takes the place of the active machine validated the longest ago, which is deactivated with its `overriddenByMachineId` set to the new machine, and recorded as a `machine.deactivated` event. When a machine deactivated this way is validated again, it takes its place back: the machine that overrode it, and the ones that overrode that one in turn, are locked, with their `overriddenByMachineId` set to the machine coming back. A locked machine is always refused, so two machines can't take turns on one place.  The checks run in this order, and the first one failing answers: the license has expired or was canceled, then it doesn't allow the version, then the machine is locked, then it's on its maximum number of machines. Each failure is recorded as a `license.validation_failed` event, except for keys that don't exist.  Changes to the license, like deactivating the machine or shortening its expiration, don't revoke the tokens already returned: the application only sees them when it validates its key again, at the latest when its token expires.
 
 ### Examples
 

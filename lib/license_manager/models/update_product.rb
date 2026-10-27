@@ -22,12 +22,16 @@ module LicenseManager
 
     attr_accessor :portal
 
+    # Whether a new machine validating a license already on its max machines takes the place of the license's machine validated the longest ago, rather than being refused with `machine_limit_reached`. When the replaced machine is validated again, it takes its place back and the machine that replaced it is locked. See `validateKey`.
+    attr_accessor :auto_machine_change
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'name' => :'name',
         :'slug' => :'slug',
-        :'portal' => :'portal'
+        :'portal' => :'portal',
+        :'auto_machine_change' => :'autoMachineChange'
       }
     end
 
@@ -46,7 +50,8 @@ module LicenseManager
       {
         :'name' => :'String',
         :'slug' => :'String',
-        :'portal' => :'UpdateProductPortal'
+        :'portal' => :'UpdateProductPortal',
+        :'auto_machine_change' => :'Boolean'
       }
     end
 
@@ -92,6 +97,10 @@ module LicenseManager
 
       if attributes.key?(:'portal')
         self.portal = attributes[:'portal']
+      end
+
+      if attributes.key?(:'auto_machine_change')
+        self.auto_machine_change = attributes[:'auto_machine_change']
       end
     end
 
@@ -184,7 +193,8 @@ module LicenseManager
       self.class == o.class &&
           name == o.name &&
           slug == o.slug &&
-          portal == o.portal
+          portal == o.portal &&
+          auto_machine_change == o.auto_machine_change
     end
 
     # @see the `==` method
@@ -196,7 +206,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, slug, portal].hash
+      [name, slug, portal, auto_machine_change].hash
     end
 
     # Builds the object from hash

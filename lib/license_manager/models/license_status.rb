@@ -18,10 +18,11 @@ module LicenseManager
     ACTIVE = "active".freeze
     INACTIVE = "inactive".freeze
     EXPIRED = "expired".freeze
+    CANCELED = "canceled".freeze
     UNKNOWN_DEFAULT_OPEN_API = "unknown_default_open_api".freeze
 
     def self.all_vars
-      @all_vars ||= [ACTIVE, INACTIVE, EXPIRED, UNKNOWN_DEFAULT_OPEN_API].freeze
+      @all_vars ||= [ACTIVE, INACTIVE, EXPIRED, CANCELED, UNKNOWN_DEFAULT_OPEN_API].freeze
     end
 
     # Builds the enum from string

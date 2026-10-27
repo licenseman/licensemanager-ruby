@@ -33,6 +33,9 @@ module LicenseManager
 
     attr_accessor :max_version
 
+    # Number of days after their creation during which customers can cancel the licenses created with this policy, from the customer portal or with `cancelLicense`, which refunds their Stripe payment. Each license keeps the end of its own period as `cancellableUntil`. `null` for no money back guarantee. Defaults to `null`.
+    attr_accessor :money_back_guarantee_days
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -42,7 +45,8 @@ module LicenseManager
         :'duration' => :'duration',
         :'max_machines' => :'maxMachines',
         :'max_offline_duration_seconds' => :'maxOfflineDurationSeconds',
-        :'max_version' => :'maxVersion'
+        :'max_version' => :'maxVersion',
+        :'money_back_guarantee_days' => :'moneyBackGuaranteeDays'
       }
     end
 
@@ -65,7 +69,8 @@ module LicenseManager
         :'duration' => :'PolicySettingsDuration',
         :'max_machines' => :'Integer',
         :'max_offline_duration_seconds' => :'Integer',
-        :'max_version' => :'PolicySettingsMaxVersion'
+        :'max_version' => :'PolicySettingsMaxVersion',
+        :'money_back_guarantee_days' => :'Integer'
       }
     end
 
@@ -74,7 +79,8 @@ module LicenseManager
       Set.new([
         :'duration',
         :'max_machines',
-        :'max_version'
+        :'max_version',
+        :'money_back_guarantee_days'
       ])
     end
 
@@ -133,6 +139,10 @@ module LicenseManager
       if attributes.key?(:'max_version')
         self.max_version = attributes[:'max_version']
       end
+
+      if attributes.key?(:'money_back_guarantee_days')
+        self.money_back_guarantee_days = attributes[:'money_back_guarantee_days']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -181,6 +191,14 @@ module LicenseManager
         invalid_properties.push('invalid value for "max_offline_duration_seconds", must be greater than or equal to 3600.')
       end
 
+      if !@money_back_guarantee_days.nil? && @money_back_guarantee_days > 3650
+        invalid_properties.push('invalid value for "money_back_guarantee_days", must be smaller than or equal to 3650.')
+      end
+
+      if !@money_back_guarantee_days.nil? && @money_back_guarantee_days <= 0
+        invalid_properties.push('invalid value for "money_back_guarantee_days", must be greater than 0.')
+      end
+
       invalid_properties
     end
 
@@ -198,6 +216,8 @@ module LicenseManager
       return false if !@max_machines.nil? && @max_machines <= 0
       return false if !@max_offline_duration_seconds.nil? && @max_offline_duration_seconds > 2147483647
       return false if !@max_offline_duration_seconds.nil? && @max_offline_duration_seconds < 3600
+      return false if !@money_back_guarantee_days.nil? && @money_back_guarantee_days > 3650
+      return false if !@money_back_guarantee_days.nil? && @money_back_guarantee_days <= 0
       true
     end
 
@@ -274,6 +294,20 @@ module LicenseManager
       @max_offline_duration_seconds = max_offline_duration_seconds
     end
 
+    # Custom attribute writer method with validation
+    # @param [Object] money_back_guarantee_days Value to be assigned
+    def money_back_guarantee_days=(money_back_guarantee_days)
+      if !money_back_guarantee_days.nil? && money_back_guarantee_days > 3650
+        fail ArgumentError, 'invalid value for "money_back_guarantee_days", must be smaller than or equal to 3650.'
+      end
+
+      if !money_back_guarantee_days.nil? && money_back_guarantee_days <= 0
+        fail ArgumentError, 'invalid value for "money_back_guarantee_days", must be greater than 0.'
+      end
+
+      @money_back_guarantee_days = money_back_guarantee_days
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -285,7 +319,8 @@ module LicenseManager
           duration == o.duration &&
           max_machines == o.max_machines &&
           max_offline_duration_seconds == o.max_offline_duration_seconds &&
-          max_version == o.max_version
+          max_version == o.max_version &&
+          money_back_guarantee_days == o.money_back_guarantee_days
     end
 
     # @see the `==` method
@@ -297,7 +332,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, slug, is_default, duration, max_machines, max_offline_duration_seconds, max_version].hash
+      [name, slug, is_default, duration, max_machines, max_offline_duration_seconds, max_version, money_back_guarantee_days].hash
     end
 
     # Builds the object from hash

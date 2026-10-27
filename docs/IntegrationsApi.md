@@ -11,6 +11,7 @@ All URIs are relative to *https://api.licensemanager.dev*
 | [**disconnect_integration**](IntegrationsApi.md#disconnect_integration) | **DELETE** /v1/integrations/{id} | Disconnect an integration |
 | [**get_stripe_integration**](IntegrationsApi.md#get_stripe_integration) | **GET** /v1/products/{productId}/integrations/stripe | Get the Stripe integration of a product |
 | [**list_stripe_prices**](IntegrationsApi.md#list_stripe_prices) | **GET** /v1/integrations/{id}/stripe/prices | List the Stripe prices of an integration |
+| [**update_integration**](IntegrationsApi.md#update_integration) | **PATCH** /v1/integrations/{id} | Update an integration |
 | [**update_stripe_mapping**](IntegrationsApi.md#update_stripe_mapping) | **PATCH** /v1/integration-mappings/{id} | Change the policy of a mapping |
 
 
@@ -510,6 +511,79 @@ end
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## update_integration
+
+> <Integration> update_integration(id, update_integration)
+
+Update an integration
+
+Changes the settings of the integration, for every product of its mode. Doesn't accept tokens: only API keys and sessions.  **Required role permission**: `integration:update` when called with a session, granted by the member's role. API keys aren't limited by roles.
+
+### Examples
+
+```ruby
+require 'time'
+require 'license_manager'
+# setup authorization
+LicenseManager.configure do |config|
+  # Configure API key authorization: apiKey
+  config.api_key['x-api-key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['x-api-key'] = 'Bearer'
+end
+
+api_instance = LicenseManager::IntegrationsApi.new
+id = 'i8Fz4QnRt' # String | 
+update_integration = LicenseManager::UpdateIntegration.new # UpdateIntegration | 
+
+begin
+  # Update an integration
+  result = api_instance.update_integration(id, update_integration)
+  p result
+rescue LicenseManager::ApiError => e
+  puts "Error when calling IntegrationsApi->update_integration: #{e}"
+end
+```
+
+#### Using the update_integration_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<Integration>, Integer, Hash)> update_integration_with_http_info(id, update_integration)
+
+```ruby
+begin
+  # Update an integration
+  data, status_code, headers = api_instance.update_integration_with_http_info(id, update_integration)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <Integration>
+rescue LicenseManager::ApiError => e
+  puts "Error when calling IntegrationsApi->update_integration_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **update_integration** | [**UpdateIntegration**](UpdateIntegration.md) |  |  |
+
+### Return type
+
+[**Integration**](Integration.md)
+
+### Authorization
+
+[apiKey](../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 

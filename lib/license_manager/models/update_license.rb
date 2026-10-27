@@ -32,6 +32,9 @@ module LicenseManager
 
     attr_accessor :price
 
+    # End of the money back guarantee: until then, the customer can cancel the license from the customer portal, or with a token. `null` to not let them.
+    attr_accessor :cancellable_until
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -40,7 +43,8 @@ module LicenseManager
         :'max_machines' => :'maxMachines',
         :'max_offline_duration_seconds' => :'maxOfflineDurationSeconds',
         :'max_version' => :'maxVersion',
-        :'price' => :'price'
+        :'price' => :'price',
+        :'cancellable_until' => :'cancellableUntil'
       }
     end
 
@@ -62,7 +66,8 @@ module LicenseManager
         :'max_machines' => :'Integer',
         :'max_offline_duration_seconds' => :'Integer',
         :'max_version' => :'LicenseMaxVersionInput',
-        :'price' => :'PriceInput'
+        :'price' => :'PriceInput',
+        :'cancellable_until' => :'Time'
       }
     end
 
@@ -72,7 +77,8 @@ module LicenseManager
         :'expires_at',
         :'meta',
         :'max_machines',
-        :'price'
+        :'price',
+        :'cancellable_until'
       ])
     end
 
@@ -126,6 +132,10 @@ module LicenseManager
 
       if attributes.key?(:'price')
         self.price = attributes[:'price']
+      end
+
+      if attributes.key?(:'cancellable_until')
+        self.cancellable_until = attributes[:'cancellable_until']
       end
     end
 
@@ -206,7 +216,8 @@ module LicenseManager
           max_machines == o.max_machines &&
           max_offline_duration_seconds == o.max_offline_duration_seconds &&
           max_version == o.max_version &&
-          price == o.price
+          price == o.price &&
+          cancellable_until == o.cancellable_until
     end
 
     # @see the `==` method
@@ -218,7 +229,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [expires_at, meta, max_machines, max_offline_duration_seconds, max_version, price].hash
+      [expires_at, meta, max_machines, max_offline_duration_seconds, max_version, price, cancellable_until].hash
     end
 
     # Builds the object from hash

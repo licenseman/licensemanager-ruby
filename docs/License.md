@@ -20,6 +20,11 @@
 | **max_version** | [**LicenseMaxVersion**](LicenseMaxVersion.md) |  |  |
 | **price** | [**Price**](Price.md) |  |  |
 | **status** | [**LicenseStatus**](LicenseStatus.md) |  |  |
+| **cancellable_until** | **Time** | End of the money back guarantee: until then, the customer can cancel the license from the customer portal, or with a token. Set from the policy&#39;s &#x60;moneyBackGuaranteeDays&#x60; when the license is created. &#x60;null&#x60; when the customer can&#39;t cancel it. |  |
+| **canceled_at** | **Time** | When the license was canceled: validating its key fails since. &#x60;null&#x60; when it wasn&#39;t. |  |
+| **cancellation_reason** | [**CancellationReason**](CancellationReason.md) |  |  |
+| **cancellation_comment** | **String** | Comment given when the license was canceled. &#x60;null&#x60; when there&#39;s none. |  |
+| **stripe_refund_id** | **String** | Id of the Stripe refund of the license&#39;s payment once it was canceled, through the Stripe integration. &#x60;null&#x60; otherwise. |  |
 | **updated_at** | **Time** | Last time the license&#39;s settings were edited, not when its key was validated. |  |
 
 ## Example
@@ -44,6 +49,11 @@ instance = LicenseManager::License.new(
   max_version: null,
   price: null,
   status: null,
+  cancellable_until: 2026-02-14T09:30:00.000Z,
+  canceled_at: 2026-01-20T16:12:00.000Z,
+  cancellation_reason: null,
+  cancellation_comment: I only needed it for one project.,
+  stripe_refund_id: re_3MtwBwLkdIwHu7ix0Bs5rA2b,
   updated_at: 2026-01-15T09:30:00.000Z
 )
 ```

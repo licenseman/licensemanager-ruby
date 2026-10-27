@@ -482,6 +482,80 @@ module LicenseManager
       return data, status_code, headers
     end
 
+    # Update an integration
+    # Changes the settings of the integration, for every product of its mode. Doesn't accept tokens: only API keys and sessions.  **Required role permission**: `integration:update` when called with a session, granted by the member's role. API keys aren't limited by roles.
+    # @param id [String] 
+    # @param update_integration [UpdateIntegration] 
+    # @param [Hash] opts the optional parameters
+    # @return [Integration]
+    def update_integration(id, update_integration, opts = {})
+      data, _status_code, _headers = update_integration_with_http_info(id, update_integration, opts)
+      data
+    end
+
+    # Update an integration
+    # Changes the settings of the integration, for every product of its mode. Doesn&#39;t accept tokens: only API keys and sessions.  **Required role permission**: &#x60;integration:update&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
+    # @param id [String] 
+    # @param update_integration [UpdateIntegration] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(Integration, Integer, Hash)>] Integration data, response status code and response headers
+    def update_integration_with_http_info(id, update_integration, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: IntegrationsApi.update_integration ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling IntegrationsApi.update_integration"
+      end
+      # verify the required parameter 'update_integration' is set
+      if @api_client.config.client_side_validation && update_integration.nil?
+        fail ArgumentError, "Missing the required parameter 'update_integration' when calling IntegrationsApi.update_integration"
+      end
+      # resource path
+      local_var_path = '/v1/integrations/{id}'.sub('{id}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(update_integration)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'Integration'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['apiKey']
+
+      new_options = opts.merge(
+        :operation => :"IntegrationsApi.update_integration",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PATCH, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: IntegrationsApi#update_integration\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Change the policy of a mapping
     # Only affects the licenses created afterwards. Doesn't accept tokens: only API keys and sessions.  **Required role permission**: `integration:update` when called with a session, granted by the member's role. API keys aren't limited by roles.
     # @param id [String] 

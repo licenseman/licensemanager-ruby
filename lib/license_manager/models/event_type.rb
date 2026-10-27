@@ -21,11 +21,14 @@ module LicenseManager
     LICENSE_UPDATED = "license.updated".freeze
     LICENSE_VALIDATED = "license.validated".freeze
     LICENSE_VALIDATION_FAILED = "license.validation_failed".freeze
+    LICENSE_CANCELED = "license.canceled".freeze
+    LICENSE_REFUNDED = "license.refunded".freeze
+    LICENSE_REFUND_FAILED = "license.refund_failed".freeze
     MACHINE_DEACTIVATED = "machine.deactivated".freeze
     UNKNOWN_DEFAULT_OPEN_API = "unknown_default_open_api".freeze
 
     def self.all_vars
-      @all_vars ||= [POLICY_CREATED, POLICY_UPDATED, LICENSE_CREATED, LICENSE_UPDATED, LICENSE_VALIDATED, LICENSE_VALIDATION_FAILED, MACHINE_DEACTIVATED, UNKNOWN_DEFAULT_OPEN_API].freeze
+      @all_vars ||= [POLICY_CREATED, POLICY_UPDATED, LICENSE_CREATED, LICENSE_UPDATED, LICENSE_VALIDATED, LICENSE_VALIDATION_FAILED, LICENSE_CANCELED, LICENSE_REFUNDED, LICENSE_REFUND_FAILED, MACHINE_DEACTIVATED, UNKNOWN_DEFAULT_OPEN_API].freeze
     end
 
     # Builds the enum from string

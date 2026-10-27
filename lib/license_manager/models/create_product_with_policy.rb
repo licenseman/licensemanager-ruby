@@ -22,7 +22,7 @@ module LicenseManager
 
     attr_accessor :default_policy
 
-    # Creates a test product: a sandbox of this live product of the organization, starting with copies of its policies, releases and portal settings.
+    # Creates a test product: a sandbox of this live product of the organization, starting with copies of its policies, releases, portal settings and `autoMachineChange`.
     attr_accessor :is_test_from_product_id
 
     # Attribute mapping from ruby-style variable name to JSON key.

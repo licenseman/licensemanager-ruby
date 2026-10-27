@@ -40,6 +40,9 @@ module LicenseManager
 
     attr_accessor :max_version
 
+    # End of the money back guarantee: until then, the customer can cancel the license from the customer portal, or with a token. `null` to not let them. Defaults to the creation date plus the policy's `moneyBackGuaranteeDays`, or `null` when it has none.
+    attr_accessor :cancellable_until
+
     # `true` emails the key to the customer once the license is created, like `sendLicenseKeys`. Sent in the background: a failed email doesn't fail the creation. In test products, it's only sent when the customer's email is a member's of the organization. Defaults to `false`.
     attr_accessor :send_key
 
@@ -55,6 +58,7 @@ module LicenseManager
         :'max_offline_duration_seconds' => :'maxOfflineDurationSeconds',
         :'price' => :'price',
         :'max_version' => :'maxVersion',
+        :'cancellable_until' => :'cancellableUntil',
         :'send_key' => :'sendKey'
       }
     end
@@ -81,6 +85,7 @@ module LicenseManager
         :'max_offline_duration_seconds' => :'Integer',
         :'price' => :'PriceInput',
         :'max_version' => :'LicenseMaxVersionInput',
+        :'cancellable_until' => :'Time',
         :'send_key' => :'Boolean'
       }
     end
@@ -92,6 +97,7 @@ module LicenseManager
         :'meta',
         :'max_machines',
         :'price',
+        :'cancellable_until',
       ])
     end
 
@@ -159,6 +165,10 @@ module LicenseManager
 
       if attributes.key?(:'max_version')
         self.max_version = attributes[:'max_version']
+      end
+
+      if attributes.key?(:'cancellable_until')
+        self.cancellable_until = attributes[:'cancellable_until']
       end
 
       if attributes.key?(:'send_key')
@@ -299,6 +309,7 @@ module LicenseManager
           max_offline_duration_seconds == o.max_offline_duration_seconds &&
           price == o.price &&
           max_version == o.max_version &&
+          cancellable_until == o.cancellable_until &&
           send_key == o.send_key
     end
 
@@ -311,7 +322,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [email, key, policy_id, expires_at, meta, max_machines, max_offline_duration_seconds, price, max_version, send_key].hash
+      [email, key, policy_id, expires_at, meta, max_machines, max_offline_duration_seconds, price, max_version, cancellable_until, send_key].hash
     end
 
     # Builds the object from hash

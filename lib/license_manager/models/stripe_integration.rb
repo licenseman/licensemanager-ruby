@@ -21,7 +21,7 @@ module LicenseManager
     # Whether Stripe can reach the API's webhook URL. A local URL can't be: set `WEBHOOK_URL` on the server, like to a tunnel in development.
     attr_accessor :webhook_url_reachable
 
-    # Permissions the restricted API key needs, and why. Every other permission can stay `None`.
+    # Permissions the restricted API key needs, and why, the `optional` ones included. Every other permission can stay `None`.
     attr_accessor :required_permissions
 
     # The organization's Stripe connection in this mode, `null` when there's none.

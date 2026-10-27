@@ -18,7 +18,7 @@ module LicenseManager
     # Link to the customer portal, holding the token.
     attr_accessor :url
 
-    # Customer token in the link, with the `customer:read`, `license:read` and `machine:write` permissions.
+    # Customer token in the link, with the `customer:read`, `license:read`, `license:cancel` and `machine:write` permissions.
     attr_accessor :token
 
     # When the link stops working.

@@ -15,7 +15,7 @@ require 'time'
 
 module LicenseManager
   class CreateToken < ApiModelBase
-    # Permissions of the token. A write permission implies the matching read one. A token creating a token can only give the permissions it has.
+    # Permissions of the token. A write permission implies the other ones of its resource, like the read one: `license:write` implies `license:read` and `license:cancel`. A token creating a token can only give the permissions it has.
     attr_accessor :scope
 
     # How long the token works, in seconds, from 60 (1 minute) to 31536000 (365 days). Defaults to 900 (15 minutes). A token creating a token can't give it a later expiration than its own: it's shortened to it.

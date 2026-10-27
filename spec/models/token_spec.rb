@@ -46,7 +46,7 @@ describe LicenseManager::Token do
   describe 'test attribute "scope"' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-      # validator = Petstore::EnumTest::EnumAttributeValidator.new('Array<String>', ["customer:read", "customer:write", "license:read", "license:write", "machine:read", "machine:write", "unknown_default_open_api"])
+      # validator = Petstore::EnumTest::EnumAttributeValidator.new('Array<String>', ["customer:read", "customer:write", "license:read", "license:write", "license:cancel", "machine:read", "machine:write", "unknown_default_open_api"])
       # validator.allowable_values.each do |value|
       #   expect { instance.scope = value }.not_to raise_error
       # end

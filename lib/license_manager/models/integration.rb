@@ -42,6 +42,12 @@ module LicenseManager
     # Last time it received an event from the provider.
     attr_accessor :last_event_at
 
+    # Whether canceling a license bought through Stripe refunds its payment. On by default, always off when `canRefund` is false.
+    attr_accessor :auto_refund
+
+    # Whether the API key has the optional Refunds: Write permission, checked when connecting and every day. Without it, canceled licenses aren't refunded: refund their payments from Stripe.
+    attr_accessor :can_refund
+
     attr_accessor :created_at
 
     class EnumAttributeValidator
@@ -79,6 +85,8 @@ module LicenseManager
         :'status_reason' => :'statusReason',
         :'last_checked_at' => :'lastCheckedAt',
         :'last_event_at' => :'lastEventAt',
+        :'auto_refund' => :'autoRefund',
+        :'can_refund' => :'canRefund',
         :'created_at' => :'createdAt'
       }
     end
@@ -106,6 +114,8 @@ module LicenseManager
         :'status_reason' => :'String',
         :'last_checked_at' => :'Time',
         :'last_event_at' => :'Time',
+        :'auto_refund' => :'Boolean',
+        :'can_refund' => :'Boolean',
         :'created_at' => :'Time'
       }
     end
@@ -206,6 +216,18 @@ module LicenseManager
         self.last_event_at = nil
       end
 
+      if attributes.key?(:'auto_refund')
+        self.auto_refund = attributes[:'auto_refund']
+      else
+        self.auto_refund = nil
+      end
+
+      if attributes.key?(:'can_refund')
+        self.can_refund = attributes[:'can_refund']
+      else
+        self.can_refund = nil
+      end
+
       if attributes.key?(:'created_at')
         self.created_at = attributes[:'created_at']
       else
@@ -242,6 +264,14 @@ module LicenseManager
         invalid_properties.push('invalid value for "status", status cannot be nil.')
       end
 
+      if @auto_refund.nil?
+        invalid_properties.push('invalid value for "auto_refund", auto_refund cannot be nil.')
+      end
+
+      if @can_refund.nil?
+        invalid_properties.push('invalid value for "can_refund", can_refund cannot be nil.')
+      end
+
       if @created_at.nil?
         invalid_properties.push('invalid value for "created_at", created_at cannot be nil.')
       end
@@ -261,6 +291,8 @@ module LicenseManager
       return false if @api_key_hint.nil?
       return false if @webhook_url.nil?
       return false if @status.nil?
+      return false if @auto_refund.nil?
+      return false if @can_refund.nil?
       return false if @created_at.nil?
       true
     end
@@ -326,6 +358,26 @@ module LicenseManager
     end
 
     # Custom attribute writer method with validation
+    # @param [Object] auto_refund Value to be assigned
+    def auto_refund=(auto_refund)
+      if auto_refund.nil?
+        fail ArgumentError, 'auto_refund cannot be nil'
+      end
+
+      @auto_refund = auto_refund
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] can_refund Value to be assigned
+    def can_refund=(can_refund)
+      if can_refund.nil?
+        fail ArgumentError, 'can_refund cannot be nil'
+      end
+
+      @can_refund = can_refund
+    end
+
+    # Custom attribute writer method with validation
     # @param [Object] created_at Value to be assigned
     def created_at=(created_at)
       if created_at.nil?
@@ -350,6 +402,8 @@ module LicenseManager
           status_reason == o.status_reason &&
           last_checked_at == o.last_checked_at &&
           last_event_at == o.last_event_at &&
+          auto_refund == o.auto_refund &&
+          can_refund == o.can_refund &&
           created_at == o.created_at
     end
 
@@ -362,7 +416,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, provider, livemode, account_name, api_key_hint, webhook_url, status, status_reason, last_checked_at, last_event_at, created_at].hash
+      [id, provider, livemode, account_name, api_key_hint, webhook_url, status, status_reason, last_checked_at, last_event_at, auto_refund, can_refund, created_at].hash
     end
 
     # Builds the object from hash

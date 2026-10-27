@@ -7,6 +7,10 @@
 Gemfile
 README.md
 Rakefile
+docs/CancelLicense.md
+docs/CancellationReason.md
+docs/CancellationStats.md
+docs/CancellationStatsByReasonInner.md
 docs/ConnectStripe.md
 docs/CreateCustomer.md
 docs/CreateIntegrationMapping.md
@@ -100,6 +104,7 @@ docs/StripePrice.md
 docs/Token.md
 docs/TokensApi.md
 docs/UpdateCustomer.md
+docs/UpdateIntegration.md
 docs/UpdateIntegrationMapping.md
 docs/UpdateLicense.md
 docs/UpdatePolicy.md
@@ -125,6 +130,10 @@ lib/license_manager/api_client.rb
 lib/license_manager/api_error.rb
 lib/license_manager/api_model_base.rb
 lib/license_manager/configuration.rb
+lib/license_manager/models/cancel_license.rb
+lib/license_manager/models/cancellation_reason.rb
+lib/license_manager/models/cancellation_stats.rb
+lib/license_manager/models/cancellation_stats_by_reason_inner.rb
 lib/license_manager/models/connect_stripe.rb
 lib/license_manager/models/create_customer.rb
 lib/license_manager/models/create_integration_mapping.rb
@@ -208,6 +217,7 @@ lib/license_manager/models/stripe_permission.rb
 lib/license_manager/models/stripe_price.rb
 lib/license_manager/models/token.rb
 lib/license_manager/models/update_customer.rb
+lib/license_manager/models/update_integration.rb
 lib/license_manager/models/update_integration_mapping.rb
 lib/license_manager/models/update_license.rb
 lib/license_manager/models/update_policy.rb
@@ -229,6 +239,10 @@ spec/api/portal_api_spec.rb
 spec/api/products_api_spec.rb
 spec/api/releases_api_spec.rb
 spec/api/tokens_api_spec.rb
+spec/models/cancel_license_spec.rb
+spec/models/cancellation_reason_spec.rb
+spec/models/cancellation_stats_by_reason_inner_spec.rb
+spec/models/cancellation_stats_spec.rb
 spec/models/connect_stripe_spec.rb
 spec/models/create_customer_spec.rb
 spec/models/create_integration_mapping_spec.rb
@@ -313,6 +327,7 @@ spec/models/stripe_price_spec.rb
 spec/models/token_spec.rb
 spec/models/update_customer_spec.rb
 spec/models/update_integration_mapping_spec.rb
+spec/models/update_integration_spec.rb
 spec/models/update_license_spec.rb
 spec/models/update_policy_spec.rb
 spec/models/update_product_portal_spec.rb

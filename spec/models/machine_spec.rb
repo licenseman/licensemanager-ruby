@@ -60,7 +60,7 @@ describe LicenseManager::Machine do
   describe 'test attribute "status"' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-      # validator = Petstore::EnumTest::EnumAttributeValidator.new('String', ["active", "deactivated", "unknown_default_open_api"])
+      # validator = Petstore::EnumTest::EnumAttributeValidator.new('String', ["active", "deactivated", "locked", "unknown_default_open_api"])
       # validator.allowable_values.each do |value|
       #   expect { instance.status = value }.not_to raise_error
       # end
@@ -68,6 +68,12 @@ describe LicenseManager::Machine do
   end
 
   describe 'test attribute "version"' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  describe 'test attribute "overridden_by_machine_id"' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end

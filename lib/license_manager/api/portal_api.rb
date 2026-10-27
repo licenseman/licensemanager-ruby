@@ -20,7 +20,7 @@ module LicenseManager
       @api_client = api_client
     end
     # Create a link to the customer portal
-    # Link letting the customer see their licenses and deactivate their machines in the customer portal, without signing in. Anyone with the link can, until it expires or the customer is deleted: it can't be revoked otherwise. The token also works with the API endpoints that accept customer tokens.  Links can be created while the product's customer portal is disabled, but the portal answers `404` until it's enabled, and `sendPortalLink` refuses to email them.  **Required role permission**: `portalLink:create` when called with a session, granted by the member's role. API keys aren't limited by roles.
+    # Link letting the customer see their licenses, cancel them during their money back guarantee, and deactivate their machines in the customer portal, without signing in. Anyone with the link can, until it expires or the customer is deleted: it can't be revoked otherwise. The token also works with the API endpoints that accept customer tokens.  Links can be created while the product's customer portal is disabled, but the portal answers `404` until it's enabled, and `sendPortalLink` refuses to email them.  **Required role permission**: `portalLink:create` when called with a session, granted by the member's role. API keys aren't limited by roles.
     # @param id [String] 
     # @param create_portal_link [CreatePortalLink] 
     # @param [Hash] opts the optional parameters
@@ -31,7 +31,7 @@ module LicenseManager
     end
 
     # Create a link to the customer portal
-    # Link letting the customer see their licenses and deactivate their machines in the customer portal, without signing in. Anyone with the link can, until it expires or the customer is deleted: it can&#39;t be revoked otherwise. The token also works with the API endpoints that accept customer tokens.  Links can be created while the product&#39;s customer portal is disabled, but the portal answers &#x60;404&#x60; until it&#39;s enabled, and &#x60;sendPortalLink&#x60; refuses to email them.  **Required role permission**: &#x60;portalLink:create&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
+    # Link letting the customer see their licenses, cancel them during their money back guarantee, and deactivate their machines in the customer portal, without signing in. Anyone with the link can, until it expires or the customer is deleted: it can&#39;t be revoked otherwise. The token also works with the API endpoints that accept customer tokens.  Links can be created while the product&#39;s customer portal is disabled, but the portal answers &#x60;404&#x60; until it&#39;s enabled, and &#x60;sendPortalLink&#x60; refuses to email them.  **Required role permission**: &#x60;portalLink:create&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
     # @param id [String] 
     # @param create_portal_link [CreatePortalLink] 
     # @param [Hash] opts the optional parameters

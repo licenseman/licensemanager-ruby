@@ -36,6 +36,9 @@ module LicenseManager
 
     attr_accessor :max_version
 
+    # Number of days after their creation during which customers can cancel the licenses created with this policy, from the customer portal or with `cancelLicense`. `null` when they can't.
+    attr_accessor :money_back_guarantee_days
+
     # Number of licenses following this policy.
     attr_accessor :license_count
 
@@ -55,6 +58,7 @@ module LicenseManager
         :'max_machines' => :'maxMachines',
         :'max_offline_duration_seconds' => :'maxOfflineDurationSeconds',
         :'max_version' => :'maxVersion',
+        :'money_back_guarantee_days' => :'moneyBackGuaranteeDays',
         :'license_count' => :'licenseCount',
         :'created_at' => :'createdAt',
         :'updated_at' => :'updatedAt'
@@ -83,6 +87,7 @@ module LicenseManager
         :'max_machines' => :'Integer',
         :'max_offline_duration_seconds' => :'Integer',
         :'max_version' => :'PolicyMaxVersion',
+        :'money_back_guarantee_days' => :'Integer',
         :'license_count' => :'Integer',
         :'created_at' => :'Time',
         :'updated_at' => :'Time'
@@ -95,6 +100,7 @@ module LicenseManager
         :'duration',
         :'max_machines',
         :'max_version',
+        :'money_back_guarantee_days',
       ])
     end
 
@@ -176,6 +182,12 @@ module LicenseManager
         self.max_version = attributes[:'max_version']
       else
         self.max_version = nil
+      end
+
+      if attributes.key?(:'money_back_guarantee_days')
+        self.money_back_guarantee_days = attributes[:'money_back_guarantee_days']
+      else
+        self.money_back_guarantee_days = nil
       end
 
       if attributes.key?(:'license_count')
@@ -361,6 +373,7 @@ module LicenseManager
           max_machines == o.max_machines &&
           max_offline_duration_seconds == o.max_offline_duration_seconds &&
           max_version == o.max_version &&
+          money_back_guarantee_days == o.money_back_guarantee_days &&
           license_count == o.license_count &&
           created_at == o.created_at &&
           updated_at == o.updated_at
@@ -375,7 +388,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, product_id, slug, name, is_default, duration, max_machines, max_offline_duration_seconds, max_version, license_count, created_at, updated_at].hash
+      [id, product_id, slug, name, is_default, duration, max_machines, max_offline_duration_seconds, max_version, money_back_guarantee_days, license_count, created_at, updated_at].hash
     end
 
     # Builds the object from hash

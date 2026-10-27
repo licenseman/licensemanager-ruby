@@ -18,16 +18,16 @@ module LicenseManager
     # Number of licenses of the product.
     attr_accessor :license_count
 
-    # Number of licenses that haven't expired, and that a machine validated in the last 90 days.
+    # Number of licenses that haven't expired nor were canceled, and that a machine validated in the last 90 days.
     attr_accessor :active_license_count
 
     # Number of licenses created in the last 30 days, today included, in UTC.
     attr_accessor :new_license_count
 
-    # Number of licenses expiring in the next 30 days.
+    # Number of licenses expiring in the next 30 days, canceled ones left out.
     attr_accessor :expiring_license_count
 
-    # Number of licenses that expired in the last 30 days.
+    # Number of licenses that expired in the last 30 days, canceled ones left out.
     attr_accessor :expired_license_count
 
     # Number of active machines of the licenses of the product.
@@ -36,7 +36,7 @@ module LicenseManager
     # Number of licenses with at least one active machine.
     attr_accessor :in_use_license_count
 
-    # Sum of the maximum numbers of machines of the licenses that haven't expired. Licenses without a maximum are left out.
+    # Sum of the maximum numbers of machines of the licenses that haven't expired nor were canceled. Licenses without a maximum are left out.
     attr_accessor :seat_count
 
     # Number of active machines of the licenses counted in `seatCount`, at most their maximum number of machines each.
@@ -59,6 +59,9 @@ module LicenseManager
 
     # Number of licenses of each policy created each day and each month, for the policies with licenses created over the covered months.
     attr_accessor :new_licenses_by_policy
+
+    # Cancellations of the licenses with a money back guarantee. `null` when no license of the product has one.
+    attr_accessor :cancellation
 
     # Revenue in each currency licenses were sold in, from the one with the most licenses sold. Amounts aren't converted between currencies.
     attr_accessor :revenue
@@ -90,6 +93,7 @@ module LicenseManager
         :'new_licenses_by_day' => :'newLicensesByDay',
         :'new_licenses_by_month' => :'newLicensesByMonth',
         :'new_licenses_by_policy' => :'newLicensesByPolicy',
+        :'cancellation' => :'cancellation',
         :'revenue' => :'revenue',
         :'activations_by_version' => :'activationsByVersion',
         :'active_machines_by_version' => :'activeMachinesByVersion',
@@ -125,6 +129,7 @@ module LicenseManager
         :'new_licenses_by_day' => :'Array<Integer>',
         :'new_licenses_by_month' => :'Array<Integer>',
         :'new_licenses_by_policy' => :'Array<ProductStatsNewLicensesByPolicyInner>',
+        :'cancellation' => :'CancellationStats',
         :'revenue' => :'Array<Revenue>',
         :'activations_by_version' => :'Array<ProductStatsActivationsByVersionInner>',
         :'active_machines_by_version' => :'Array<ProductStatsActiveMachinesByVersionInner>',
@@ -135,6 +140,7 @@ module LicenseManager
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'cancellation',
       ])
     end
 
@@ -262,6 +268,12 @@ module LicenseManager
         end
       else
         self.new_licenses_by_policy = nil
+      end
+
+      if attributes.key?(:'cancellation')
+        self.cancellation = attributes[:'cancellation']
+      else
+        self.cancellation = nil
       end
 
       if attributes.key?(:'revenue')
@@ -617,6 +629,7 @@ module LicenseManager
           new_licenses_by_day == o.new_licenses_by_day &&
           new_licenses_by_month == o.new_licenses_by_month &&
           new_licenses_by_policy == o.new_licenses_by_policy &&
+          cancellation == o.cancellation &&
           revenue == o.revenue &&
           activations_by_version == o.activations_by_version &&
           active_machines_by_version == o.active_machines_by_version &&
@@ -632,7 +645,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [license_count, active_license_count, new_license_count, expiring_license_count, expired_license_count, active_machine_count, in_use_license_count, seat_count, used_seat_count, full_license_count, days, months, new_licenses_by_day, new_licenses_by_month, new_licenses_by_policy, revenue, activations_by_version, active_machines_by_version, active_machines_by_platform].hash
+      [license_count, active_license_count, new_license_count, expiring_license_count, expired_license_count, active_machine_count, in_use_license_count, seat_count, used_seat_count, full_license_count, days, months, new_licenses_by_day, new_licenses_by_month, new_licenses_by_policy, cancellation, revenue, activations_by_version, active_machines_by_version, active_machines_by_platform].hash
     end
 
     # Builds the object from hash

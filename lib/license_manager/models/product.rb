@@ -29,6 +29,9 @@ module LicenseManager
 
     attr_accessor :portal
 
+    # Whether a new machine validating a license already on its max machines takes the place of the license's machine validated the longest ago, rather than being refused with `machine_limit_reached`. When the replaced machine is validated again, it takes its place back and the machine that replaced it is locked. See `validateKey`.
+    attr_accessor :auto_machine_change
+
     attr_accessor :created_at
 
     attr_accessor :updated_at
@@ -42,6 +45,7 @@ module LicenseManager
         :'is_test_from_product_id' => :'isTestFromProductId',
         :'logo_url' => :'logoUrl',
         :'portal' => :'portal',
+        :'auto_machine_change' => :'autoMachineChange',
         :'created_at' => :'createdAt',
         :'updated_at' => :'updatedAt'
       }
@@ -66,6 +70,7 @@ module LicenseManager
         :'is_test_from_product_id' => :'String',
         :'logo_url' => :'String',
         :'portal' => :'PortalSettings',
+        :'auto_machine_change' => :'Boolean',
         :'created_at' => :'Time',
         :'updated_at' => :'Time'
       }
@@ -141,6 +146,12 @@ module LicenseManager
         self.portal = nil
       end
 
+      if attributes.key?(:'auto_machine_change')
+        self.auto_machine_change = attributes[:'auto_machine_change']
+      else
+        self.auto_machine_change = nil
+      end
+
       if attributes.key?(:'created_at')
         self.created_at = attributes[:'created_at']
       else
@@ -175,6 +186,10 @@ module LicenseManager
         invalid_properties.push('invalid value for "portal", portal cannot be nil.')
       end
 
+      if @auto_machine_change.nil?
+        invalid_properties.push('invalid value for "auto_machine_change", auto_machine_change cannot be nil.')
+      end
+
       if @created_at.nil?
         invalid_properties.push('invalid value for "created_at", created_at cannot be nil.')
       end
@@ -194,6 +209,7 @@ module LicenseManager
       return false if @slug.nil?
       return false if @name.nil?
       return false if @portal.nil?
+      return false if @auto_machine_change.nil?
       return false if @created_at.nil?
       return false if @updated_at.nil?
       true
@@ -240,6 +256,16 @@ module LicenseManager
     end
 
     # Custom attribute writer method with validation
+    # @param [Object] auto_machine_change Value to be assigned
+    def auto_machine_change=(auto_machine_change)
+      if auto_machine_change.nil?
+        fail ArgumentError, 'auto_machine_change cannot be nil'
+      end
+
+      @auto_machine_change = auto_machine_change
+    end
+
+    # Custom attribute writer method with validation
     # @param [Object] created_at Value to be assigned
     def created_at=(created_at)
       if created_at.nil?
@@ -270,6 +296,7 @@ module LicenseManager
           is_test_from_product_id == o.is_test_from_product_id &&
           logo_url == o.logo_url &&
           portal == o.portal &&
+          auto_machine_change == o.auto_machine_change &&
           created_at == o.created_at &&
           updated_at == o.updated_at
     end
@@ -283,7 +310,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, slug, name, is_test_from_product_id, logo_url, portal, created_at, updated_at].hash
+      [id, slug, name, is_test_from_product_id, logo_url, portal, auto_machine_change, created_at, updated_at].hash
     end
 
     # Builds the object from hash

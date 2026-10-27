@@ -76,7 +76,7 @@ Every method is documented, with its parameters and responses, in the [`docs`](d
 
 | Class | Methods |
 | --- | --- |
-| [`LicensesApi`](docs/LicensesApi.md) | `validate_key`, `list_licenses`, `create_license`, `list_customer_licenses`, `get_license`, `delete_license`, `update_license`, `get_license_stats`, `send_license_keys`, `get_signing_key` |
+| [`LicensesApi`](docs/LicensesApi.md) | `validate_key`, `list_licenses`, `create_license`, `list_customer_licenses`, `get_license`, `delete_license`, `update_license`, `get_license_stats`, `cancel_license`, `send_license_keys`, `get_signing_key` |
 | [`PortalApi`](docs/PortalApi.md) | `get_portal`, `request_portal_link`, `create_portal_link`, `send_portal_link` |
 | [`ProductsApi`](docs/ProductsApi.md) | `list_products`, `create_product`, `get_product`, `delete_product`, `update_product`, `reset_product`, `upload_product_logo`, `delete_product_logo`, `get_product_stats` |
 | [`PoliciesApi`](docs/PoliciesApi.md) | `list_policies`, `create_policy`, `get_policy`, `delete_policy`, `update_policy` |
@@ -85,7 +85,7 @@ Every method is documented, with its parameters and responses, in the [`docs`](d
 | [`ReleasesApi`](docs/ReleasesApi.md) | `list_releases`, `create_release`, `get_release`, `delete_release`, `update_release` |
 | [`TokensApi`](docs/TokensApi.md) | `create_customer_token`, `create_license_token`, `create_machine_token` |
 | [`EventsApi`](docs/EventsApi.md) | `list_policy_events`, `list_license_events` |
-| [`IntegrationsApi`](docs/IntegrationsApi.md) | `get_stripe_integration`, `connect_stripe`, `disconnect_integration`, `check_integration`, `list_stripe_prices`, `create_stripe_mapping`, `delete_stripe_mapping`, `update_stripe_mapping` |
+| [`IntegrationsApi`](docs/IntegrationsApi.md) | `get_stripe_integration`, `connect_stripe`, `disconnect_integration`, `update_integration`, `check_integration`, `list_stripe_prices`, `create_stripe_mapping`, `delete_stripe_mapping`, `update_stripe_mapping` |
 
 ## Versioning
 

@@ -20,7 +20,7 @@ module LicenseManager
       @api_client = api_client
     end
     # Deactivate a machine
-    # The machine no longer counts as using the license, freeing its place when the license has a maximum number of machines. Validating the license key on the machine activates it again, unless the license is on its maximum number of machines by then. Deactivating a deactivated machine does nothing.  The license token `validateKey` returned to the machine isn't revoked: the application can keep running offline until it expires. Machines can't be deleted: they're deleted with their license.  **Token access**: customer, license, machine tokens with the `machine:write` permission (or the matching write one). A token reaches the machine it's scoped to, or the machines of its license or customer.  **Required role permission**: `machine:deactivate` when called with a session, granted by the member's role. API keys aren't limited by roles.
+    # The machine no longer counts as using the license, freeing its place when the license has a maximum number of machines. Validating the license key on the machine activates it again, unless the license is on its maximum number of machines by then. Deactivating a deactivated or locked machine does nothing.  The license token `validateKey` returned to the machine isn't revoked: the application can keep running offline until it expires. Machines can't be deleted: they're deleted with their license.  **Token access**: customer, license, machine tokens with the `machine:write` permission (or the matching write one). A token reaches the machine it's scoped to, or the machines of its license or customer.  **Required role permission**: `machine:deactivate` when called with a session, granted by the member's role. API keys aren't limited by roles.
     # @param id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Machine]
@@ -30,7 +30,7 @@ module LicenseManager
     end
 
     # Deactivate a machine
-    # The machine no longer counts as using the license, freeing its place when the license has a maximum number of machines. Validating the license key on the machine activates it again, unless the license is on its maximum number of machines by then. Deactivating a deactivated machine does nothing.  The license token &#x60;validateKey&#x60; returned to the machine isn&#39;t revoked: the application can keep running offline until it expires. Machines can&#39;t be deleted: they&#39;re deleted with their license.  **Token access**: customer, license, machine tokens with the &#x60;machine:write&#x60; permission (or the matching write one). A token reaches the machine it&#39;s scoped to, or the machines of its license or customer.  **Required role permission**: &#x60;machine:deactivate&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
+    # The machine no longer counts as using the license, freeing its place when the license has a maximum number of machines. Validating the license key on the machine activates it again, unless the license is on its maximum number of machines by then. Deactivating a deactivated or locked machine does nothing.  The license token &#x60;validateKey&#x60; returned to the machine isn&#39;t revoked: the application can keep running offline until it expires. Machines can&#39;t be deleted: they&#39;re deleted with their license.  **Token access**: customer, license, machine tokens with the &#x60;machine:write&#x60; permission (or the matching write one). A token reaches the machine it&#39;s scoped to, or the machines of its license or customer.  **Required role permission**: &#x60;machine:deactivate&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
     # @param id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(Machine, Integer, Hash)>] Machine data, response status code and response headers
@@ -204,7 +204,7 @@ module LicenseManager
         fail ArgumentError, 'invalid value for "opts[:"search"]" when calling MachinesApi.list_machines, the character length must be greater than or equal to 1.'
       end
 
-      allowable_values = ["active", "deactivated", "unknown_default_open_api"]
+      allowable_values = ["active", "deactivated", "locked", "unknown_default_open_api"]
       if @api_client.config.client_side_validation && opts[:'status'] && !allowable_values.include?(opts[:'status'])
         fail ArgumentError, "invalid value for \"status\", must be one of #{allowable_values}"
       end

@@ -14,6 +14,8 @@
 | **status_reason** | **String** | Why the integration isn&#39;t &#x60;active&#x60;, &#x60;null&#x60; when it is. |  |
 | **last_checked_at** | **Time** | Last time its health was checked, done every day. |  |
 | **last_event_at** | **Time** | Last time it received an event from the provider. |  |
+| **auto_refund** | **Boolean** | Whether canceling a license bought through Stripe refunds its payment. On by default, always off when &#x60;canRefund&#x60; is false. |  |
+| **can_refund** | **Boolean** | Whether the API key has the optional Refunds: Write permission, checked when connecting and every day. Without it, canceled licenses aren&#39;t refunded: refund their payments from Stripe. |  |
 | **created_at** | **Time** |  |  |
 
 ## Example
@@ -27,11 +29,13 @@ instance = LicenseManager::Integration.new(
   livemode: null,
   account_name: Acme Inc.,
   api_key_hint: rk_live_…Ab3d,
-  webhook_url: https://api.example.com/v1/webhooks/stripe/i8Fz4QnRt,
+  webhook_url: https://api.licensemanager.dev/v1/webhooks/stripe/i8Fz4QnRt,
   status: null,
   status_reason: The API key can&#39;t manage webhook endpoints: give it the Webhook Endpoints: Write permission,
   last_checked_at: null,
   last_event_at: null,
+  auto_refund: true,
+  can_refund: true,
   created_at: null
 )
 ```

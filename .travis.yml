@@ -8,4 +8,4 @@ script:
   - bundle install --path vendor/bundle
   - bundle exec rspec
   - gem build license_manager.gemspec
-  - gem install ./license_manager-0.1.1.gem
+  - gem install ./license_manager-0.2.0.gem

@@ -55,6 +55,20 @@ module LicenseManager
 
     attr_accessor :status
 
+    # End of the money back guarantee: until then, the customer can cancel the license from the customer portal, or with a token. Set from the policy's `moneyBackGuaranteeDays` when the license is created. `null` when the customer can't cancel it.
+    attr_accessor :cancellable_until
+
+    # When the license was canceled: validating its key fails since. `null` when it wasn't.
+    attr_accessor :canceled_at
+
+    attr_accessor :cancellation_reason
+
+    # Comment given when the license was canceled. `null` when there's none.
+    attr_accessor :cancellation_comment
+
+    # Id of the Stripe refund of the license's payment once it was canceled, through the Stripe integration. `null` otherwise.
+    attr_accessor :stripe_refund_id
+
     # Last time the license's settings were edited, not when its key was validated.
     attr_accessor :updated_at
 
@@ -99,6 +113,11 @@ module LicenseManager
         :'max_version' => :'maxVersion',
         :'price' => :'price',
         :'status' => :'status',
+        :'cancellable_until' => :'cancellableUntil',
+        :'canceled_at' => :'canceledAt',
+        :'cancellation_reason' => :'cancellationReason',
+        :'cancellation_comment' => :'cancellationComment',
+        :'stripe_refund_id' => :'stripeRefundId',
         :'updated_at' => :'updatedAt'
       }
     end
@@ -132,6 +151,11 @@ module LicenseManager
         :'max_version' => :'LicenseMaxVersion',
         :'price' => :'Price',
         :'status' => :'LicenseStatus',
+        :'cancellable_until' => :'Time',
+        :'canceled_at' => :'Time',
+        :'cancellation_reason' => :'CancellationReason',
+        :'cancellation_comment' => :'String',
+        :'stripe_refund_id' => :'String',
         :'updated_at' => :'Time'
       }
     end
@@ -145,6 +169,10 @@ module LicenseManager
         :'max_machines',
         :'last_activated_at',
         :'price',
+        :'cancellable_until',
+        :'canceled_at',
+        :'cancellation_comment',
+        :'stripe_refund_id',
       ])
     end
 
@@ -272,6 +300,36 @@ module LicenseManager
         self.status = nil
       end
 
+      if attributes.key?(:'cancellable_until')
+        self.cancellable_until = attributes[:'cancellable_until']
+      else
+        self.cancellable_until = nil
+      end
+
+      if attributes.key?(:'canceled_at')
+        self.canceled_at = attributes[:'canceled_at']
+      else
+        self.canceled_at = nil
+      end
+
+      if attributes.key?(:'cancellation_reason')
+        self.cancellation_reason = attributes[:'cancellation_reason']
+      else
+        self.cancellation_reason = nil
+      end
+
+      if attributes.key?(:'cancellation_comment')
+        self.cancellation_comment = attributes[:'cancellation_comment']
+      else
+        self.cancellation_comment = nil
+      end
+
+      if attributes.key?(:'stripe_refund_id')
+        self.stripe_refund_id = attributes[:'stripe_refund_id']
+      else
+        self.stripe_refund_id = nil
+      end
+
       if attributes.key?(:'updated_at')
         self.updated_at = attributes[:'updated_at']
       else
@@ -324,6 +382,10 @@ module LicenseManager
         invalid_properties.push('invalid value for "status", status cannot be nil.')
       end
 
+      if @cancellation_reason.nil?
+        invalid_properties.push('invalid value for "cancellation_reason", cancellation_reason cannot be nil.')
+      end
+
       if @updated_at.nil?
         invalid_properties.push('invalid value for "updated_at", updated_at cannot be nil.')
       end
@@ -345,6 +407,7 @@ module LicenseManager
       return false if @active_machine_count.nil?
       return false if @max_version.nil?
       return false if @status.nil?
+      return false if @cancellation_reason.nil?
       return false if @updated_at.nil?
       true
     end
@@ -450,6 +513,16 @@ module LicenseManager
     end
 
     # Custom attribute writer method with validation
+    # @param [Object] cancellation_reason Value to be assigned
+    def cancellation_reason=(cancellation_reason)
+      if cancellation_reason.nil?
+        fail ArgumentError, 'cancellation_reason cannot be nil'
+      end
+
+      @cancellation_reason = cancellation_reason
+    end
+
+    # Custom attribute writer method with validation
     # @param [Object] updated_at Value to be assigned
     def updated_at=(updated_at)
       if updated_at.nil?
@@ -480,6 +553,11 @@ module LicenseManager
           max_version == o.max_version &&
           price == o.price &&
           status == o.status &&
+          cancellable_until == o.cancellable_until &&
+          canceled_at == o.canceled_at &&
+          cancellation_reason == o.cancellation_reason &&
+          cancellation_comment == o.cancellation_comment &&
+          stripe_refund_id == o.stripe_refund_id &&
           updated_at == o.updated_at
     end
 
@@ -492,7 +570,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, product_id, policy_id, customer_id, key, created_at, expires_at, meta, stripe_payment_intent_id, max_machines, max_offline_duration_seconds, active_machine_count, last_activated_at, max_version, price, status, updated_at].hash
+      [id, product_id, policy_id, customer_id, key, created_at, expires_at, meta, stripe_payment_intent_id, max_machines, max_offline_duration_seconds, active_machine_count, last_activated_at, max_version, price, status, cancellable_until, canceled_at, cancellation_reason, cancellation_comment, stripe_refund_id, updated_at].hash
     end
 
     # Builds the object from hash

@@ -14,16 +14,22 @@ require 'date'
 require 'time'
 
 module LicenseManager
-  # Revenue of the licenses sold in one currency, each license counting on the day it was created. Licenses without a price are left out.
+  # Revenue of the licenses sold in one currency, each license counting on the day it was created. Licenses without a price are left out, and so are canceled ones, but in `canceledLicenseCount` and `canceledTotal`.
   class Revenue < ApiModelBase
     # ISO 4217 code of the currency of the revenue.
     attr_accessor :currency
 
-    # Number of licenses sold in the currency, free ones included.
+    # Number of licenses sold in the currency, free ones included, canceled ones left out.
     attr_accessor :license_count
 
-    # Sum of the prices of the licenses sold in the currency, in major units.
+    # Sum of the prices of the licenses sold in the currency, in major units, canceled ones left out.
     attr_accessor :total
+
+    # Number of canceled licenses sold in the currency.
+    attr_accessor :canceled_license_count
+
+    # Sum of the prices of the canceled licenses sold in the currency, in major units: revenue lost to cancellations.
+    attr_accessor :canceled_total
 
     # Revenue of the current month, in UTC.
     attr_accessor :this_month
@@ -49,6 +55,8 @@ module LicenseManager
         :'currency' => :'currency',
         :'license_count' => :'licenseCount',
         :'total' => :'total',
+        :'canceled_license_count' => :'canceledLicenseCount',
+        :'canceled_total' => :'canceledTotal',
         :'this_month' => :'thisMonth',
         :'last_month' => :'lastMonth',
         :'last30_days' => :'last30Days',
@@ -74,6 +82,8 @@ module LicenseManager
         :'currency' => :'String',
         :'license_count' => :'Integer',
         :'total' => :'Float',
+        :'canceled_license_count' => :'Integer',
+        :'canceled_total' => :'Float',
         :'this_month' => :'Float',
         :'last_month' => :'Float',
         :'last30_days' => :'Float',
@@ -131,6 +141,18 @@ module LicenseManager
         self.total = attributes[:'total']
       else
         self.total = nil
+      end
+
+      if attributes.key?(:'canceled_license_count')
+        self.canceled_license_count = attributes[:'canceled_license_count']
+      else
+        self.canceled_license_count = nil
+      end
+
+      if attributes.key?(:'canceled_total')
+        self.canceled_total = attributes[:'canceled_total']
+      else
+        self.canceled_total = nil
       end
 
       if attributes.key?(:'this_month')
@@ -193,6 +215,14 @@ module LicenseManager
         invalid_properties.push('invalid value for "total", total cannot be nil.')
       end
 
+      if @canceled_license_count.nil?
+        invalid_properties.push('invalid value for "canceled_license_count", canceled_license_count cannot be nil.')
+      end
+
+      if @canceled_total.nil?
+        invalid_properties.push('invalid value for "canceled_total", canceled_total cannot be nil.')
+      end
+
       if @this_month.nil?
         invalid_properties.push('invalid value for "this_month", this_month cannot be nil.')
       end
@@ -227,6 +257,8 @@ module LicenseManager
       return false if @currency.nil?
       return false if @license_count.nil?
       return false if @total.nil?
+      return false if @canceled_license_count.nil?
+      return false if @canceled_total.nil?
       return false if @this_month.nil?
       return false if @last_month.nil?
       return false if @last30_days.nil?
@@ -264,6 +296,26 @@ module LicenseManager
       end
 
       @total = total
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] canceled_license_count Value to be assigned
+    def canceled_license_count=(canceled_license_count)
+      if canceled_license_count.nil?
+        fail ArgumentError, 'canceled_license_count cannot be nil'
+      end
+
+      @canceled_license_count = canceled_license_count
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] canceled_total Value to be assigned
+    def canceled_total=(canceled_total)
+      if canceled_total.nil?
+        fail ArgumentError, 'canceled_total cannot be nil'
+      end
+
+      @canceled_total = canceled_total
     end
 
     # Custom attribute writer method with validation
@@ -334,6 +386,8 @@ module LicenseManager
           currency == o.currency &&
           license_count == o.license_count &&
           total == o.total &&
+          canceled_license_count == o.canceled_license_count &&
+          canceled_total == o.canceled_total &&
           this_month == o.this_month &&
           last_month == o.last_month &&
           last30_days == o.last30_days &&
@@ -351,7 +405,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [currency, license_count, total, this_month, last_month, last30_days, by_day, by_month, by_policy].hash
+      [currency, license_count, total, canceled_license_count, canceled_total, this_month, last_month, last30_days, by_day, by_month, by_policy].hash
     end
 
     # Builds the object from hash

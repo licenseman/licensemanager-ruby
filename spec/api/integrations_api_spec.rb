@@ -118,6 +118,19 @@ describe 'IntegrationsApi' do
     end
   end
 
+  # unit tests for update_integration
+  # Update an integration
+  # Changes the settings of the integration, for every product of its mode. Doesn&#39;t accept tokens: only API keys and sessions.  **Required role permission**: &#x60;integration:update&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
+  # @param id 
+  # @param update_integration 
+  # @param [Hash] opts the optional parameters
+  # @return [Integration]
+  describe 'update_integration test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   # unit tests for update_stripe_mapping
   # Change the policy of a mapping
   # Only affects the licenses created afterwards. Doesn&#39;t accept tokens: only API keys and sessions.  **Required role permission**: &#x60;integration:update&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
