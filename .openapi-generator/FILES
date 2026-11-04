@@ -48,6 +48,7 @@ docs/IntegrationMappingRecurring.md
 docs/IntegrationStatus.md
 docs/IntegrationsApi.md
 docs/License.md
+docs/LicenseCustomer.md
 docs/LicenseList.md
 docs/LicenseMaxVersion.md
 docs/LicenseMaxVersionInput.md
@@ -177,6 +178,7 @@ lib/license_manager/models/integration_mapping.rb
 lib/license_manager/models/integration_mapping_recurring.rb
 lib/license_manager/models/integration_status.rb
 lib/license_manager/models/license.rb
+lib/license_manager/models/license_customer.rb
 lib/license_manager/models/license_list.rb
 lib/license_manager/models/license_max_version.rb
 lib/license_manager/models/license_max_version_input.rb
@@ -294,6 +296,7 @@ spec/models/integration_mapping_recurring_spec.rb
 spec/models/integration_mapping_spec.rb
 spec/models/integration_spec.rb
 spec/models/integration_status_spec.rb
+spec/models/license_customer_spec.rb
 spec/models/license_list_spec.rb
 spec/models/license_max_version_input_spec.rb
 spec/models/license_max_version_spec.rb

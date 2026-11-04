@@ -479,7 +479,7 @@ opts = {
   page: 1, # Integer | Page to return. Pages are numbered from 1: `1` is the first page. A page past the last one returns an empty `data`, not an error. Defaults to `1`.
   page_size: 20, # Integer | Maximum number of items per page, from 1 to 100. Every page holds this many items except the last one, which can hold fewer. Defaults to `20`.
   sort: 'key', # String | Field to sort by, prefixed with `-` for descending order. Defaults to `-createdAt`.
-  search: 'X9ZPA', # String | Case-insensitive text the key contains.
+  search: 'X9ZPA', # String | Case-insensitive text the key or the email of the customer contains.
   key: '7KQ2M-X9ZPA-H4TRC-WN6EY-B3JDF', # String | Only returns the license with this exact key, case included. Keys of test products start with `TEST-`.
   policy_id: 'p4Rt8LmQ', # String | Only returns the licenses following this policy.
   machine_version: '2.3.1', # String | Only returns the licenses with at least one active machine running this version of the product.
@@ -534,7 +534,7 @@ end
 | **page** | **Integer** | Page to return. Pages are numbered from 1: &#x60;1&#x60; is the first page. A page past the last one returns an empty &#x60;data&#x60;, not an error. Defaults to &#x60;1&#x60;. | [optional][default to 1] |
 | **page_size** | **Integer** | Maximum number of items per page, from 1 to 100. Every page holds this many items except the last one, which can hold fewer. Defaults to &#x60;20&#x60;. | [optional][default to 20] |
 | **sort** | **String** | Field to sort by, prefixed with &#x60;-&#x60; for descending order. Defaults to &#x60;-createdAt&#x60;. | [optional][default to &#39;-createdAt&#39;] |
-| **search** | **String** | Case-insensitive text the key contains. | [optional] |
+| **search** | **String** | Case-insensitive text the key or the email of the customer contains. | [optional] |
 | **key** | **String** | Only returns the license with this exact key, case included. Keys of test products start with &#x60;TEST-&#x60;. | [optional] |
 | **policy_id** | **String** | Only returns the licenses following this policy. | [optional] |
 | **machine_version** | **String** | Only returns the licenses with at least one active machine running this version of the product. | [optional] |
@@ -594,7 +594,7 @@ opts = {
   page: 1, # Integer | Page to return. Pages are numbered from 1: `1` is the first page. A page past the last one returns an empty `data`, not an error. Defaults to `1`.
   page_size: 20, # Integer | Maximum number of items per page, from 1 to 100. Every page holds this many items except the last one, which can hold fewer. Defaults to `20`.
   sort: 'key', # String | Field to sort by, prefixed with `-` for descending order. Defaults to `-createdAt`.
-  search: 'X9ZPA', # String | Case-insensitive text the key contains.
+  search: 'X9ZPA', # String | Case-insensitive text the key or the email of the customer contains.
   key: '7KQ2M-X9ZPA-H4TRC-WN6EY-B3JDF', # String | Only returns the license with this exact key, case included. Keys of test products start with `TEST-`.
   policy_id: 'p4Rt8LmQ', # String | Only returns the licenses following this policy.
   customer_id: 'c9Wd3RtE', # String | Only returns the licenses of this customer.
@@ -650,7 +650,7 @@ end
 | **page** | **Integer** | Page to return. Pages are numbered from 1: &#x60;1&#x60; is the first page. A page past the last one returns an empty &#x60;data&#x60;, not an error. Defaults to &#x60;1&#x60;. | [optional][default to 1] |
 | **page_size** | **Integer** | Maximum number of items per page, from 1 to 100. Every page holds this many items except the last one, which can hold fewer. Defaults to &#x60;20&#x60;. | [optional][default to 20] |
 | **sort** | **String** | Field to sort by, prefixed with &#x60;-&#x60; for descending order. Defaults to &#x60;-createdAt&#x60;. | [optional][default to &#39;-createdAt&#39;] |
-| **search** | **String** | Case-insensitive text the key contains. | [optional] |
+| **search** | **String** | Case-insensitive text the key or the email of the customer contains. | [optional] |
 | **key** | **String** | Only returns the license with this exact key, case included. Keys of test products start with &#x60;TEST-&#x60;. | [optional] |
 | **policy_id** | **String** | Only returns the licenses following this policy. | [optional] |
 | **customer_id** | **String** | Only returns the licenses of this customer. | [optional] |

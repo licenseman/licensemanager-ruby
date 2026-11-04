@@ -420,7 +420,7 @@ module LicenseManager
     # @option opts [Integer] :page Page to return. Pages are numbered from 1: &#x60;1&#x60; is the first page. A page past the last one returns an empty &#x60;data&#x60;, not an error. Defaults to &#x60;1&#x60;. (default to 1)
     # @option opts [Integer] :page_size Maximum number of items per page, from 1 to 100. Every page holds this many items except the last one, which can hold fewer. Defaults to &#x60;20&#x60;. (default to 20)
     # @option opts [String] :sort Field to sort by, prefixed with &#x60;-&#x60; for descending order. Defaults to &#x60;-createdAt&#x60;. (default to '-createdAt')
-    # @option opts [String] :search Case-insensitive text the key contains.
+    # @option opts [String] :search Case-insensitive text the key or the email of the customer contains.
     # @option opts [String] :key Only returns the license with this exact key, case included. Keys of test products start with &#x60;TEST-&#x60;.
     # @option opts [String] :policy_id Only returns the licenses following this policy.
     # @option opts [String] :machine_version Only returns the licenses with at least one active machine running this version of the product.
@@ -451,7 +451,7 @@ module LicenseManager
     # @option opts [Integer] :page Page to return. Pages are numbered from 1: &#x60;1&#x60; is the first page. A page past the last one returns an empty &#x60;data&#x60;, not an error. Defaults to &#x60;1&#x60;. (default to 1)
     # @option opts [Integer] :page_size Maximum number of items per page, from 1 to 100. Every page holds this many items except the last one, which can hold fewer. Defaults to &#x60;20&#x60;. (default to 20)
     # @option opts [String] :sort Field to sort by, prefixed with &#x60;-&#x60; for descending order. Defaults to &#x60;-createdAt&#x60;. (default to '-createdAt')
-    # @option opts [String] :search Case-insensitive text the key contains.
+    # @option opts [String] :search Case-insensitive text the key or the email of the customer contains.
     # @option opts [String] :key Only returns the license with this exact key, case included. Keys of test products start with &#x60;TEST-&#x60;.
     # @option opts [String] :policy_id Only returns the licenses following this policy.
     # @option opts [String] :machine_version Only returns the licenses with at least one active machine running this version of the product.
@@ -582,7 +582,7 @@ module LicenseManager
     # @option opts [Integer] :page Page to return. Pages are numbered from 1: &#x60;1&#x60; is the first page. A page past the last one returns an empty &#x60;data&#x60;, not an error. Defaults to &#x60;1&#x60;. (default to 1)
     # @option opts [Integer] :page_size Maximum number of items per page, from 1 to 100. Every page holds this many items except the last one, which can hold fewer. Defaults to &#x60;20&#x60;. (default to 20)
     # @option opts [String] :sort Field to sort by, prefixed with &#x60;-&#x60; for descending order. Defaults to &#x60;-createdAt&#x60;. (default to '-createdAt')
-    # @option opts [String] :search Case-insensitive text the key contains.
+    # @option opts [String] :search Case-insensitive text the key or the email of the customer contains.
     # @option opts [String] :key Only returns the license with this exact key, case included. Keys of test products start with &#x60;TEST-&#x60;.
     # @option opts [String] :policy_id Only returns the licenses following this policy.
     # @option opts [String] :customer_id Only returns the licenses of this customer.
@@ -614,7 +614,7 @@ module LicenseManager
     # @option opts [Integer] :page Page to return. Pages are numbered from 1: &#x60;1&#x60; is the first page. A page past the last one returns an empty &#x60;data&#x60;, not an error. Defaults to &#x60;1&#x60;. (default to 1)
     # @option opts [Integer] :page_size Maximum number of items per page, from 1 to 100. Every page holds this many items except the last one, which can hold fewer. Defaults to &#x60;20&#x60;. (default to 20)
     # @option opts [String] :sort Field to sort by, prefixed with &#x60;-&#x60; for descending order. Defaults to &#x60;-createdAt&#x60;. (default to '-createdAt')
-    # @option opts [String] :search Case-insensitive text the key contains.
+    # @option opts [String] :search Case-insensitive text the key or the email of the customer contains.
     # @option opts [String] :key Only returns the license with this exact key, case included. Keys of test products start with &#x60;TEST-&#x60;.
     # @option opts [String] :policy_id Only returns the licenses following this policy.
     # @option opts [String] :customer_id Only returns the licenses of this customer.

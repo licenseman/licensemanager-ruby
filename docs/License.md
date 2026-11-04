@@ -8,6 +8,7 @@
 | **product_id** | **String** |  |  |
 | **policy_id** | **String** |  |  |
 | **customer_id** | **String** |  |  |
+| **customer** | [**LicenseCustomer**](LicenseCustomer.md) |  |  |
 | **key** | **String** | Unique within the product. Case sensitive: &#x60;validateKey&#x60; compares keys exactly. |  |
 | **created_at** | **Time** |  |  |
 | **expires_at** | **Time** | &#x60;null&#x60; when the license never expires. |  |
@@ -38,6 +39,7 @@ instance = LicenseManager::License.new(
   product_id: x7Kp2QaZ,
   policy_id: p4Rt8LmQ,
   customer_id: c9Wd3RtE,
+  customer: null,
   key: 7KQ2M-X9ZPA-H4TRC-WN6EY-B3JDF,
   created_at: 2026-01-15T09:30:00.000Z,
   expires_at: 2027-01-15T09:30:00.000Z,

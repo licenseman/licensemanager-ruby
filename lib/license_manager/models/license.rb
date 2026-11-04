@@ -23,6 +23,8 @@ module LicenseManager
 
     attr_accessor :customer_id
 
+    attr_accessor :customer
+
     # Unique within the product. Case sensitive: `validateKey` compares keys exactly.
     attr_accessor :key
 
@@ -103,6 +105,7 @@ module LicenseManager
         :'product_id' => :'productId',
         :'policy_id' => :'policyId',
         :'customer_id' => :'customerId',
+        :'customer' => :'customer',
         :'key' => :'key',
         :'created_at' => :'createdAt',
         :'expires_at' => :'expiresAt',
@@ -142,6 +145,7 @@ module LicenseManager
         :'product_id' => :'String',
         :'policy_id' => :'String',
         :'customer_id' => :'String',
+        :'customer' => :'LicenseCustomer',
         :'key' => :'String',
         :'created_at' => :'Time',
         :'expires_at' => :'Time',
@@ -229,6 +233,12 @@ module LicenseManager
         self.customer_id = attributes[:'customer_id']
       else
         self.customer_id = nil
+      end
+
+      if attributes.key?(:'customer')
+        self.customer = attributes[:'customer']
+      else
+        self.customer = nil
       end
 
       if attributes.key?(:'key')
@@ -369,6 +379,10 @@ module LicenseManager
         invalid_properties.push('invalid value for "customer_id", customer_id cannot be nil.')
       end
 
+      if @customer.nil?
+        invalid_properties.push('invalid value for "customer", customer cannot be nil.')
+      end
+
       if @key.nil?
         invalid_properties.push('invalid value for "key", key cannot be nil.')
       end
@@ -412,6 +426,7 @@ module LicenseManager
       return false if @product_id.nil?
       return false if @policy_id.nil?
       return false if @customer_id.nil?
+      return false if @customer.nil?
       return false if @key.nil?
       return false if @created_at.nil?
       return false if @max_offline_duration_seconds.nil?
@@ -461,6 +476,16 @@ module LicenseManager
       end
 
       @customer_id = customer_id
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] customer Value to be assigned
+    def customer=(customer)
+      if customer.nil?
+        fail ArgumentError, 'customer cannot be nil'
+      end
+
+      @customer = customer
     end
 
     # Custom attribute writer method with validation
@@ -552,6 +577,7 @@ module LicenseManager
           product_id == o.product_id &&
           policy_id == o.policy_id &&
           customer_id == o.customer_id &&
+          customer == o.customer &&
           key == o.key &&
           created_at == o.created_at &&
           expires_at == o.expires_at &&
@@ -582,7 +608,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, product_id, policy_id, customer_id, key, created_at, expires_at, meta, stripe_payment_intent_id, max_machines, max_offline_duration_seconds, active_machine_count, last_activated_at, max_version, price, status, cancellable_until, canceled_at, cancellation_reason, subscription, cancellation_comment, stripe_refund_id, updated_at].hash
+      [id, product_id, policy_id, customer_id, customer, key, created_at, expires_at, meta, stripe_payment_intent_id, max_machines, max_offline_duration_seconds, active_machine_count, last_activated_at, max_version, price, status, cancellable_until, canceled_at, cancellation_reason, subscription, cancellation_comment, stripe_refund_id, updated_at].hash
     end
 
     # Builds the object from hash
