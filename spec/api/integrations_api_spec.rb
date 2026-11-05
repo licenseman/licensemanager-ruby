@@ -32,6 +32,18 @@ describe 'IntegrationsApi' do
     end
   end
 
+  # unit tests for authorize_slack
+  # Start connecting a Slack channel
+  # Returns the URL of Slack&#39;s consent screen, where the user picks the channel getting the product&#39;s notifications. Slack then redirects to the app&#39;s integrations page. Doesn&#39;t accept tokens: only API keys and sessions.  **Required role permission**: &#x60;integration:create&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
+  # @param product_id 
+  # @param [Hash] opts the optional parameters
+  # @return [SlackAuthorize]
+  describe 'authorize_slack test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   # unit tests for check_integration
   # Check an integration
   # Checks right away, as done every day, that the API key still works and can manage the webhook endpoint, which is pointed at the server&#39;s webhook URL again (or created again when it was deleted). Updates the status. Doesn&#39;t accept tokens: only API keys and sessions.  **Required role permission**: &#x60;integration:update&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
@@ -70,6 +82,18 @@ describe 'IntegrationsApi' do
     end
   end
 
+  # unit tests for delete_slack_connection
+  # Remove a Slack connection
+  # Stops posting to the channel and revokes the installation&#39;s token in Slack. Doesn&#39;t accept tokens: only API keys and sessions.  **Required role permission**: &#x60;integration:delete&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @return [nil]
+  describe 'delete_slack_connection test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   # unit tests for delete_stripe_mapping
   # Delete a mapping
   # Paying the price no longer creates licenses. The licenses it created stay. Doesn&#39;t accept tokens: only API keys and sessions.  **Required role permission**: &#x60;integration:update&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
@@ -89,6 +113,18 @@ describe 'IntegrationsApi' do
   # @param [Hash] opts the optional parameters
   # @return [nil]
   describe 'disconnect_integration test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for get_slack_integration
+  # Get the Slack integration of a product
+  # Slack channels getting notifications about the product&#39;s licenses: purchases, renewals, failed payments and cancellations. Doesn&#39;t accept tokens: only API keys and sessions.
+  # @param product_id 
+  # @param [Hash] opts the optional parameters
+  # @return [SlackIntegration]
+  describe 'get_slack_integration test' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end
@@ -118,6 +154,18 @@ describe 'IntegrationsApi' do
     end
   end
 
+  # unit tests for test_slack_connection
+  # Send a test message to a Slack channel
+  # Posts a message to the channel, to check it gets the notifications. Marks the connection &#x60;revoked&#x60; when Slack says it won&#39;t work again. Doesn&#39;t accept tokens: only API keys and sessions.  **Required role permission**: &#x60;integration:update&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @return [SlackConnection]
+  describe 'test_slack_connection test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   # unit tests for update_integration
   # Update an integration
   # Changes the settings of the integration, for every product of its mode. Doesn&#39;t accept tokens: only API keys and sessions.  **Required role permission**: &#x60;integration:update&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
@@ -126,6 +174,19 @@ describe 'IntegrationsApi' do
   # @param [Hash] opts the optional parameters
   # @return [Integration]
   describe 'update_integration test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for update_slack_connection
+  # Update a Slack connection
+  # Changes the notifications the channel gets. Doesn&#39;t accept tokens: only API keys and sessions.  **Required role permission**: &#x60;integration:update&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
+  # @param id 
+  # @param update_slack_connection 
+  # @param [Hash] opts the optional parameters
+  # @return [SlackConnection]
+  describe 'update_slack_connection test' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end

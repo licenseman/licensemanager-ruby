@@ -19,6 +19,69 @@ module LicenseManager
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
+    # Start connecting a Slack channel
+    # Returns the URL of Slack's consent screen, where the user picks the channel getting the product's notifications. Slack then redirects to the app's integrations page. Doesn't accept tokens: only API keys and sessions.  **Required role permission**: `integration:create` when called with a session, granted by the member's role. API keys aren't limited by roles.
+    # @param product_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [SlackAuthorize]
+    def authorize_slack(product_id, opts = {})
+      data, _status_code, _headers = authorize_slack_with_http_info(product_id, opts)
+      data
+    end
+
+    # Start connecting a Slack channel
+    # Returns the URL of Slack&#39;s consent screen, where the user picks the channel getting the product&#39;s notifications. Slack then redirects to the app&#39;s integrations page. Doesn&#39;t accept tokens: only API keys and sessions.  **Required role permission**: &#x60;integration:create&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
+    # @param product_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(SlackAuthorize, Integer, Hash)>] SlackAuthorize data, response status code and response headers
+    def authorize_slack_with_http_info(product_id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: IntegrationsApi.authorize_slack ...'
+      end
+      # verify the required parameter 'product_id' is set
+      if @api_client.config.client_side_validation && product_id.nil?
+        fail ArgumentError, "Missing the required parameter 'product_id' when calling IntegrationsApi.authorize_slack"
+      end
+      # resource path
+      local_var_path = '/v1/products/{productId}/integrations/slack/authorize'.sub('{productId}', CGI.escape(product_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'SlackAuthorize'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['apiKey']
+
+      new_options = opts.merge(
+        :operation => :"IntegrationsApi.authorize_slack",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: IntegrationsApi#authorize_slack\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Check an integration
     # Checks right away, as done every day, that the API key still works and can manage the webhook endpoint, which is pointed at the server's webhook URL again (or created again when it was deleted). Updates the status. Doesn't accept tokens: only API keys and sessions.  **Required role permission**: `integration:update` when called with a session, granted by the member's role. API keys aren't limited by roles.
     # @param id [String] 
@@ -230,6 +293,69 @@ module LicenseManager
       return data, status_code, headers
     end
 
+    # Remove a Slack connection
+    # Stops posting to the channel and revokes the installation's token in Slack. Doesn't accept tokens: only API keys and sessions.  **Required role permission**: `integration:delete` when called with a session, granted by the member's role. API keys aren't limited by roles.
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [nil]
+    def delete_slack_connection(id, opts = {})
+      delete_slack_connection_with_http_info(id, opts)
+      nil
+    end
+
+    # Remove a Slack connection
+    # Stops posting to the channel and revokes the installation&#39;s token in Slack. Doesn&#39;t accept tokens: only API keys and sessions.  **Required role permission**: &#x60;integration:delete&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    def delete_slack_connection_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: IntegrationsApi.delete_slack_connection ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling IntegrationsApi.delete_slack_connection"
+      end
+      # resource path
+      local_var_path = '/v1/slack-connections/{id}'.sub('{id}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type]
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['apiKey']
+
+      new_options = opts.merge(
+        :operation => :"IntegrationsApi.delete_slack_connection",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: IntegrationsApi#delete_slack_connection\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Delete a mapping
     # Paying the price no longer creates licenses. The licenses it created stay. Doesn't accept tokens: only API keys and sessions.  **Required role permission**: `integration:update` when called with a session, granted by the member's role. API keys aren't limited by roles.
     # @param id [String] 
@@ -352,6 +478,69 @@ module LicenseManager
       data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: IntegrationsApi#disconnect_integration\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Get the Slack integration of a product
+    # Slack channels getting notifications about the product's licenses: purchases, renewals, failed payments and cancellations. Doesn't accept tokens: only API keys and sessions.
+    # @param product_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [SlackIntegration]
+    def get_slack_integration(product_id, opts = {})
+      data, _status_code, _headers = get_slack_integration_with_http_info(product_id, opts)
+      data
+    end
+
+    # Get the Slack integration of a product
+    # Slack channels getting notifications about the product&#39;s licenses: purchases, renewals, failed payments and cancellations. Doesn&#39;t accept tokens: only API keys and sessions.
+    # @param product_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(SlackIntegration, Integer, Hash)>] SlackIntegration data, response status code and response headers
+    def get_slack_integration_with_http_info(product_id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: IntegrationsApi.get_slack_integration ...'
+      end
+      # verify the required parameter 'product_id' is set
+      if @api_client.config.client_side_validation && product_id.nil?
+        fail ArgumentError, "Missing the required parameter 'product_id' when calling IntegrationsApi.get_slack_integration"
+      end
+      # resource path
+      local_var_path = '/v1/products/{productId}/integrations/slack'.sub('{productId}', CGI.escape(product_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'SlackIntegration'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['apiKey']
+
+      new_options = opts.merge(
+        :operation => :"IntegrationsApi.get_slack_integration",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: IntegrationsApi#get_slack_integration\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -482,6 +671,69 @@ module LicenseManager
       return data, status_code, headers
     end
 
+    # Send a test message to a Slack channel
+    # Posts a message to the channel, to check it gets the notifications. Marks the connection `revoked` when Slack says it won't work again. Doesn't accept tokens: only API keys and sessions.  **Required role permission**: `integration:update` when called with a session, granted by the member's role. API keys aren't limited by roles.
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [SlackConnection]
+    def test_slack_connection(id, opts = {})
+      data, _status_code, _headers = test_slack_connection_with_http_info(id, opts)
+      data
+    end
+
+    # Send a test message to a Slack channel
+    # Posts a message to the channel, to check it gets the notifications. Marks the connection &#x60;revoked&#x60; when Slack says it won&#39;t work again. Doesn&#39;t accept tokens: only API keys and sessions.  **Required role permission**: &#x60;integration:update&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(SlackConnection, Integer, Hash)>] SlackConnection data, response status code and response headers
+    def test_slack_connection_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: IntegrationsApi.test_slack_connection ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling IntegrationsApi.test_slack_connection"
+      end
+      # resource path
+      local_var_path = '/v1/slack-connections/{id}/test'.sub('{id}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'SlackConnection'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['apiKey']
+
+      new_options = opts.merge(
+        :operation => :"IntegrationsApi.test_slack_connection",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: IntegrationsApi#test_slack_connection\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Update an integration
     # Changes the settings of the integration, for every product of its mode. Doesn't accept tokens: only API keys and sessions.  **Required role permission**: `integration:update` when called with a session, granted by the member's role. API keys aren't limited by roles.
     # @param id [String] 
@@ -552,6 +804,80 @@ module LicenseManager
       data, status_code, headers = @api_client.call_api(:PATCH, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: IntegrationsApi#update_integration\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Update a Slack connection
+    # Changes the notifications the channel gets. Doesn't accept tokens: only API keys and sessions.  **Required role permission**: `integration:update` when called with a session, granted by the member's role. API keys aren't limited by roles.
+    # @param id [String] 
+    # @param update_slack_connection [UpdateSlackConnection] 
+    # @param [Hash] opts the optional parameters
+    # @return [SlackConnection]
+    def update_slack_connection(id, update_slack_connection, opts = {})
+      data, _status_code, _headers = update_slack_connection_with_http_info(id, update_slack_connection, opts)
+      data
+    end
+
+    # Update a Slack connection
+    # Changes the notifications the channel gets. Doesn&#39;t accept tokens: only API keys and sessions.  **Required role permission**: &#x60;integration:update&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
+    # @param id [String] 
+    # @param update_slack_connection [UpdateSlackConnection] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(SlackConnection, Integer, Hash)>] SlackConnection data, response status code and response headers
+    def update_slack_connection_with_http_info(id, update_slack_connection, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: IntegrationsApi.update_slack_connection ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling IntegrationsApi.update_slack_connection"
+      end
+      # verify the required parameter 'update_slack_connection' is set
+      if @api_client.config.client_side_validation && update_slack_connection.nil?
+        fail ArgumentError, "Missing the required parameter 'update_slack_connection' when calling IntegrationsApi.update_slack_connection"
+      end
+      # resource path
+      local_var_path = '/v1/slack-connections/{id}'.sub('{id}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(update_slack_connection)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'SlackConnection'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['apiKey']
+
+      new_options = opts.merge(
+        :operation => :"IntegrationsApi.update_slack_connection",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PATCH, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: IntegrationsApi#update_slack_connection\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end

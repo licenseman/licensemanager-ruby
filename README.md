@@ -85,7 +85,7 @@ Every method is documented, with its parameters and responses, in the [`docs`](d
 | [`ReleasesApi`](docs/ReleasesApi.md) | `list_releases`, `create_release`, `get_release`, `delete_release`, `update_release` |
 | [`TokensApi`](docs/TokensApi.md) | `create_customer_token`, `create_license_token`, `create_machine_token` |
 | [`EventsApi`](docs/EventsApi.md) | `list_policy_events`, `list_license_events` |
-| [`IntegrationsApi`](docs/IntegrationsApi.md) | `get_stripe_integration`, `connect_stripe`, `disconnect_integration`, `update_integration`, `check_integration`, `list_stripe_prices`, `create_stripe_mapping`, `delete_stripe_mapping`, `update_stripe_mapping` |
+| [`IntegrationsApi`](docs/IntegrationsApi.md) | `get_stripe_integration`, `connect_stripe`, `disconnect_integration`, `update_integration`, `check_integration`, `list_stripe_prices`, `create_stripe_mapping`, `delete_stripe_mapping`, `update_stripe_mapping`, `get_slack_integration`, `authorize_slack`, `delete_slack_connection`, `update_slack_connection`, `test_slack_connection` |
 
 ## Versioning
 

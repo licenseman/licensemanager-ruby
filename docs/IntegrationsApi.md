@@ -4,15 +4,91 @@ All URIs are relative to *https://api.licensemanager.dev*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
+| [**authorize_slack**](IntegrationsApi.md#authorize_slack) | **POST** /v1/products/{productId}/integrations/slack/authorize | Start connecting a Slack channel |
 | [**check_integration**](IntegrationsApi.md#check_integration) | **POST** /v1/integrations/{id}/check | Check an integration |
 | [**connect_stripe**](IntegrationsApi.md#connect_stripe) | **PUT** /v1/products/{productId}/integrations/stripe | Connect Stripe |
 | [**create_stripe_mapping**](IntegrationsApi.md#create_stripe_mapping) | **POST** /v1/products/{productId}/integrations/stripe/mappings | Map a Stripe price to a policy |
+| [**delete_slack_connection**](IntegrationsApi.md#delete_slack_connection) | **DELETE** /v1/slack-connections/{id} | Remove a Slack connection |
 | [**delete_stripe_mapping**](IntegrationsApi.md#delete_stripe_mapping) | **DELETE** /v1/integration-mappings/{id} | Delete a mapping |
 | [**disconnect_integration**](IntegrationsApi.md#disconnect_integration) | **DELETE** /v1/integrations/{id} | Disconnect an integration |
+| [**get_slack_integration**](IntegrationsApi.md#get_slack_integration) | **GET** /v1/products/{productId}/integrations/slack | Get the Slack integration of a product |
 | [**get_stripe_integration**](IntegrationsApi.md#get_stripe_integration) | **GET** /v1/products/{productId}/integrations/stripe | Get the Stripe integration of a product |
 | [**list_stripe_prices**](IntegrationsApi.md#list_stripe_prices) | **GET** /v1/integrations/{id}/stripe/prices | List the Stripe prices of an integration |
+| [**test_slack_connection**](IntegrationsApi.md#test_slack_connection) | **POST** /v1/slack-connections/{id}/test | Send a test message to a Slack channel |
 | [**update_integration**](IntegrationsApi.md#update_integration) | **PATCH** /v1/integrations/{id} | Update an integration |
+| [**update_slack_connection**](IntegrationsApi.md#update_slack_connection) | **PATCH** /v1/slack-connections/{id} | Update a Slack connection |
 | [**update_stripe_mapping**](IntegrationsApi.md#update_stripe_mapping) | **PATCH** /v1/integration-mappings/{id} | Change the policy of a mapping |
+
+
+## authorize_slack
+
+> <SlackAuthorize> authorize_slack(product_id)
+
+Start connecting a Slack channel
+
+Returns the URL of Slack's consent screen, where the user picks the channel getting the product's notifications. Slack then redirects to the app's integrations page. Doesn't accept tokens: only API keys and sessions.  **Required role permission**: `integration:create` when called with a session, granted by the member's role. API keys aren't limited by roles.
+
+### Examples
+
+```ruby
+require 'time'
+require 'license_manager'
+# setup authorization
+LicenseManager.configure do |config|
+  # Configure API key authorization: apiKey
+  config.api_key['x-api-key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['x-api-key'] = 'Bearer'
+end
+
+api_instance = LicenseManager::IntegrationsApi.new
+product_id = 'x7Kp2QaZ' # String | 
+
+begin
+  # Start connecting a Slack channel
+  result = api_instance.authorize_slack(product_id)
+  p result
+rescue LicenseManager::ApiError => e
+  puts "Error when calling IntegrationsApi->authorize_slack: #{e}"
+end
+```
+
+#### Using the authorize_slack_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<SlackAuthorize>, Integer, Hash)> authorize_slack_with_http_info(product_id)
+
+```ruby
+begin
+  # Start connecting a Slack channel
+  data, status_code, headers = api_instance.authorize_slack_with_http_info(product_id)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <SlackAuthorize>
+rescue LicenseManager::ApiError => e
+  puts "Error when calling IntegrationsApi->authorize_slack_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **product_id** | **String** |  |  |
+
+### Return type
+
+[**SlackAuthorize**](SlackAuthorize.md)
+
+### Authorization
+
+[apiKey](../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 
 ## check_integration
@@ -232,6 +308,76 @@ end
 - **Accept**: application/json
 
 
+## delete_slack_connection
+
+> delete_slack_connection(id)
+
+Remove a Slack connection
+
+Stops posting to the channel and revokes the installation's token in Slack. Doesn't accept tokens: only API keys and sessions.  **Required role permission**: `integration:delete` when called with a session, granted by the member's role. API keys aren't limited by roles.
+
+### Examples
+
+```ruby
+require 'time'
+require 'license_manager'
+# setup authorization
+LicenseManager.configure do |config|
+  # Configure API key authorization: apiKey
+  config.api_key['x-api-key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['x-api-key'] = 'Bearer'
+end
+
+api_instance = LicenseManager::IntegrationsApi.new
+id = 's4Hq8ZpLm' # String | 
+
+begin
+  # Remove a Slack connection
+  api_instance.delete_slack_connection(id)
+rescue LicenseManager::ApiError => e
+  puts "Error when calling IntegrationsApi->delete_slack_connection: #{e}"
+end
+```
+
+#### Using the delete_slack_connection_with_http_info variant
+
+This returns an Array which contains the response data (`nil` in this case), status code and headers.
+
+> <Array(nil, Integer, Hash)> delete_slack_connection_with_http_info(id)
+
+```ruby
+begin
+  # Remove a Slack connection
+  data, status_code, headers = api_instance.delete_slack_connection_with_http_info(id)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => nil
+rescue LicenseManager::ApiError => e
+  puts "Error when calling IntegrationsApi->delete_slack_connection_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+
+### Return type
+
+nil (empty response body)
+
+### Authorization
+
+[apiKey](../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
 ## delete_stripe_mapping
 
 > delete_stripe_mapping(id)
@@ -361,6 +507,77 @@ end
 ### Return type
 
 nil (empty response body)
+
+### Authorization
+
+[apiKey](../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## get_slack_integration
+
+> <SlackIntegration> get_slack_integration(product_id)
+
+Get the Slack integration of a product
+
+Slack channels getting notifications about the product's licenses: purchases, renewals, failed payments and cancellations. Doesn't accept tokens: only API keys and sessions.
+
+### Examples
+
+```ruby
+require 'time'
+require 'license_manager'
+# setup authorization
+LicenseManager.configure do |config|
+  # Configure API key authorization: apiKey
+  config.api_key['x-api-key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['x-api-key'] = 'Bearer'
+end
+
+api_instance = LicenseManager::IntegrationsApi.new
+product_id = 'x7Kp2QaZ' # String | 
+
+begin
+  # Get the Slack integration of a product
+  result = api_instance.get_slack_integration(product_id)
+  p result
+rescue LicenseManager::ApiError => e
+  puts "Error when calling IntegrationsApi->get_slack_integration: #{e}"
+end
+```
+
+#### Using the get_slack_integration_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<SlackIntegration>, Integer, Hash)> get_slack_integration_with_http_info(product_id)
+
+```ruby
+begin
+  # Get the Slack integration of a product
+  data, status_code, headers = api_instance.get_slack_integration_with_http_info(product_id)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <SlackIntegration>
+rescue LicenseManager::ApiError => e
+  puts "Error when calling IntegrationsApi->get_slack_integration_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **product_id** | **String** |  |  |
+
+### Return type
+
+[**SlackIntegration**](SlackIntegration.md)
 
 ### Authorization
 
@@ -514,6 +731,77 @@ end
 - **Accept**: application/json
 
 
+## test_slack_connection
+
+> <SlackConnection> test_slack_connection(id)
+
+Send a test message to a Slack channel
+
+Posts a message to the channel, to check it gets the notifications. Marks the connection `revoked` when Slack says it won't work again. Doesn't accept tokens: only API keys and sessions.  **Required role permission**: `integration:update` when called with a session, granted by the member's role. API keys aren't limited by roles.
+
+### Examples
+
+```ruby
+require 'time'
+require 'license_manager'
+# setup authorization
+LicenseManager.configure do |config|
+  # Configure API key authorization: apiKey
+  config.api_key['x-api-key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['x-api-key'] = 'Bearer'
+end
+
+api_instance = LicenseManager::IntegrationsApi.new
+id = 's4Hq8ZpLm' # String | 
+
+begin
+  # Send a test message to a Slack channel
+  result = api_instance.test_slack_connection(id)
+  p result
+rescue LicenseManager::ApiError => e
+  puts "Error when calling IntegrationsApi->test_slack_connection: #{e}"
+end
+```
+
+#### Using the test_slack_connection_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<SlackConnection>, Integer, Hash)> test_slack_connection_with_http_info(id)
+
+```ruby
+begin
+  # Send a test message to a Slack channel
+  data, status_code, headers = api_instance.test_slack_connection_with_http_info(id)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <SlackConnection>
+rescue LicenseManager::ApiError => e
+  puts "Error when calling IntegrationsApi->test_slack_connection_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+
+### Return type
+
+[**SlackConnection**](SlackConnection.md)
+
+### Authorization
+
+[apiKey](../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
 ## update_integration
 
 > <Integration> update_integration(id, update_integration)
@@ -576,6 +864,79 @@ end
 ### Return type
 
 [**Integration**](Integration.md)
+
+### Authorization
+
+[apiKey](../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+
+## update_slack_connection
+
+> <SlackConnection> update_slack_connection(id, update_slack_connection)
+
+Update a Slack connection
+
+Changes the notifications the channel gets. Doesn't accept tokens: only API keys and sessions.  **Required role permission**: `integration:update` when called with a session, granted by the member's role. API keys aren't limited by roles.
+
+### Examples
+
+```ruby
+require 'time'
+require 'license_manager'
+# setup authorization
+LicenseManager.configure do |config|
+  # Configure API key authorization: apiKey
+  config.api_key['x-api-key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['x-api-key'] = 'Bearer'
+end
+
+api_instance = LicenseManager::IntegrationsApi.new
+id = 's4Hq8ZpLm' # String | 
+update_slack_connection = LicenseManager::UpdateSlackConnection.new({events: [purchased,  canceled]}) # UpdateSlackConnection | 
+
+begin
+  # Update a Slack connection
+  result = api_instance.update_slack_connection(id, update_slack_connection)
+  p result
+rescue LicenseManager::ApiError => e
+  puts "Error when calling IntegrationsApi->update_slack_connection: #{e}"
+end
+```
+
+#### Using the update_slack_connection_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<SlackConnection>, Integer, Hash)> update_slack_connection_with_http_info(id, update_slack_connection)
+
+```ruby
+begin
+  # Update a Slack connection
+  data, status_code, headers = api_instance.update_slack_connection_with_http_info(id, update_slack_connection)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <SlackConnection>
+rescue LicenseManager::ApiError => e
+  puts "Error when calling IntegrationsApi->update_slack_connection_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+| **update_slack_connection** | [**UpdateSlackConnection**](UpdateSlackConnection.md) |  |  |
+
+### Return type
+
+[**SlackConnection**](SlackConnection.md)
 
 ### Authorization
 

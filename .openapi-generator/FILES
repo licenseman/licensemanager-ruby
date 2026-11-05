@@ -106,6 +106,9 @@ docs/Revenue.md
 docs/SendLicenseKeys.md
 docs/SendPortalLink.md
 docs/SigningKey.md
+docs/SlackAuthorize.md
+docs/SlackConnection.md
+docs/SlackIntegration.md
 docs/StripeIntegration.md
 docs/StripePermission.md
 docs/StripePrice.md
@@ -121,6 +124,7 @@ docs/UpdatePolicy.md
 docs/UpdateProduct.md
 docs/UpdateProductPortal.md
 docs/UpdateRelease.md
+docs/UpdateSlackConnection.md
 docs/ValidateKey.md
 docs/ValidateKeyError.md
 docs/ValidateKeyErrorError.md
@@ -230,6 +234,9 @@ lib/license_manager/models/revenue.rb
 lib/license_manager/models/send_license_keys.rb
 lib/license_manager/models/send_portal_link.rb
 lib/license_manager/models/signing_key.rb
+lib/license_manager/models/slack_authorize.rb
+lib/license_manager/models/slack_connection.rb
+lib/license_manager/models/slack_integration.rb
 lib/license_manager/models/stripe_integration.rb
 lib/license_manager/models/stripe_permission.rb
 lib/license_manager/models/stripe_price.rb
@@ -244,6 +251,7 @@ lib/license_manager/models/update_policy.rb
 lib/license_manager/models/update_product.rb
 lib/license_manager/models/update_product_portal.rb
 lib/license_manager/models/update_release.rb
+lib/license_manager/models/update_slack_connection.rb
 lib/license_manager/models/validate_key.rb
 lib/license_manager/models/validate_key_error.rb
 lib/license_manager/models/validate_key_error_error.rb
@@ -349,6 +357,9 @@ spec/models/revenue_spec.rb
 spec/models/send_license_keys_spec.rb
 spec/models/send_portal_link_spec.rb
 spec/models/signing_key_spec.rb
+spec/models/slack_authorize_spec.rb
+spec/models/slack_connection_spec.rb
+spec/models/slack_integration_spec.rb
 spec/models/stripe_integration_spec.rb
 spec/models/stripe_permission_spec.rb
 spec/models/stripe_price_recurring_spec.rb
@@ -363,6 +374,7 @@ spec/models/update_policy_spec.rb
 spec/models/update_product_portal_spec.rb
 spec/models/update_product_spec.rb
 spec/models/update_release_spec.rb
+spec/models/update_slack_connection_spec.rb
 spec/models/validate_key_error_error_spec.rb
 spec/models/validate_key_error_spec.rb
 spec/models/validate_key_spec.rb
