@@ -21,12 +21,18 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["LicenseManager"]
   s.email       = ["bot@licensemanager.dev"]
-  s.homepage    = "https://licensemanager.dev"
+  s.homepage    = "https://licensemanager.dev/docs/sdks/ruby"
   s.summary     = "Ruby client for the LicenseManager API"
   s.description = "Ruby client for the LicenseManager API: products, policies, customers, licenses, machines and releases."
-  s.license     = "Unlicense"
+  s.license     = "Apache-2.0"
   s.required_ruby_version = ">= 3.1"
-  s.metadata    = {}
+  s.metadata    = {
+    "homepage_uri" => "https://licensemanager.dev/docs/sdks/ruby",
+    "documentation_uri" => "https://licensemanager.dev/docs/sdks/ruby",
+    "source_code_uri" => "https://github.com/licenseman/licensemanager-ruby",
+    "changelog_uri" => "https://github.com/licenseman/licensemanager-ruby/blob/main/CHANGELOG.md",
+    "bug_tracker_uri" => "https://github.com/licenseman/licensemanager-ruby/issues",
+  }
 
   s.add_runtime_dependency 'faraday', '>= 1.0.1', '< 3.0'
   s.add_runtime_dependency 'faraday-multipart'

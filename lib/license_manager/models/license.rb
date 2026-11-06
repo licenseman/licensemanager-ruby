@@ -63,6 +63,7 @@ module LicenseManager
     # When the license was canceled: validating its key fails since. `null` when it wasn't.
     attr_accessor :canceled_at
 
+    # Why the license was canceled. `null` when it wasn't.
     attr_accessor :cancellation_reason
 
     attr_accessor :subscription
@@ -179,6 +180,7 @@ module LicenseManager
         :'price',
         :'cancellable_until',
         :'canceled_at',
+        :'cancellation_reason',
         :'subscription',
         :'cancellation_comment',
         :'stripe_refund_id',
@@ -407,10 +409,6 @@ module LicenseManager
         invalid_properties.push('invalid value for "status", status cannot be nil.')
       end
 
-      if @cancellation_reason.nil?
-        invalid_properties.push('invalid value for "cancellation_reason", cancellation_reason cannot be nil.')
-      end
-
       if @updated_at.nil?
         invalid_properties.push('invalid value for "updated_at", updated_at cannot be nil.')
       end
@@ -433,7 +431,6 @@ module LicenseManager
       return false if @active_machine_count.nil?
       return false if @max_version.nil?
       return false if @status.nil?
-      return false if @cancellation_reason.nil?
       return false if @updated_at.nil?
       true
     end
@@ -546,16 +543,6 @@ module LicenseManager
       end
 
       @status = status
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] cancellation_reason Value to be assigned
-    def cancellation_reason=(cancellation_reason)
-      if cancellation_reason.nil?
-        fail ArgumentError, 'cancellation_reason cannot be nil'
-      end
-
-      @cancellation_reason = cancellation_reason
     end
 
     # Custom attribute writer method with validation
