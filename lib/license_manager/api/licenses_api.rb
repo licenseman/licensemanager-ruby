@@ -424,6 +424,7 @@ module LicenseManager
     # @option opts [String] :key Only returns the license with this exact key, case included. Keys of test products start with &#x60;TEST-&#x60;.
     # @option opts [String] :policy_id Only returns the licenses following this policy.
     # @option opts [String] :machine_version Only returns the licenses with at least one active machine running this version of the product.
+    # @option opts [String] :machine_platform Only returns the licenses with at least one active machine on this platform.
     # @option opts [LicenseStatus] :status Only returns the licenses with this status.
     # @option opts [Time] :created_from Only returns the licenses created at or after this date.
     # @option opts [Time] :created_to Only returns the licenses created at or before this date.
@@ -455,6 +456,7 @@ module LicenseManager
     # @option opts [String] :key Only returns the license with this exact key, case included. Keys of test products start with &#x60;TEST-&#x60;.
     # @option opts [String] :policy_id Only returns the licenses following this policy.
     # @option opts [String] :machine_version Only returns the licenses with at least one active machine running this version of the product.
+    # @option opts [String] :machine_platform Only returns the licenses with at least one active machine on this platform.
     # @option opts [LicenseStatus] :status Only returns the licenses with this status.
     # @option opts [Time] :created_from Only returns the licenses created at or after this date.
     # @option opts [Time] :created_to Only returns the licenses created at or before this date.
@@ -526,6 +528,7 @@ module LicenseManager
       query_params[:'key'] = opts[:'key'] if !opts[:'key'].nil?
       query_params[:'policyId'] = opts[:'policy_id'] if !opts[:'policy_id'].nil?
       query_params[:'machineVersion'] = opts[:'machine_version'] if !opts[:'machine_version'].nil?
+      query_params[:'machinePlatform'] = opts[:'machine_platform'] if !opts[:'machine_platform'].nil?
       query_params[:'status'] = opts[:'status'] if !opts[:'status'].nil?
       query_params[:'createdFrom'] = opts[:'created_from'] if !opts[:'created_from'].nil?
       query_params[:'createdTo'] = opts[:'created_to'] if !opts[:'created_to'].nil?
@@ -587,6 +590,7 @@ module LicenseManager
     # @option opts [String] :policy_id Only returns the licenses following this policy.
     # @option opts [String] :customer_id Only returns the licenses of this customer.
     # @option opts [String] :machine_version Only returns the licenses with at least one active machine running this version of the product.
+    # @option opts [String] :machine_platform Only returns the licenses with at least one active machine on this platform.
     # @option opts [LicenseStatus] :status Only returns the licenses with this status.
     # @option opts [Time] :created_from Only returns the licenses created at or after this date.
     # @option opts [Time] :created_to Only returns the licenses created at or before this date.
@@ -619,6 +623,7 @@ module LicenseManager
     # @option opts [String] :policy_id Only returns the licenses following this policy.
     # @option opts [String] :customer_id Only returns the licenses of this customer.
     # @option opts [String] :machine_version Only returns the licenses with at least one active machine running this version of the product.
+    # @option opts [String] :machine_platform Only returns the licenses with at least one active machine on this platform.
     # @option opts [LicenseStatus] :status Only returns the licenses with this status.
     # @option opts [Time] :created_from Only returns the licenses created at or after this date.
     # @option opts [Time] :created_to Only returns the licenses created at or before this date.
@@ -691,6 +696,7 @@ module LicenseManager
       query_params[:'policyId'] = opts[:'policy_id'] if !opts[:'policy_id'].nil?
       query_params[:'customerId'] = opts[:'customer_id'] if !opts[:'customer_id'].nil?
       query_params[:'machineVersion'] = opts[:'machine_version'] if !opts[:'machine_version'].nil?
+      query_params[:'machinePlatform'] = opts[:'machine_platform'] if !opts[:'machine_platform'].nil?
       query_params[:'status'] = opts[:'status'] if !opts[:'status'].nil?
       query_params[:'createdFrom'] = opts[:'created_from'] if !opts[:'created_from'].nil?
       query_params[:'createdTo'] = opts[:'created_to'] if !opts[:'created_to'].nil?

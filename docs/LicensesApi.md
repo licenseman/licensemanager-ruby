@@ -483,6 +483,7 @@ opts = {
   key: '7KQ2M-X9ZPA-H4TRC-WN6EY-B3JDF', # String | Only returns the license with this exact key, case included. Keys of test products start with `TEST-`.
   policy_id: 'p4Rt8LmQ', # String | Only returns the licenses following this policy.
   machine_version: '2.3.1', # String | Only returns the licenses with at least one active machine running this version of the product.
+  machine_platform: 'macOS 15.1', # String | Only returns the licenses with at least one active machine on this platform.
   status: LicenseManager::LicenseStatus::ACTIVE, # LicenseStatus | Only returns the licenses with this status.
   created_from: Time.parse('2026-01-01T00:00:00.000Z'), # Time | Only returns the licenses created at or after this date.
   created_to: Time.parse('2026-02-01T00:00:00.000Z'), # Time | Only returns the licenses created at or before this date.
@@ -538,6 +539,7 @@ end
 | **key** | **String** | Only returns the license with this exact key, case included. Keys of test products start with &#x60;TEST-&#x60;. | [optional] |
 | **policy_id** | **String** | Only returns the licenses following this policy. | [optional] |
 | **machine_version** | **String** | Only returns the licenses with at least one active machine running this version of the product. | [optional] |
+| **machine_platform** | **String** | Only returns the licenses with at least one active machine on this platform. | [optional] |
 | **status** | [**LicenseStatus**](.md) | Only returns the licenses with this status. | [optional] |
 | **created_from** | **Time** | Only returns the licenses created at or after this date. | [optional] |
 | **created_to** | **Time** | Only returns the licenses created at or before this date. | [optional] |
@@ -599,6 +601,7 @@ opts = {
   policy_id: 'p4Rt8LmQ', # String | Only returns the licenses following this policy.
   customer_id: 'c9Wd3RtE', # String | Only returns the licenses of this customer.
   machine_version: '2.3.1', # String | Only returns the licenses with at least one active machine running this version of the product.
+  machine_platform: 'macOS 15.1', # String | Only returns the licenses with at least one active machine on this platform.
   status: LicenseManager::LicenseStatus::ACTIVE, # LicenseStatus | Only returns the licenses with this status.
   created_from: Time.parse('2026-01-01T00:00:00.000Z'), # Time | Only returns the licenses created at or after this date.
   created_to: Time.parse('2026-02-01T00:00:00.000Z'), # Time | Only returns the licenses created at or before this date.
@@ -655,6 +658,7 @@ end
 | **policy_id** | **String** | Only returns the licenses following this policy. | [optional] |
 | **customer_id** | **String** | Only returns the licenses of this customer. | [optional] |
 | **machine_version** | **String** | Only returns the licenses with at least one active machine running this version of the product. | [optional] |
+| **machine_platform** | **String** | Only returns the licenses with at least one active machine on this platform. | [optional] |
 | **status** | [**LicenseStatus**](.md) | Only returns the licenses with this status. | [optional] |
 | **created_from** | **Time** | Only returns the licenses created at or after this date. | [optional] |
 | **created_to** | **Time** | Only returns the licenses created at or before this date. | [optional] |

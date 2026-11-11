@@ -117,6 +117,7 @@ describe 'LicensesApi' do
   # @option opts [String] :key Only returns the license with this exact key, case included. Keys of test products start with &#x60;TEST-&#x60;.
   # @option opts [String] :policy_id Only returns the licenses following this policy.
   # @option opts [String] :machine_version Only returns the licenses with at least one active machine running this version of the product.
+  # @option opts [String] :machine_platform Only returns the licenses with at least one active machine on this platform.
   # @option opts [LicenseStatus] :status Only returns the licenses with this status.
   # @option opts [Time] :created_from Only returns the licenses created at or after this date.
   # @option opts [Time] :created_to Only returns the licenses created at or before this date.
@@ -151,6 +152,7 @@ describe 'LicensesApi' do
   # @option opts [String] :policy_id Only returns the licenses following this policy.
   # @option opts [String] :customer_id Only returns the licenses of this customer.
   # @option opts [String] :machine_version Only returns the licenses with at least one active machine running this version of the product.
+  # @option opts [String] :machine_platform Only returns the licenses with at least one active machine on this platform.
   # @option opts [LicenseStatus] :status Only returns the licenses with this status.
   # @option opts [Time] :created_from Only returns the licenses created at or after this date.
   # @option opts [Time] :created_to Only returns the licenses created at or before this date.
