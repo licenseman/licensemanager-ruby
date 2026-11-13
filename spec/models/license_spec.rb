@@ -87,6 +87,12 @@ describe LicenseManager::License do
     end
   end
 
+  describe 'test attribute "paddle_transaction_id"' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   describe 'test attribute "max_machines"' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
@@ -162,6 +168,22 @@ describe LicenseManager::License do
   describe 'test attribute "stripe_refund_id"' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  describe 'test attribute "paddle_adjustment_id"' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  describe 'test attribute "paddle_refund_status"' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+      # validator = Petstore::EnumTest::EnumAttributeValidator.new('String', ["pending_approval", "approved", "rejected", "unknown_default_open_api"])
+      # validator.allowable_values.each do |value|
+      #   expect { instance.paddle_refund_status = value }.not_to raise_error
+      # end
     end
   end
 

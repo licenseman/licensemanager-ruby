@@ -29,7 +29,7 @@ module LicenseManager
     # Page of the installation in Slack.
     attr_accessor :configuration_url
 
-    # Notifications the channel gets: `purchased` (a license bought through Stripe), `renewed` (a subscription renewal paid), `payment_failed` (a subscription payment failed) and `canceled` (a license canceled, or its subscription ended).
+    # Notifications the channel gets: `purchased` (a license bought through Stripe or Paddle), `renewed` (a subscription renewal paid), `payment_failed` (a subscription payment failed) and `canceled` (a license canceled, or its subscription ended).
     attr_accessor :events
 
     # `revoked` once Slack refuses the messages, like when the app was removed from the workspace or the channel deleted: remove it and add it again.

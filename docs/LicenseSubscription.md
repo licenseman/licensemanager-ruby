@@ -4,8 +4,10 @@
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **stripe_subscription_id** | **String** |  |  |
-| **status** | **String** | Status of the subscription in Stripe: &#x60;active&#x60;, &#x60;trialing&#x60;, &#x60;past_due&#x60; while a failed payment is retried, &#x60;canceled&#x60;, &#x60;unpaid&#x60;, &#x60;paused&#x60;, &#x60;incomplete&#x60; or &#x60;incomplete_expired&#x60;. |  |
+| **provider** | **String** | Provider of the subscription. |  |
+| **external_id** | **String** | Id of the subscription in the provider: &#x60;sub_…&#x60; in Stripe and in Paddle. |  |
+| **stripe_subscription_id** | **String** | Deprecated: use &#x60;externalId&#x60;, which it equals. |  |
+| **status** | **String** | Status of the subscription in the provider. Stripe: &#x60;active&#x60;, &#x60;trialing&#x60;, &#x60;past_due&#x60; while a failed payment is retried, &#x60;canceled&#x60;, &#x60;unpaid&#x60;, &#x60;paused&#x60;, &#x60;incomplete&#x60; or &#x60;incomplete_expired&#x60;. Paddle: &#x60;active&#x60;, &#x60;trialing&#x60;, &#x60;past_due&#x60;, &#x60;paused&#x60; or &#x60;canceled&#x60;. |  |
 | **interval** | **String** |  |  |
 | **interval_count** | **Integer** | Number of intervals between payments. |  |
 | **quantity** | **Integer** | Units subscribed, multiplying the policy&#39;s machines. |  |
@@ -20,6 +22,8 @@
 require 'license_manager'
 
 instance = LicenseManager::LicenseSubscription.new(
+  provider: null,
+  external_id: sub_1MowQVLkdIwHu7ix,
   stripe_subscription_id: sub_1MowQVLkdIwHu7ix,
   status: active,
   interval: null,

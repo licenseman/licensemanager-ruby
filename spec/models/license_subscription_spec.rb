@@ -27,6 +27,22 @@ describe LicenseManager::LicenseSubscription do
     end
   end
 
+  describe 'test attribute "provider"' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+      # validator = Petstore::EnumTest::EnumAttributeValidator.new('String', ["stripe", "paddle", "unknown_default_open_api"])
+      # validator.allowable_values.each do |value|
+      #   expect { instance.provider = value }.not_to raise_error
+      # end
+    end
+  end
+
+  describe 'test attribute "external_id"' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   describe 'test attribute "stripe_subscription_id"' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/

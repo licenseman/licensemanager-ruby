@@ -6,13 +6,17 @@ All URIs are relative to *https://api.licensemanager.dev*
 | ------ | ------------ | ----------- |
 | [**authorize_slack**](IntegrationsApi.md#authorize_slack) | **POST** /v1/products/{productId}/integrations/slack/authorize | Start connecting a Slack channel |
 | [**check_integration**](IntegrationsApi.md#check_integration) | **POST** /v1/integrations/{id}/check | Check an integration |
+| [**connect_paddle**](IntegrationsApi.md#connect_paddle) | **PUT** /v1/products/{productId}/integrations/paddle | Connect Paddle |
 | [**connect_stripe**](IntegrationsApi.md#connect_stripe) | **PUT** /v1/products/{productId}/integrations/stripe | Connect Stripe |
+| [**create_paddle_mapping**](IntegrationsApi.md#create_paddle_mapping) | **POST** /v1/products/{productId}/integrations/paddle/mappings | Map a Paddle price to a policy |
 | [**create_stripe_mapping**](IntegrationsApi.md#create_stripe_mapping) | **POST** /v1/products/{productId}/integrations/stripe/mappings | Map a Stripe price to a policy |
 | [**delete_slack_connection**](IntegrationsApi.md#delete_slack_connection) | **DELETE** /v1/slack-connections/{id} | Remove a Slack connection |
 | [**delete_stripe_mapping**](IntegrationsApi.md#delete_stripe_mapping) | **DELETE** /v1/integration-mappings/{id} | Delete a mapping |
 | [**disconnect_integration**](IntegrationsApi.md#disconnect_integration) | **DELETE** /v1/integrations/{id} | Disconnect an integration |
+| [**get_paddle_integration**](IntegrationsApi.md#get_paddle_integration) | **GET** /v1/products/{productId}/integrations/paddle | Get the Paddle integration of a product |
 | [**get_slack_integration**](IntegrationsApi.md#get_slack_integration) | **GET** /v1/products/{productId}/integrations/slack | Get the Slack integration of a product |
 | [**get_stripe_integration**](IntegrationsApi.md#get_stripe_integration) | **GET** /v1/products/{productId}/integrations/stripe | Get the Stripe integration of a product |
+| [**list_paddle_prices**](IntegrationsApi.md#list_paddle_prices) | **GET** /v1/integrations/{id}/paddle/prices | List the Paddle prices of an integration |
 | [**list_stripe_prices**](IntegrationsApi.md#list_stripe_prices) | **GET** /v1/integrations/{id}/stripe/prices | List the Stripe prices of an integration |
 | [**test_slack_connection**](IntegrationsApi.md#test_slack_connection) | **POST** /v1/slack-connections/{id}/test | Send a test message to a Slack channel |
 | [**update_integration**](IntegrationsApi.md#update_integration) | **PATCH** /v1/integrations/{id} | Update an integration |
@@ -162,6 +166,79 @@ end
 - **Accept**: application/json
 
 
+## connect_paddle
+
+> <PaddleIntegration> connect_paddle(product_id, connect_paddle)
+
+Connect Paddle
+
+Connects the Paddle Billing account of the API key for the organization's products of the product's mode, or replaces the key of the existing connection. Checks the key works and has the required permissions, then creates a notification destination on the account, telling the app about payments. Doesn't accept tokens: only API keys and sessions.  **Required role permission**: `integration:create` when called with a session, granted by the member's role. API keys aren't limited by roles.
+
+### Examples
+
+```ruby
+require 'time'
+require 'license_manager'
+# setup authorization
+LicenseManager.configure do |config|
+  # Configure API key authorization: apiKey
+  config.api_key['x-api-key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['x-api-key'] = 'Bearer'
+end
+
+api_instance = LicenseManager::IntegrationsApi.new
+product_id = 'x7Kp2QaZ' # String | 
+connect_paddle = LicenseManager::ConnectPaddle.new({api_key: 'pdl_live_apikey_01gtgztp8f…'}) # ConnectPaddle | 
+
+begin
+  # Connect Paddle
+  result = api_instance.connect_paddle(product_id, connect_paddle)
+  p result
+rescue LicenseManager::ApiError => e
+  puts "Error when calling IntegrationsApi->connect_paddle: #{e}"
+end
+```
+
+#### Using the connect_paddle_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<PaddleIntegration>, Integer, Hash)> connect_paddle_with_http_info(product_id, connect_paddle)
+
+```ruby
+begin
+  # Connect Paddle
+  data, status_code, headers = api_instance.connect_paddle_with_http_info(product_id, connect_paddle)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <PaddleIntegration>
+rescue LicenseManager::ApiError => e
+  puts "Error when calling IntegrationsApi->connect_paddle_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **product_id** | **String** |  |  |
+| **connect_paddle** | [**ConnectPaddle**](ConnectPaddle.md) |  |  |
+
+### Return type
+
+[**PaddleIntegration**](PaddleIntegration.md)
+
+### Authorization
+
+[apiKey](../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+
 ## connect_stripe
 
 > <StripeIntegration> connect_stripe(product_id, connect_stripe)
@@ -224,6 +301,79 @@ end
 ### Return type
 
 [**StripeIntegration**](StripeIntegration.md)
+
+### Authorization
+
+[apiKey](../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+
+## create_paddle_mapping
+
+> <IntegrationMapping> create_paddle_mapping(product_id, create_paddle_mapping)
+
+Map a Paddle price to a policy
+
+Paying the price then creates licenses of the product with the policy: one per unit bought, or one per subscription for a recurring price. Doesn't accept tokens: only API keys and sessions.  **Required role permission**: `integration:update` when called with a session, granted by the member's role. API keys aren't limited by roles.
+
+### Examples
+
+```ruby
+require 'time'
+require 'license_manager'
+# setup authorization
+LicenseManager.configure do |config|
+  # Configure API key authorization: apiKey
+  config.api_key['x-api-key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['x-api-key'] = 'Bearer'
+end
+
+api_instance = LicenseManager::IntegrationsApi.new
+product_id = 'x7Kp2QaZ' # String | 
+create_paddle_mapping = LicenseManager::CreatePaddleMapping.new({paddle_price_id: 'pri_01gsz8x8sawmvhz1pv30nge1ke', policy_id: 'p4Rt8LmQ'}) # CreatePaddleMapping | 
+
+begin
+  # Map a Paddle price to a policy
+  result = api_instance.create_paddle_mapping(product_id, create_paddle_mapping)
+  p result
+rescue LicenseManager::ApiError => e
+  puts "Error when calling IntegrationsApi->create_paddle_mapping: #{e}"
+end
+```
+
+#### Using the create_paddle_mapping_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<IntegrationMapping>, Integer, Hash)> create_paddle_mapping_with_http_info(product_id, create_paddle_mapping)
+
+```ruby
+begin
+  # Map a Paddle price to a policy
+  data, status_code, headers = api_instance.create_paddle_mapping_with_http_info(product_id, create_paddle_mapping)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <IntegrationMapping>
+rescue LicenseManager::ApiError => e
+  puts "Error when calling IntegrationsApi->create_paddle_mapping_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **product_id** | **String** |  |  |
+| **create_paddle_mapping** | [**CreatePaddleMapping**](CreatePaddleMapping.md) |  |  |
+
+### Return type
+
+[**IntegrationMapping**](IntegrationMapping.md)
 
 ### Authorization
 
@@ -518,6 +668,77 @@ nil (empty response body)
 - **Accept**: application/json
 
 
+## get_paddle_integration
+
+> <PaddleIntegration> get_paddle_integration(product_id)
+
+Get the Paddle integration of a product
+
+The organization connects one Paddle Billing account for its live products, and one sandbox account for its test products. Its mappings tell which Paddle prices create licenses of the product. Doesn't accept tokens: only API keys and sessions.
+
+### Examples
+
+```ruby
+require 'time'
+require 'license_manager'
+# setup authorization
+LicenseManager.configure do |config|
+  # Configure API key authorization: apiKey
+  config.api_key['x-api-key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['x-api-key'] = 'Bearer'
+end
+
+api_instance = LicenseManager::IntegrationsApi.new
+product_id = 'x7Kp2QaZ' # String | 
+
+begin
+  # Get the Paddle integration of a product
+  result = api_instance.get_paddle_integration(product_id)
+  p result
+rescue LicenseManager::ApiError => e
+  puts "Error when calling IntegrationsApi->get_paddle_integration: #{e}"
+end
+```
+
+#### Using the get_paddle_integration_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<PaddleIntegration>, Integer, Hash)> get_paddle_integration_with_http_info(product_id)
+
+```ruby
+begin
+  # Get the Paddle integration of a product
+  data, status_code, headers = api_instance.get_paddle_integration_with_http_info(product_id)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <PaddleIntegration>
+rescue LicenseManager::ApiError => e
+  puts "Error when calling IntegrationsApi->get_paddle_integration_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **product_id** | **String** |  |  |
+
+### Return type
+
+[**PaddleIntegration**](PaddleIntegration.md)
+
+### Authorization
+
+[apiKey](../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
 ## get_slack_integration
 
 > <SlackIntegration> get_slack_integration(product_id)
@@ -649,6 +870,77 @@ end
 ### Return type
 
 [**StripeIntegration**](StripeIntegration.md)
+
+### Authorization
+
+[apiKey](../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## list_paddle_prices
+
+> <ListPaddlePrices200Response> list_paddle_prices(id)
+
+List the Paddle prices of an integration
+
+Active catalog prices of active products of the Paddle account, the ones that can be mapped, up to 500. Doesn't accept tokens: only API keys and sessions.
+
+### Examples
+
+```ruby
+require 'time'
+require 'license_manager'
+# setup authorization
+LicenseManager.configure do |config|
+  # Configure API key authorization: apiKey
+  config.api_key['x-api-key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['x-api-key'] = 'Bearer'
+end
+
+api_instance = LicenseManager::IntegrationsApi.new
+id = 'i8Fz4QnRt' # String | 
+
+begin
+  # List the Paddle prices of an integration
+  result = api_instance.list_paddle_prices(id)
+  p result
+rescue LicenseManager::ApiError => e
+  puts "Error when calling IntegrationsApi->list_paddle_prices: #{e}"
+end
+```
+
+#### Using the list_paddle_prices_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<ListPaddlePrices200Response>, Integer, Hash)> list_paddle_prices_with_http_info(id)
+
+```ruby
+begin
+  # List the Paddle prices of an integration
+  data, status_code, headers = api_instance.list_paddle_prices_with_http_info(id)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <ListPaddlePrices200Response>
+rescue LicenseManager::ApiError => e
+  puts "Error when calling IntegrationsApi->list_paddle_prices_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **id** | **String** |  |  |
+
+### Return type
+
+[**ListPaddlePrices200Response**](ListPaddlePrices200Response.md)
 
 ### Authorization
 

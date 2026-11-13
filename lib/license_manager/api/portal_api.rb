@@ -20,7 +20,7 @@ module LicenseManager
       @api_client = api_client
     end
     # Open the Stripe customer portal of a customer
-    # Link to the Stripe customer portal of the customer's Stripe customer, where they manage their subscriptions: change their plan or payment method, see their invoices, cancel. Needs the Stripe integration's `canBillingPortal`, and the customer portal configured in the Stripe account's settings. The changes come back through the integration's webhook, keeping the subscription licenses in line.  **Token access**: customer tokens with the `customer:billing` permission (or the matching write one). A customer token reaches its own customer.  **Required role permission**: `portalLink:create` when called with a session, granted by the member's role. API keys aren't limited by roles.
+    # Link to the customer portal of the customer's Stripe or Paddle customer, where they manage their subscriptions: change their plan or payment method, see their invoices, cancel. Needs the integration's `canBillingPortal`, and for Stripe, the customer portal configured in the Stripe account's settings. The changes come back through the integration's webhook, keeping the subscription licenses in line.  **Token access**: customer tokens with the `customer:billing` permission (or the matching write one). A customer token reaches its own customer.  **Required role permission**: `portalLink:create` when called with a session, granted by the member's role. API keys aren't limited by roles.
     # @param id [String] 
     # @param [Hash] opts the optional parameters
     # @option opts [CreateBillingPortalSession] :create_billing_portal_session 
@@ -31,7 +31,7 @@ module LicenseManager
     end
 
     # Open the Stripe customer portal of a customer
-    # Link to the Stripe customer portal of the customer&#39;s Stripe customer, where they manage their subscriptions: change their plan or payment method, see their invoices, cancel. Needs the Stripe integration&#39;s &#x60;canBillingPortal&#x60;, and the customer portal configured in the Stripe account&#39;s settings. The changes come back through the integration&#39;s webhook, keeping the subscription licenses in line.  **Token access**: customer tokens with the &#x60;customer:billing&#x60; permission (or the matching write one). A customer token reaches its own customer.  **Required role permission**: &#x60;portalLink:create&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
+    # Link to the customer portal of the customer&#39;s Stripe or Paddle customer, where they manage their subscriptions: change their plan or payment method, see their invoices, cancel. Needs the integration&#39;s &#x60;canBillingPortal&#x60;, and for Stripe, the customer portal configured in the Stripe account&#39;s settings. The changes come back through the integration&#39;s webhook, keeping the subscription licenses in line.  **Token access**: customer tokens with the &#x60;customer:billing&#x60; permission (or the matching write one). A customer token reaches its own customer.  **Required role permission**: &#x60;portalLink:create&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
     # @param id [String] 
     # @param [Hash] opts the optional parameters
     # @option opts [CreateBillingPortalSession] :create_billing_portal_session 

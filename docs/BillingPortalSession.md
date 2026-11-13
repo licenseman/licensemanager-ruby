@@ -4,7 +4,7 @@
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **url** | **String** | Link to the Stripe customer portal, to open right away: it expires shortly. |  |
+| **url** | **String** | Link to the Stripe or Paddle customer portal, to open right away: it expires shortly. |  |
 
 ## Example
 

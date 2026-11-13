@@ -56,6 +56,19 @@ describe 'IntegrationsApi' do
     end
   end
 
+  # unit tests for connect_paddle
+  # Connect Paddle
+  # Connects the Paddle Billing account of the API key for the organization&#39;s products of the product&#39;s mode, or replaces the key of the existing connection. Checks the key works and has the required permissions, then creates a notification destination on the account, telling the app about payments. Doesn&#39;t accept tokens: only API keys and sessions.  **Required role permission**: &#x60;integration:create&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
+  # @param product_id 
+  # @param connect_paddle 
+  # @param [Hash] opts the optional parameters
+  # @return [PaddleIntegration]
+  describe 'connect_paddle test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   # unit tests for connect_stripe
   # Connect Stripe
   # Connects the Stripe account of the API key for the organization&#39;s products of the product&#39;s mode, or replaces the key of the existing connection. Checks the key works and has the required permissions, then creates a webhook endpoint on the account, telling the app about payments. Doesn&#39;t accept tokens: only API keys and sessions.  **Required role permission**: &#x60;integration:create&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
@@ -64,6 +77,19 @@ describe 'IntegrationsApi' do
   # @param [Hash] opts the optional parameters
   # @return [StripeIntegration]
   describe 'connect_stripe test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for create_paddle_mapping
+  # Map a Paddle price to a policy
+  # Paying the price then creates licenses of the product with the policy: one per unit bought, or one per subscription for a recurring price. Doesn&#39;t accept tokens: only API keys and sessions.  **Required role permission**: &#x60;integration:update&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
+  # @param product_id 
+  # @param create_paddle_mapping 
+  # @param [Hash] opts the optional parameters
+  # @return [IntegrationMapping]
+  describe 'create_paddle_mapping test' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end
@@ -118,6 +144,18 @@ describe 'IntegrationsApi' do
     end
   end
 
+  # unit tests for get_paddle_integration
+  # Get the Paddle integration of a product
+  # The organization connects one Paddle Billing account for its live products, and one sandbox account for its test products. Its mappings tell which Paddle prices create licenses of the product. Doesn&#39;t accept tokens: only API keys and sessions.
+  # @param product_id 
+  # @param [Hash] opts the optional parameters
+  # @return [PaddleIntegration]
+  describe 'get_paddle_integration test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   # unit tests for get_slack_integration
   # Get the Slack integration of a product
   # Slack channels getting notifications about the product&#39;s licenses: purchases, renewals, failed payments and cancellations. Doesn&#39;t accept tokens: only API keys and sessions.
@@ -137,6 +175,18 @@ describe 'IntegrationsApi' do
   # @param [Hash] opts the optional parameters
   # @return [StripeIntegration]
   describe 'get_stripe_integration test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
+  # unit tests for list_paddle_prices
+  # List the Paddle prices of an integration
+  # Active catalog prices of active products of the Paddle account, the ones that can be mapped, up to 500. Doesn&#39;t accept tokens: only API keys and sessions.
+  # @param id 
+  # @param [Hash] opts the optional parameters
+  # @return [ListPaddlePrices200Response]
+  describe 'list_paddle_prices test' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
     end

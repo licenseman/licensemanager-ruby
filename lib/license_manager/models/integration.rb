@@ -22,13 +22,13 @@ module LicenseManager
     # Whether it's connected in live mode, for the live products, or in test mode, for the test products.
     attr_accessor :livemode
 
-    # Name of the Stripe account, `null` when the API key can't read it.
+    # Name of the Stripe account, `null` when the API key can't read it, and for Paddle, whose API doesn't give it.
     attr_accessor :account_name
 
     # Start and end of the API key, to recognize it.
     attr_accessor :api_key_hint
 
-    # URL of the webhook endpoint created on the Stripe account.
+    # URL of the webhook endpoint created on the Stripe account, or of the notification destination created on the Paddle account.
     attr_accessor :webhook_url
 
     attr_accessor :status
@@ -42,19 +42,19 @@ module LicenseManager
     # Last time it received an event from the provider.
     attr_accessor :last_event_at
 
-    # Whether canceling a license bought through Stripe refunds its payment. On by default, always off when `canRefund` is false.
+    # Whether canceling a license bought through the integration refunds its payment. On by default, always off when `canRefund` is false.
     attr_accessor :auto_refund
 
-    # Whether the API key has the optional Refunds: Write permission, checked when connecting and every day. Without it, canceled licenses aren't refunded: refund their payments from Stripe.
+    # Whether the API key has the optional refund permission (Stripe: Refunds: Write, Paddle: Adjustments: Write), checked when connecting and every day. Without it, canceled licenses aren't refunded: refund their payments from the provider.
     attr_accessor :can_refund
 
-    # Whether the API key has the optional Subscriptions: Write permission, checked when connecting and every day. Without it, subscription licenses can't be canceled from the app: cancel their subscriptions from Stripe.
+    # Whether the API key has the optional Subscriptions: Write permission, checked when connecting and every day. Without it, subscription licenses can't be canceled from the app: cancel their subscriptions from the provider.
     attr_accessor :can_manage_subscriptions
 
-    # Whether the API key has the optional Customer portal: Write permission, checked when connecting and every day. Without it, the license portal doesn't link to the Stripe customer portal.
+    # Whether the API key has the optional customer portal permission (Stripe: Customer portal: Write, Paddle: Customer portal sessions: Write), checked when connecting and every day. Without it, the license portal doesn't link to the provider's customer portal.
     attr_accessor :can_billing_portal
 
-    # Days a subscription license stays valid after its period ends while its renewal is unpaid, as Stripe retries the payment. 7 by default.
+    # Days a subscription license stays valid after its period ends while its renewal is unpaid, as the provider retries the payment. 7 by default.
     attr_accessor :subscription_grace_days
 
     attr_accessor :created_at
@@ -330,7 +330,7 @@ module LicenseManager
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @id.nil?
       return false if @provider.nil?
-      provider_validator = EnumAttributeValidator.new('String', ["stripe", "unknown_default_open_api"])
+      provider_validator = EnumAttributeValidator.new('String', ["stripe", "paddle", "unknown_default_open_api"])
       return false unless provider_validator.valid?(@provider)
       return false if @livemode.nil?
       return false if @api_key_hint.nil?
@@ -358,7 +358,7 @@ module LicenseManager
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] provider Object to be assigned
     def provider=(provider)
-      validator = EnumAttributeValidator.new('String', ["stripe", "unknown_default_open_api"])
+      validator = EnumAttributeValidator.new('String', ["stripe", "paddle", "unknown_default_open_api"])
       unless validator.valid?(provider)
         fail ArgumentError, "invalid value for \"provider\", must be one of #{validator.allowable_values}."
       end

@@ -15,7 +15,7 @@ require 'time'
 
 module LicenseManager
   class CreateBillingPortalSession < ApiModelBase
-    # Where the Stripe customer portal links back to: a page of the customer portal, or of one of the product's `returnDomains`. The customer portal of the product by default.
+    # Where the Stripe customer portal links back to: a page of the customer portal, or of one of the product's `returnDomains`. The customer portal of the product by default. Paddle's customer portal has no link back: ignored for Paddle customers.
     attr_accessor :return_url
 
     # Attribute mapping from ruby-style variable name to JSON key.

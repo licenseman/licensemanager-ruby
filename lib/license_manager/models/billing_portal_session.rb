@@ -15,7 +15,7 @@ require 'time'
 
 module LicenseManager
   class BillingPortalSession < ApiModelBase
-    # Link to the Stripe customer portal, to open right away: it expires shortly.
+    # Link to the Stripe or Paddle customer portal, to open right away: it expires shortly.
     attr_accessor :url
 
     # Attribute mapping from ruby-style variable name to JSON key.

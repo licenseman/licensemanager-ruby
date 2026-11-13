@@ -14,11 +14,18 @@ require 'date'
 require 'time'
 
 module LicenseManager
-  # The Stripe subscription keeping the license valid, `null` when it isn't a subscription license. The license expires when it stops being paid, includes every update, and can't be canceled during a money back guarantee.
+  # The Stripe or Paddle subscription keeping the license valid, `null` when it isn't a subscription license. The license expires when it stops being paid, includes every update, and can't be canceled during a money back guarantee.
   class LicenseSubscription < ApiModelBase
+    # Provider of the subscription.
+    attr_accessor :provider
+
+    # Id of the subscription in the provider: `sub_…` in Stripe and in Paddle.
+    attr_accessor :external_id
+
+    # Deprecated: use `externalId`, which it equals.
     attr_accessor :stripe_subscription_id
 
-    # Status of the subscription in Stripe: `active`, `trialing`, `past_due` while a failed payment is retried, `canceled`, `unpaid`, `paused`, `incomplete` or `incomplete_expired`.
+    # Status of the subscription in the provider. Stripe: `active`, `trialing`, `past_due` while a failed payment is retried, `canceled`, `unpaid`, `paused`, `incomplete` or `incomplete_expired`. Paddle: `active`, `trialing`, `past_due`, `paused` or `canceled`.
     attr_accessor :status
 
     attr_accessor :interval
@@ -65,6 +72,8 @@ module LicenseManager
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'provider' => :'provider',
+        :'external_id' => :'externalId',
         :'stripe_subscription_id' => :'stripeSubscriptionId',
         :'status' => :'status',
         :'interval' => :'interval',
@@ -90,6 +99,8 @@ module LicenseManager
     # Attribute type mapping.
     def self.openapi_types
       {
+        :'provider' => :'String',
+        :'external_id' => :'String',
         :'stripe_subscription_id' => :'String',
         :'status' => :'String',
         :'interval' => :'String',
@@ -135,6 +146,18 @@ module LicenseManager
         end
         h[k.to_sym] = v
       }
+
+      if attributes.key?(:'provider')
+        self.provider = attributes[:'provider']
+      else
+        self.provider = nil
+      end
+
+      if attributes.key?(:'external_id')
+        self.external_id = attributes[:'external_id']
+      else
+        self.external_id = nil
+      end
 
       if attributes.key?(:'stripe_subscription_id')
         self.stripe_subscription_id = attributes[:'stripe_subscription_id']
@@ -196,6 +219,14 @@ module LicenseManager
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if @provider.nil?
+        invalid_properties.push('invalid value for "provider", provider cannot be nil.')
+      end
+
+      if @external_id.nil?
+        invalid_properties.push('invalid value for "external_id", external_id cannot be nil.')
+      end
+
       if @stripe_subscription_id.nil?
         invalid_properties.push('invalid value for "stripe_subscription_id", stripe_subscription_id cannot be nil.')
       end
@@ -231,6 +262,10 @@ module LicenseManager
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      return false if @provider.nil?
+      provider_validator = EnumAttributeValidator.new('String', ["stripe", "paddle", "unknown_default_open_api"])
+      return false unless provider_validator.valid?(@provider)
+      return false if @external_id.nil?
       return false if @stripe_subscription_id.nil?
       return false if @status.nil?
       return false if @interval.nil?
@@ -241,6 +276,26 @@ module LicenseManager
       return false if @current_period_end.nil?
       return false if @cancel_at_period_end.nil?
       true
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] provider Object to be assigned
+    def provider=(provider)
+      validator = EnumAttributeValidator.new('String', ["stripe", "paddle", "unknown_default_open_api"])
+      unless validator.valid?(provider)
+        fail ArgumentError, "invalid value for \"provider\", must be one of #{validator.allowable_values}."
+      end
+      @provider = provider
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] external_id Value to be assigned
+    def external_id=(external_id)
+      if external_id.nil?
+        fail ArgumentError, 'external_id cannot be nil'
+      end
+
+      @external_id = external_id
     end
 
     # Custom attribute writer method with validation
@@ -318,6 +373,8 @@ module LicenseManager
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          provider == o.provider &&
+          external_id == o.external_id &&
           stripe_subscription_id == o.stripe_subscription_id &&
           status == o.status &&
           interval == o.interval &&
@@ -338,7 +395,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [stripe_subscription_id, status, interval, interval_count, quantity, price, current_period_end, cancel_at_period_end, ended_at].hash
+      [provider, external_id, stripe_subscription_id, status, interval, interval_count, quantity, price, current_period_end, cancel_at_period_end, ended_at].hash
     end
 
     # Builds the object from hash

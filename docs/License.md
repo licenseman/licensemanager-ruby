@@ -14,6 +14,7 @@
 | **expires_at** | **Time** | &#x60;null&#x60; when the license never expires. |  |
 | **meta** | **Hash&lt;String, Object&gt;** | Free-form JSON object. |  |
 | **stripe_payment_intent_id** | **String** | Id of the Stripe payment intent that paid the license, when it was bought through the Stripe integration. &#x60;null&#x60; otherwise, or when nothing was paid. |  |
+| **paddle_transaction_id** | **String** | Id of the Paddle transaction that paid the license, when it was bought through the Paddle integration. &#x60;null&#x60; otherwise. |  |
 | **max_machines** | **Integer** | Maximum number of active machines the license can be used on. &#x60;null&#x60; when there&#39;s no limit. Can be lower than &#x60;activeMachineCount&#x60; after it was lowered: machines aren&#39;t deactivated to match it. |  |
 | **max_offline_duration_seconds** | **Integer** | Longest the applications can run offline with the license: the license tokens returned by &#x60;validateKey&#x60; expire this long after they&#39;re issued, unless the license expires sooner. |  |
 | **active_machine_count** | **Integer** | Number of active machines the license is used on. |  |
@@ -27,6 +28,8 @@
 | **subscription** | [**LicenseSubscription**](LicenseSubscription.md) |  |  |
 | **cancellation_comment** | **String** | Comment given when the license was canceled. &#x60;null&#x60; when there&#39;s none. |  |
 | **stripe_refund_id** | **String** | Id of the Stripe refund of the license&#39;s payment once it was canceled, through the Stripe integration. &#x60;null&#x60; otherwise. |  |
+| **paddle_adjustment_id** | **String** | Id of the Paddle refund adjustment of the license&#39;s transaction once it was canceled, through the Paddle integration. &#x60;null&#x60; otherwise. |  |
+| **paddle_refund_status** | **String** | Outcome of the Paddle refund: &#x60;pending_approval&#x60; while Paddle reviews it, then &#x60;approved&#x60; or &#x60;rejected&#x60;. &#x60;null&#x60; without a Paddle refund. |  |
 | **updated_at** | **Time** | Last time the license&#39;s settings were edited, not when its key was validated. |  |
 
 ## Example
@@ -45,6 +48,7 @@ instance = LicenseManager::License.new(
   expires_at: 2027-01-15T09:30:00.000Z,
   meta: {seats&#x3D;5},
   stripe_payment_intent_id: pi_3MtwBwLkdIwHu7ix28a3tqPa,
+  paddle_transaction_id: txn_01h04vsc0qhwtsbsxh3422wjs4,
   max_machines: 3,
   max_offline_duration_seconds: 604800,
   active_machine_count: 2,
@@ -58,6 +62,8 @@ instance = LicenseManager::License.new(
   subscription: null,
   cancellation_comment: I only needed it for one project.,
   stripe_refund_id: re_3MtwBwLkdIwHu7ix0Bs5rA2b,
+  paddle_adjustment_id: adj_01h04vsc0qhwtsbsxh3422wjs4,
+  paddle_refund_status: approved,
   updated_at: 2026-01-15T09:30:00.000Z
 )
 ```

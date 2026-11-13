@@ -10,6 +10,7 @@
 | **name** | **String** | Display name of the customer. &#x60;null&#x60; when unknown. |  |
 | **license_count** | **Integer** | Number of licenses of this customer. |  |
 | **stripe_customer_id** | **String** | Id of the Stripe customer, when the customer bought licenses through the Stripe integration as a Stripe customer. &#x60;null&#x60; otherwise, e.g. for a guest checkout. |  |
+| **paddle_customer_id** | **String** | Id of the Paddle customer, when the customer bought licenses through the Paddle integration. &#x60;null&#x60; otherwise. |  |
 | **created_at** | **Time** |  |  |
 
 ## Example
@@ -24,6 +25,7 @@ instance = LicenseManager::Customer.new(
   name: Jane Doe,
   license_count: 3,
   stripe_customer_id: cus_NffrFeUfNV2Hib,
+  paddle_customer_id: ctm_01h04vsc0qhwtsbsxh3422wjs4,
   created_at: 2026-01-15T09:30:00.000Z
 )
 ```

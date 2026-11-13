@@ -149,7 +149,7 @@ module LicenseManager
       type_validator = EnumAttributeValidator.new('String', ["integration", "unknown_default_open_api"])
       return false unless type_validator.valid?(@type)
       return false if @provider.nil?
-      provider_validator = EnumAttributeValidator.new('String', ["stripe", "unknown_default_open_api"])
+      provider_validator = EnumAttributeValidator.new('String', ["stripe", "paddle", "unknown_default_open_api"])
       return false unless provider_validator.valid?(@provider)
       true
     end
@@ -167,7 +167,7 @@ module LicenseManager
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] provider Object to be assigned
     def provider=(provider)
-      validator = EnumAttributeValidator.new('String', ["stripe", "unknown_default_open_api"])
+      validator = EnumAttributeValidator.new('String', ["stripe", "paddle", "unknown_default_open_api"])
       unless validator.valid?(provider)
         fail ArgumentError, "invalid value for \"provider\", must be one of #{validator.allowable_values}."
       end

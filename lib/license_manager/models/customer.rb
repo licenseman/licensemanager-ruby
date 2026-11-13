@@ -30,6 +30,9 @@ module LicenseManager
     # Id of the Stripe customer, when the customer bought licenses through the Stripe integration as a Stripe customer. `null` otherwise, e.g. for a guest checkout.
     attr_accessor :stripe_customer_id
 
+    # Id of the Paddle customer, when the customer bought licenses through the Paddle integration. `null` otherwise.
+    attr_accessor :paddle_customer_id
+
     attr_accessor :created_at
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -41,6 +44,7 @@ module LicenseManager
         :'name' => :'name',
         :'license_count' => :'licenseCount',
         :'stripe_customer_id' => :'stripeCustomerId',
+        :'paddle_customer_id' => :'paddleCustomerId',
         :'created_at' => :'createdAt'
       }
     end
@@ -64,6 +68,7 @@ module LicenseManager
         :'name' => :'String',
         :'license_count' => :'Integer',
         :'stripe_customer_id' => :'String',
+        :'paddle_customer_id' => :'String',
         :'created_at' => :'Time'
       }
     end
@@ -73,6 +78,7 @@ module LicenseManager
       Set.new([
         :'name',
         :'stripe_customer_id',
+        :'paddle_customer_id',
       ])
     end
 
@@ -136,6 +142,12 @@ module LicenseManager
         self.stripe_customer_id = attributes[:'stripe_customer_id']
       else
         self.stripe_customer_id = nil
+      end
+
+      if attributes.key?(:'paddle_customer_id')
+        self.paddle_customer_id = attributes[:'paddle_customer_id']
+      else
+        self.paddle_customer_id = nil
       end
 
       if attributes.key?(:'created_at')
@@ -246,6 +258,7 @@ module LicenseManager
           name == o.name &&
           license_count == o.license_count &&
           stripe_customer_id == o.stripe_customer_id &&
+          paddle_customer_id == o.paddle_customer_id &&
           created_at == o.created_at
     end
 
@@ -258,7 +271,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, product_id, email, name, license_count, stripe_customer_id, created_at].hash
+      [id, product_id, email, name, license_count, stripe_customer_id, paddle_customer_id, created_at].hash
     end
 
     # Builds the object from hash

@@ -19,15 +19,25 @@ module LicenseManager
 
     attr_accessor :integration_id
 
+    attr_accessor :provider
+
     attr_accessor :product_id
 
     attr_accessor :policy_id
 
+    # Id of the product in the provider: `prod_…` in Stripe, `pro_…` in Paddle.
+    attr_accessor :external_product_id
+
+    # Id of the price in the provider: `price_…` in Stripe, `pri_…` in Paddle.
+    attr_accessor :external_price_id
+
+    # Deprecated: use `externalProductId`, which it equals.
     attr_accessor :stripe_product_id
 
+    # Deprecated: use `externalPriceId`, which it equals.
     attr_accessor :stripe_price_id
 
-    # Name of the Stripe product when it was mapped.
+    # Name of the provider's product when it was mapped.
     attr_accessor :product_name
 
     attr_accessor :price
@@ -68,8 +78,11 @@ module LicenseManager
       {
         :'id' => :'id',
         :'integration_id' => :'integrationId',
+        :'provider' => :'provider',
         :'product_id' => :'productId',
         :'policy_id' => :'policyId',
+        :'external_product_id' => :'externalProductId',
+        :'external_price_id' => :'externalPriceId',
         :'stripe_product_id' => :'stripeProductId',
         :'stripe_price_id' => :'stripePriceId',
         :'product_name' => :'productName',
@@ -96,8 +109,11 @@ module LicenseManager
       {
         :'id' => :'String',
         :'integration_id' => :'String',
+        :'provider' => :'String',
         :'product_id' => :'String',
         :'policy_id' => :'String',
+        :'external_product_id' => :'String',
+        :'external_price_id' => :'String',
         :'stripe_product_id' => :'String',
         :'stripe_price_id' => :'String',
         :'product_name' => :'String',
@@ -156,6 +172,12 @@ module LicenseManager
         self.integration_id = nil
       end
 
+      if attributes.key?(:'provider')
+        self.provider = attributes[:'provider']
+      else
+        self.provider = nil
+      end
+
       if attributes.key?(:'product_id')
         self.product_id = attributes[:'product_id']
       else
@@ -166,6 +188,18 @@ module LicenseManager
         self.policy_id = attributes[:'policy_id']
       else
         self.policy_id = nil
+      end
+
+      if attributes.key?(:'external_product_id')
+        self.external_product_id = attributes[:'external_product_id']
+      else
+        self.external_product_id = nil
+      end
+
+      if attributes.key?(:'external_price_id')
+        self.external_price_id = attributes[:'external_price_id']
+      else
+        self.external_price_id = nil
       end
 
       if attributes.key?(:'stripe_product_id')
@@ -230,12 +264,24 @@ module LicenseManager
         invalid_properties.push('invalid value for "integration_id", integration_id cannot be nil.')
       end
 
+      if @provider.nil?
+        invalid_properties.push('invalid value for "provider", provider cannot be nil.')
+      end
+
       if @product_id.nil?
         invalid_properties.push('invalid value for "product_id", product_id cannot be nil.')
       end
 
       if @policy_id.nil?
         invalid_properties.push('invalid value for "policy_id", policy_id cannot be nil.')
+      end
+
+      if @external_product_id.nil?
+        invalid_properties.push('invalid value for "external_product_id", external_product_id cannot be nil.')
+      end
+
+      if @external_price_id.nil?
+        invalid_properties.push('invalid value for "external_price_id", external_price_id cannot be nil.')
       end
 
       if @stripe_product_id.nil?
@@ -267,8 +313,13 @@ module LicenseManager
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @id.nil?
       return false if @integration_id.nil?
+      return false if @provider.nil?
+      provider_validator = EnumAttributeValidator.new('String', ["stripe", "paddle", "unknown_default_open_api"])
+      return false unless provider_validator.valid?(@provider)
       return false if @product_id.nil?
       return false if @policy_id.nil?
+      return false if @external_product_id.nil?
+      return false if @external_price_id.nil?
       return false if @stripe_product_id.nil?
       return false if @stripe_price_id.nil?
       return false if @product_name.nil?
@@ -299,6 +350,16 @@ module LicenseManager
       @integration_id = integration_id
     end
 
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] provider Object to be assigned
+    def provider=(provider)
+      validator = EnumAttributeValidator.new('String', ["stripe", "paddle", "unknown_default_open_api"])
+      unless validator.valid?(provider)
+        fail ArgumentError, "invalid value for \"provider\", must be one of #{validator.allowable_values}."
+      end
+      @provider = provider
+    end
+
     # Custom attribute writer method with validation
     # @param [Object] product_id Value to be assigned
     def product_id=(product_id)
@@ -317,6 +378,26 @@ module LicenseManager
       end
 
       @policy_id = policy_id
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] external_product_id Value to be assigned
+    def external_product_id=(external_product_id)
+      if external_product_id.nil?
+        fail ArgumentError, 'external_product_id cannot be nil'
+      end
+
+      @external_product_id = external_product_id
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] external_price_id Value to be assigned
+    def external_price_id=(external_price_id)
+      if external_price_id.nil?
+        fail ArgumentError, 'external_price_id cannot be nil'
+      end
+
+      @external_price_id = external_price_id
     end
 
     # Custom attribute writer method with validation
@@ -376,8 +457,11 @@ module LicenseManager
       self.class == o.class &&
           id == o.id &&
           integration_id == o.integration_id &&
+          provider == o.provider &&
           product_id == o.product_id &&
           policy_id == o.policy_id &&
+          external_product_id == o.external_product_id &&
+          external_price_id == o.external_price_id &&
           stripe_product_id == o.stripe_product_id &&
           stripe_price_id == o.stripe_price_id &&
           product_name == o.product_name &&
@@ -397,7 +481,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, integration_id, product_id, policy_id, stripe_product_id, stripe_price_id, product_name, price, recurring, status, status_reason, created_at].hash
+      [id, integration_id, provider, product_id, policy_id, external_product_id, external_price_id, stripe_product_id, stripe_price_id, product_name, price, recurring, status, status_reason, created_at].hash
     end
 
     # Builds the object from hash

@@ -12,11 +12,13 @@ docs/CancelLicense.md
 docs/CancellationReason.md
 docs/CancellationStats.md
 docs/CancellationStatsByReasonInner.md
+docs/ConnectPaddle.md
 docs/ConnectStripe.md
 docs/CreateBillingPortalSession.md
 docs/CreateCustomer.md
 docs/CreateIntegrationMapping.md
 docs/CreateLicense.md
+docs/CreatePaddleMapping.md
 docs/CreatePolicy.md
 docs/CreatePortalLink.md
 docs/CreateProduct.md
@@ -59,6 +61,7 @@ docs/LicenseStatus.md
 docs/LicenseSubscription.md
 docs/LicenseToken.md
 docs/LicensesApi.md
+docs/ListPaddlePrices200Response.md
 docs/ListPolicyEventsTypeParameter.md
 docs/ListStripePrices200Response.md
 docs/LockMaxVersion.md
@@ -72,6 +75,9 @@ docs/MachinesApi.md
 docs/Mrr.md
 docs/MrrByIntervalInner.md
 docs/MrrByPolicyInner.md
+docs/PaddleIntegration.md
+docs/PaddlePermission.md
+docs/PaddlePrice.md
 docs/Pagination.md
 docs/PoliciesApi.md
 docs/Policy.md
@@ -149,11 +155,13 @@ lib/license_manager/models/cancel_license.rb
 lib/license_manager/models/cancellation_reason.rb
 lib/license_manager/models/cancellation_stats.rb
 lib/license_manager/models/cancellation_stats_by_reason_inner.rb
+lib/license_manager/models/connect_paddle.rb
 lib/license_manager/models/connect_stripe.rb
 lib/license_manager/models/create_billing_portal_session.rb
 lib/license_manager/models/create_customer.rb
 lib/license_manager/models/create_integration_mapping.rb
 lib/license_manager/models/create_license.rb
+lib/license_manager/models/create_paddle_mapping.rb
 lib/license_manager/models/create_policy.rb
 lib/license_manager/models/create_portal_link.rb
 lib/license_manager/models/create_product.rb
@@ -192,6 +200,7 @@ lib/license_manager/models/license_stats_activations_by_version_inner.rb
 lib/license_manager/models/license_status.rb
 lib/license_manager/models/license_subscription.rb
 lib/license_manager/models/license_token.rb
+lib/license_manager/models/list_paddle_prices200_response.rb
 lib/license_manager/models/list_policy_events_type_parameter.rb
 lib/license_manager/models/list_stripe_prices200_response.rb
 lib/license_manager/models/lock_max_version.rb
@@ -204,6 +213,9 @@ lib/license_manager/models/machine_list.rb
 lib/license_manager/models/mrr.rb
 lib/license_manager/models/mrr_by_interval_inner.rb
 lib/license_manager/models/mrr_by_policy_inner.rb
+lib/license_manager/models/paddle_integration.rb
+lib/license_manager/models/paddle_permission.rb
+lib/license_manager/models/paddle_price.rb
 lib/license_manager/models/pagination.rb
 lib/license_manager/models/policy.rb
 lib/license_manager/models/policy_duration.rb
@@ -272,11 +284,13 @@ spec/models/cancel_license_spec.rb
 spec/models/cancellation_reason_spec.rb
 spec/models/cancellation_stats_by_reason_inner_spec.rb
 spec/models/cancellation_stats_spec.rb
+spec/models/connect_paddle_spec.rb
 spec/models/connect_stripe_spec.rb
 spec/models/create_billing_portal_session_spec.rb
 spec/models/create_customer_spec.rb
 spec/models/create_integration_mapping_spec.rb
 spec/models/create_license_spec.rb
+spec/models/create_paddle_mapping_spec.rb
 spec/models/create_policy_spec.rb
 spec/models/create_portal_link_spec.rb
 spec/models/create_product_spec.rb
@@ -315,6 +329,7 @@ spec/models/license_stats_spec.rb
 spec/models/license_status_spec.rb
 spec/models/license_subscription_spec.rb
 spec/models/license_token_spec.rb
+spec/models/list_paddle_prices200_response_spec.rb
 spec/models/list_policy_events_type_parameter_spec.rb
 spec/models/list_stripe_prices200_response_spec.rb
 spec/models/lock_max_version_major_after_one_of1_spec.rb
@@ -327,6 +342,9 @@ spec/models/machine_spec.rb
 spec/models/mrr_by_interval_inner_spec.rb
 spec/models/mrr_by_policy_inner_spec.rb
 spec/models/mrr_spec.rb
+spec/models/paddle_integration_spec.rb
+spec/models/paddle_permission_spec.rb
+spec/models/paddle_price_spec.rb
 spec/models/pagination_spec.rb
 spec/models/policy_duration_spec.rb
 spec/models/policy_list_spec.rb

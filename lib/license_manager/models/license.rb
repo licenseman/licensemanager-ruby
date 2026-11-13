@@ -39,6 +39,9 @@ module LicenseManager
     # Id of the Stripe payment intent that paid the license, when it was bought through the Stripe integration. `null` otherwise, or when nothing was paid.
     attr_accessor :stripe_payment_intent_id
 
+    # Id of the Paddle transaction that paid the license, when it was bought through the Paddle integration. `null` otherwise.
+    attr_accessor :paddle_transaction_id
+
     # Maximum number of active machines the license can be used on. `null` when there's no limit. Can be lower than `activeMachineCount` after it was lowered: machines aren't deactivated to match it.
     attr_accessor :max_machines
 
@@ -73,6 +76,12 @@ module LicenseManager
 
     # Id of the Stripe refund of the license's payment once it was canceled, through the Stripe integration. `null` otherwise.
     attr_accessor :stripe_refund_id
+
+    # Id of the Paddle refund adjustment of the license's transaction once it was canceled, through the Paddle integration. `null` otherwise.
+    attr_accessor :paddle_adjustment_id
+
+    # Outcome of the Paddle refund: `pending_approval` while Paddle reviews it, then `approved` or `rejected`. `null` without a Paddle refund.
+    attr_accessor :paddle_refund_status
 
     # Last time the license's settings were edited, not when its key was validated.
     attr_accessor :updated_at
@@ -112,6 +121,7 @@ module LicenseManager
         :'expires_at' => :'expiresAt',
         :'meta' => :'meta',
         :'stripe_payment_intent_id' => :'stripePaymentIntentId',
+        :'paddle_transaction_id' => :'paddleTransactionId',
         :'max_machines' => :'maxMachines',
         :'max_offline_duration_seconds' => :'maxOfflineDurationSeconds',
         :'active_machine_count' => :'activeMachineCount',
@@ -125,6 +135,8 @@ module LicenseManager
         :'subscription' => :'subscription',
         :'cancellation_comment' => :'cancellationComment',
         :'stripe_refund_id' => :'stripeRefundId',
+        :'paddle_adjustment_id' => :'paddleAdjustmentId',
+        :'paddle_refund_status' => :'paddleRefundStatus',
         :'updated_at' => :'updatedAt'
       }
     end
@@ -152,6 +164,7 @@ module LicenseManager
         :'expires_at' => :'Time',
         :'meta' => :'Hash<String, Object>',
         :'stripe_payment_intent_id' => :'String',
+        :'paddle_transaction_id' => :'String',
         :'max_machines' => :'Integer',
         :'max_offline_duration_seconds' => :'Integer',
         :'active_machine_count' => :'Integer',
@@ -165,6 +178,8 @@ module LicenseManager
         :'subscription' => :'LicenseSubscription',
         :'cancellation_comment' => :'String',
         :'stripe_refund_id' => :'String',
+        :'paddle_adjustment_id' => :'String',
+        :'paddle_refund_status' => :'String',
         :'updated_at' => :'Time'
       }
     end
@@ -175,6 +190,7 @@ module LicenseManager
         :'expires_at',
         :'meta',
         :'stripe_payment_intent_id',
+        :'paddle_transaction_id',
         :'max_machines',
         :'last_activated_at',
         :'price',
@@ -184,6 +200,8 @@ module LicenseManager
         :'subscription',
         :'cancellation_comment',
         :'stripe_refund_id',
+        :'paddle_adjustment_id',
+        :'paddle_refund_status',
       ])
     end
 
@@ -275,6 +293,12 @@ module LicenseManager
         self.stripe_payment_intent_id = nil
       end
 
+      if attributes.key?(:'paddle_transaction_id')
+        self.paddle_transaction_id = attributes[:'paddle_transaction_id']
+      else
+        self.paddle_transaction_id = nil
+      end
+
       if attributes.key?(:'max_machines')
         self.max_machines = attributes[:'max_machines']
       else
@@ -351,6 +375,18 @@ module LicenseManager
         self.stripe_refund_id = attributes[:'stripe_refund_id']
       else
         self.stripe_refund_id = nil
+      end
+
+      if attributes.key?(:'paddle_adjustment_id')
+        self.paddle_adjustment_id = attributes[:'paddle_adjustment_id']
+      else
+        self.paddle_adjustment_id = nil
+      end
+
+      if attributes.key?(:'paddle_refund_status')
+        self.paddle_refund_status = attributes[:'paddle_refund_status']
+      else
+        self.paddle_refund_status = nil
       end
 
       if attributes.key?(:'updated_at')
@@ -431,6 +467,8 @@ module LicenseManager
       return false if @active_machine_count.nil?
       return false if @max_version.nil?
       return false if @status.nil?
+      paddle_refund_status_validator = EnumAttributeValidator.new('String', ["pending_approval", "approved", "rejected", "unknown_default_open_api"])
+      return false unless paddle_refund_status_validator.valid?(@paddle_refund_status)
       return false if @updated_at.nil?
       true
     end
@@ -545,6 +583,16 @@ module LicenseManager
       @status = status
     end
 
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] paddle_refund_status Object to be assigned
+    def paddle_refund_status=(paddle_refund_status)
+      validator = EnumAttributeValidator.new('String', ["pending_approval", "approved", "rejected", "unknown_default_open_api"])
+      unless validator.valid?(paddle_refund_status)
+        fail ArgumentError, "invalid value for \"paddle_refund_status\", must be one of #{validator.allowable_values}."
+      end
+      @paddle_refund_status = paddle_refund_status
+    end
+
     # Custom attribute writer method with validation
     # @param [Object] updated_at Value to be assigned
     def updated_at=(updated_at)
@@ -570,6 +618,7 @@ module LicenseManager
           expires_at == o.expires_at &&
           meta == o.meta &&
           stripe_payment_intent_id == o.stripe_payment_intent_id &&
+          paddle_transaction_id == o.paddle_transaction_id &&
           max_machines == o.max_machines &&
           max_offline_duration_seconds == o.max_offline_duration_seconds &&
           active_machine_count == o.active_machine_count &&
@@ -583,6 +632,8 @@ module LicenseManager
           subscription == o.subscription &&
           cancellation_comment == o.cancellation_comment &&
           stripe_refund_id == o.stripe_refund_id &&
+          paddle_adjustment_id == o.paddle_adjustment_id &&
+          paddle_refund_status == o.paddle_refund_status &&
           updated_at == o.updated_at
     end
 
@@ -595,7 +646,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, product_id, policy_id, customer_id, customer, key, created_at, expires_at, meta, stripe_payment_intent_id, max_machines, max_offline_duration_seconds, active_machine_count, last_activated_at, max_version, price, status, cancellable_until, canceled_at, cancellation_reason, subscription, cancellation_comment, stripe_refund_id, updated_at].hash
+      [id, product_id, policy_id, customer_id, customer, key, created_at, expires_at, meta, stripe_payment_intent_id, paddle_transaction_id, max_machines, max_offline_duration_seconds, active_machine_count, last_activated_at, max_version, price, status, cancellable_until, canceled_at, cancellation_reason, subscription, cancellation_comment, stripe_refund_id, paddle_adjustment_id, paddle_refund_status, updated_at].hash
     end
 
     # Builds the object from hash

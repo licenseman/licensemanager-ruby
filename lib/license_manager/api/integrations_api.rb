@@ -145,6 +145,80 @@ module LicenseManager
       return data, status_code, headers
     end
 
+    # Connect Paddle
+    # Connects the Paddle Billing account of the API key for the organization's products of the product's mode, or replaces the key of the existing connection. Checks the key works and has the required permissions, then creates a notification destination on the account, telling the app about payments. Doesn't accept tokens: only API keys and sessions.  **Required role permission**: `integration:create` when called with a session, granted by the member's role. API keys aren't limited by roles.
+    # @param product_id [String] 
+    # @param connect_paddle [ConnectPaddle] 
+    # @param [Hash] opts the optional parameters
+    # @return [PaddleIntegration]
+    def connect_paddle(product_id, connect_paddle, opts = {})
+      data, _status_code, _headers = connect_paddle_with_http_info(product_id, connect_paddle, opts)
+      data
+    end
+
+    # Connect Paddle
+    # Connects the Paddle Billing account of the API key for the organization&#39;s products of the product&#39;s mode, or replaces the key of the existing connection. Checks the key works and has the required permissions, then creates a notification destination on the account, telling the app about payments. Doesn&#39;t accept tokens: only API keys and sessions.  **Required role permission**: &#x60;integration:create&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
+    # @param product_id [String] 
+    # @param connect_paddle [ConnectPaddle] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(PaddleIntegration, Integer, Hash)>] PaddleIntegration data, response status code and response headers
+    def connect_paddle_with_http_info(product_id, connect_paddle, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: IntegrationsApi.connect_paddle ...'
+      end
+      # verify the required parameter 'product_id' is set
+      if @api_client.config.client_side_validation && product_id.nil?
+        fail ArgumentError, "Missing the required parameter 'product_id' when calling IntegrationsApi.connect_paddle"
+      end
+      # verify the required parameter 'connect_paddle' is set
+      if @api_client.config.client_side_validation && connect_paddle.nil?
+        fail ArgumentError, "Missing the required parameter 'connect_paddle' when calling IntegrationsApi.connect_paddle"
+      end
+      # resource path
+      local_var_path = '/v1/products/{productId}/integrations/paddle'.sub('{productId}', CGI.escape(product_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(connect_paddle)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'PaddleIntegration'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['apiKey']
+
+      new_options = opts.merge(
+        :operation => :"IntegrationsApi.connect_paddle",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: IntegrationsApi#connect_paddle\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Connect Stripe
     # Connects the Stripe account of the API key for the organization's products of the product's mode, or replaces the key of the existing connection. Checks the key works and has the required permissions, then creates a webhook endpoint on the account, telling the app about payments. Doesn't accept tokens: only API keys and sessions.  **Required role permission**: `integration:create` when called with a session, granted by the member's role. API keys aren't limited by roles.
     # @param product_id [String] 
@@ -215,6 +289,80 @@ module LicenseManager
       data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: IntegrationsApi#connect_stripe\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Map a Paddle price to a policy
+    # Paying the price then creates licenses of the product with the policy: one per unit bought, or one per subscription for a recurring price. Doesn't accept tokens: only API keys and sessions.  **Required role permission**: `integration:update` when called with a session, granted by the member's role. API keys aren't limited by roles.
+    # @param product_id [String] 
+    # @param create_paddle_mapping [CreatePaddleMapping] 
+    # @param [Hash] opts the optional parameters
+    # @return [IntegrationMapping]
+    def create_paddle_mapping(product_id, create_paddle_mapping, opts = {})
+      data, _status_code, _headers = create_paddle_mapping_with_http_info(product_id, create_paddle_mapping, opts)
+      data
+    end
+
+    # Map a Paddle price to a policy
+    # Paying the price then creates licenses of the product with the policy: one per unit bought, or one per subscription for a recurring price. Doesn&#39;t accept tokens: only API keys and sessions.  **Required role permission**: &#x60;integration:update&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
+    # @param product_id [String] 
+    # @param create_paddle_mapping [CreatePaddleMapping] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(IntegrationMapping, Integer, Hash)>] IntegrationMapping data, response status code and response headers
+    def create_paddle_mapping_with_http_info(product_id, create_paddle_mapping, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: IntegrationsApi.create_paddle_mapping ...'
+      end
+      # verify the required parameter 'product_id' is set
+      if @api_client.config.client_side_validation && product_id.nil?
+        fail ArgumentError, "Missing the required parameter 'product_id' when calling IntegrationsApi.create_paddle_mapping"
+      end
+      # verify the required parameter 'create_paddle_mapping' is set
+      if @api_client.config.client_side_validation && create_paddle_mapping.nil?
+        fail ArgumentError, "Missing the required parameter 'create_paddle_mapping' when calling IntegrationsApi.create_paddle_mapping"
+      end
+      # resource path
+      local_var_path = '/v1/products/{productId}/integrations/paddle/mappings'.sub('{productId}', CGI.escape(product_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(create_paddle_mapping)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'IntegrationMapping'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['apiKey']
+
+      new_options = opts.merge(
+        :operation => :"IntegrationsApi.create_paddle_mapping",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: IntegrationsApi#create_paddle_mapping\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -482,6 +630,69 @@ module LicenseManager
       return data, status_code, headers
     end
 
+    # Get the Paddle integration of a product
+    # The organization connects one Paddle Billing account for its live products, and one sandbox account for its test products. Its mappings tell which Paddle prices create licenses of the product. Doesn't accept tokens: only API keys and sessions.
+    # @param product_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [PaddleIntegration]
+    def get_paddle_integration(product_id, opts = {})
+      data, _status_code, _headers = get_paddle_integration_with_http_info(product_id, opts)
+      data
+    end
+
+    # Get the Paddle integration of a product
+    # The organization connects one Paddle Billing account for its live products, and one sandbox account for its test products. Its mappings tell which Paddle prices create licenses of the product. Doesn&#39;t accept tokens: only API keys and sessions.
+    # @param product_id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(PaddleIntegration, Integer, Hash)>] PaddleIntegration data, response status code and response headers
+    def get_paddle_integration_with_http_info(product_id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: IntegrationsApi.get_paddle_integration ...'
+      end
+      # verify the required parameter 'product_id' is set
+      if @api_client.config.client_side_validation && product_id.nil?
+        fail ArgumentError, "Missing the required parameter 'product_id' when calling IntegrationsApi.get_paddle_integration"
+      end
+      # resource path
+      local_var_path = '/v1/products/{productId}/integrations/paddle'.sub('{productId}', CGI.escape(product_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'PaddleIntegration'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['apiKey']
+
+      new_options = opts.merge(
+        :operation => :"IntegrationsApi.get_paddle_integration",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: IntegrationsApi#get_paddle_integration\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Get the Slack integration of a product
     # Slack channels getting notifications about the product's licenses: purchases, renewals, failed payments and cancellations. Doesn't accept tokens: only API keys and sessions.
     # @param product_id [String] 
@@ -604,6 +815,69 @@ module LicenseManager
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: IntegrationsApi#get_stripe_integration\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # List the Paddle prices of an integration
+    # Active catalog prices of active products of the Paddle account, the ones that can be mapped, up to 500. Doesn't accept tokens: only API keys and sessions.
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [ListPaddlePrices200Response]
+    def list_paddle_prices(id, opts = {})
+      data, _status_code, _headers = list_paddle_prices_with_http_info(id, opts)
+      data
+    end
+
+    # List the Paddle prices of an integration
+    # Active catalog prices of active products of the Paddle account, the ones that can be mapped, up to 500. Doesn&#39;t accept tokens: only API keys and sessions.
+    # @param id [String] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(ListPaddlePrices200Response, Integer, Hash)>] ListPaddlePrices200Response data, response status code and response headers
+    def list_paddle_prices_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: IntegrationsApi.list_paddle_prices ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling IntegrationsApi.list_paddle_prices"
+      end
+      # resource path
+      local_var_path = '/v1/integrations/{id}/paddle/prices'.sub('{id}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'ListPaddlePrices200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['apiKey']
+
+      new_options = opts.merge(
+        :operation => :"IntegrationsApi.list_paddle_prices",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: IntegrationsApi#list_paddle_prices\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
