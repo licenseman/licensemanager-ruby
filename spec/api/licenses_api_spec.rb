@@ -105,6 +105,19 @@ describe 'LicensesApi' do
     end
   end
 
+  # unit tests for import_licenses
+  # Import licenses
+  # Creates up to 500 licenses with their current keys, like when moving from another license manager or Lemon Squeezy, in one request. Each license is created like with &#x60;createLicense&#x60;, which describes the defaults, and never emails its key. The licenses are imported one by one: one that fails doesn&#39;t stop the others, and the response tells the result of each.  A key already used by a license of the product is skipped, so an interrupted import can be sent again.  With a &#x60;subscription&#x60;, the license is kept valid by the Stripe or Paddle subscription, rather than one created by its next payment.  **Required role permission**: &#x60;license:create&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
+  # @param product_id 
+  # @param import_licenses 
+  # @param [Hash] opts the optional parameters
+  # @return [ImportLicensesResult]
+  describe 'import_licenses test' do
+    it 'should work' do
+      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
+    end
+  end
+
   # unit tests for list_customer_licenses
   # List the licenses of a customer
   # Sorting by &#x60;lastActivatedAt&#x60; puts the licenses never activated last in both orders. Sorting by &#x60;price&#x60; compares the amounts whatever their currency, and puts the licenses without a price last in both orders.  **Token access**: customer tokens with the &#x60;license:read&#x60; permission (or the matching write one). A customer token reaches its own licenses.

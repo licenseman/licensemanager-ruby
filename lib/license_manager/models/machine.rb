@@ -38,6 +38,15 @@ module LicenseManager
     # When the license was last validated on the machine.
     attr_accessor :last_validated_at
 
+    # ISO 3166-1 alpha-2 code of the country of the IP address the license was last successfully validated from on the machine. `null` until it's looked up, shortly after, or when it can't be.
+    attr_accessor :country
+
+    # Approximate latitude of the IP address the license was last successfully validated from on the machine. `null` until it's looked up, shortly after, or when it can't be.
+    attr_accessor :latitude
+
+    # Approximate longitude of the IP address the license was last successfully validated from on the machine. `null` until it's looked up, shortly after, or when it can't be.
+    attr_accessor :longitude
+
     attr_accessor :created_at
 
     attr_accessor :updated_at
@@ -76,6 +85,9 @@ module LicenseManager
         :'version' => :'version',
         :'overridden_by_machine_id' => :'overriddenByMachineId',
         :'last_validated_at' => :'lastValidatedAt',
+        :'country' => :'country',
+        :'latitude' => :'latitude',
+        :'longitude' => :'longitude',
         :'created_at' => :'createdAt',
         :'updated_at' => :'updatedAt'
       }
@@ -103,6 +115,9 @@ module LicenseManager
         :'version' => :'String',
         :'overridden_by_machine_id' => :'String',
         :'last_validated_at' => :'Time',
+        :'country' => :'String',
+        :'latitude' => :'Float',
+        :'longitude' => :'Float',
         :'created_at' => :'Time',
         :'updated_at' => :'Time'
       }
@@ -116,6 +131,9 @@ module LicenseManager
         :'version',
         :'overridden_by_machine_id',
         :'last_validated_at',
+        :'country',
+        :'latitude',
+        :'longitude',
       ])
     end
 
@@ -197,6 +215,24 @@ module LicenseManager
         self.last_validated_at = attributes[:'last_validated_at']
       else
         self.last_validated_at = nil
+      end
+
+      if attributes.key?(:'country')
+        self.country = attributes[:'country']
+      else
+        self.country = nil
+      end
+
+      if attributes.key?(:'latitude')
+        self.latitude = attributes[:'latitude']
+      else
+        self.latitude = nil
+      end
+
+      if attributes.key?(:'longitude')
+        self.longitude = attributes[:'longitude']
+      else
+        self.longitude = nil
       end
 
       if attributes.key?(:'created_at')
@@ -333,6 +369,9 @@ module LicenseManager
           version == o.version &&
           overridden_by_machine_id == o.overridden_by_machine_id &&
           last_validated_at == o.last_validated_at &&
+          country == o.country &&
+          latitude == o.latitude &&
+          longitude == o.longitude &&
           created_at == o.created_at &&
           updated_at == o.updated_at
     end
@@ -346,7 +385,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, license_id, fingerprint, platform, name, status, version, overridden_by_machine_id, last_validated_at, created_at, updated_at].hash
+      [id, license_id, fingerprint, platform, name, status, version, overridden_by_machine_id, last_validated_at, country, latitude, longitude, created_at, updated_at].hash
     end
 
     # Builds the object from hash

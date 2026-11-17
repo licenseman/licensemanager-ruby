@@ -25,6 +25,7 @@
 | **activations_by_version** | [**Array&lt;ProductStatsActivationsByVersionInner&gt;**](ProductStatsActivationsByVersionInner.md) | Successful activations of the licenses of the product each day, per version of the application, from the most recent one. |  |
 | **active_machines_by_version** | [**Array&lt;ProductStatsActiveMachinesByVersionInner&gt;**](ProductStatsActiveMachinesByVersionInner.md) | Number of active machines running each version of the application, from the most recent one. |  |
 | **active_machines_by_platform** | [**Array&lt;ProductStatsActiveMachinesByPlatformInner&gt;**](ProductStatsActiveMachinesByPlatformInner.md) | Number of active machines on each platform, from the one with the most machines. |  |
+| **active_machines_by_country** | [**Array&lt;ProductStatsActiveMachinesByCountryInner&gt;**](ProductStatsActiveMachinesByCountryInner.md) | Number of active machines in each country, from the one with the most machines. |  |
 
 ## Example
 
@@ -52,7 +53,8 @@ instance = LicenseManager::ProductStats.new(
   revenue: null,
   activations_by_version: null,
   active_machines_by_version: null,
-  active_machines_by_platform: null
+  active_machines_by_platform: null,
+  active_machines_by_country: null
 )
 ```
 

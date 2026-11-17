@@ -78,6 +78,9 @@ module LicenseManager
     # Number of active machines on each platform, from the one with the most machines.
     attr_accessor :active_machines_by_platform
 
+    # Number of active machines in each country, from the one with the most machines.
+    attr_accessor :active_machines_by_country
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -101,7 +104,8 @@ module LicenseManager
         :'revenue' => :'revenue',
         :'activations_by_version' => :'activationsByVersion',
         :'active_machines_by_version' => :'activeMachinesByVersion',
-        :'active_machines_by_platform' => :'activeMachinesByPlatform'
+        :'active_machines_by_platform' => :'activeMachinesByPlatform',
+        :'active_machines_by_country' => :'activeMachinesByCountry'
       }
     end
 
@@ -138,7 +142,8 @@ module LicenseManager
         :'revenue' => :'Array<Revenue>',
         :'activations_by_version' => :'Array<ProductStatsActivationsByVersionInner>',
         :'active_machines_by_version' => :'Array<ProductStatsActiveMachinesByVersionInner>',
-        :'active_machines_by_platform' => :'Array<ProductStatsActiveMachinesByPlatformInner>'
+        :'active_machines_by_platform' => :'Array<ProductStatsActiveMachinesByPlatformInner>',
+        :'active_machines_by_country' => :'Array<ProductStatsActiveMachinesByCountryInner>'
       }
     end
 
@@ -319,6 +324,14 @@ module LicenseManager
       else
         self.active_machines_by_platform = nil
       end
+
+      if attributes.key?(:'active_machines_by_country')
+        if (value = attributes[:'active_machines_by_country']).is_a?(Array)
+          self.active_machines_by_country = value
+        end
+      else
+        self.active_machines_by_country = nil
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -402,6 +415,10 @@ module LicenseManager
         invalid_properties.push('invalid value for "active_machines_by_platform", active_machines_by_platform cannot be nil.')
       end
 
+      if @active_machines_by_country.nil?
+        invalid_properties.push('invalid value for "active_machines_by_country", active_machines_by_country cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -428,6 +445,7 @@ module LicenseManager
       return false if @activations_by_version.nil?
       return false if @active_machines_by_version.nil?
       return false if @active_machines_by_platform.nil?
+      return false if @active_machines_by_country.nil?
       true
     end
 
@@ -621,6 +639,16 @@ module LicenseManager
       @active_machines_by_platform = active_machines_by_platform
     end
 
+    # Custom attribute writer method with validation
+    # @param [Object] active_machines_by_country Value to be assigned
+    def active_machines_by_country=(active_machines_by_country)
+      if active_machines_by_country.nil?
+        fail ArgumentError, 'active_machines_by_country cannot be nil'
+      end
+
+      @active_machines_by_country = active_machines_by_country
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -646,7 +674,8 @@ module LicenseManager
           revenue == o.revenue &&
           activations_by_version == o.activations_by_version &&
           active_machines_by_version == o.active_machines_by_version &&
-          active_machines_by_platform == o.active_machines_by_platform
+          active_machines_by_platform == o.active_machines_by_platform &&
+          active_machines_by_country == o.active_machines_by_country
     end
 
     # @see the `==` method
@@ -658,7 +687,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [license_count, active_license_count, new_license_count, expiring_license_count, expired_license_count, active_machine_count, in_use_license_count, seat_count, used_seat_count, full_license_count, days, months, new_licenses_by_day, new_licenses_by_month, new_licenses_by_policy, cancellation, subscriptions, revenue, activations_by_version, active_machines_by_version, active_machines_by_platform].hash
+      [license_count, active_license_count, new_license_count, expiring_license_count, expired_license_count, active_machine_count, in_use_license_count, seat_count, used_seat_count, full_license_count, days, months, new_licenses_by_day, new_licenses_by_month, new_licenses_by_policy, cancellation, subscriptions, revenue, activations_by_version, active_machines_by_version, active_machines_by_platform, active_machines_by_country].hash
     end
 
     # Builds the object from hash

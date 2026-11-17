@@ -34,6 +34,15 @@ module LicenseManager
 
     attr_accessor :actor
 
+    # ISO 3166-1 alpha-2 code of the country of the IP address the request came from, for `license.validated` and `license.validation_failed` events. `null` until it's looked up, shortly after, or when it can't be.
+    attr_accessor :country
+
+    # Approximate latitude of the IP address the request came from, for `license.validated` and `license.validation_failed` events. `null` until it's looked up, shortly after, or when it can't be.
+    attr_accessor :latitude
+
+    # Approximate longitude of the IP address the request came from, for `license.validated` and `license.validation_failed` events. `null` until it's looked up, shortly after, or when it can't be.
+    attr_accessor :longitude
+
     class EnumAttributeValidator
       attr_reader :datatype
       attr_reader :allowable_values
@@ -67,7 +76,10 @@ module LicenseManager
         :'license_id' => :'licenseId',
         :'machine_id' => :'machineId',
         :'machine' => :'machine',
-        :'actor' => :'actor'
+        :'actor' => :'actor',
+        :'country' => :'country',
+        :'latitude' => :'latitude',
+        :'longitude' => :'longitude'
       }
     end
 
@@ -92,7 +104,10 @@ module LicenseManager
         :'license_id' => :'String',
         :'machine_id' => :'String',
         :'machine' => :'EventMachine',
-        :'actor' => :'EventActor'
+        :'actor' => :'EventActor',
+        :'country' => :'String',
+        :'latitude' => :'Float',
+        :'longitude' => :'Float'
       }
     end
 
@@ -103,7 +118,10 @@ module LicenseManager
         :'license_id',
         :'machine_id',
         :'machine',
-        :'actor'
+        :'actor',
+        :'country',
+        :'latitude',
+        :'longitude'
       ])
     end
 
@@ -187,6 +205,24 @@ module LicenseManager
         self.actor = attributes[:'actor']
       else
         self.actor = nil
+      end
+
+      if attributes.key?(:'country')
+        self.country = attributes[:'country']
+      else
+        self.country = nil
+      end
+
+      if attributes.key?(:'latitude')
+        self.latitude = attributes[:'latitude']
+      else
+        self.latitude = nil
+      end
+
+      if attributes.key?(:'longitude')
+        self.longitude = attributes[:'longitude']
+      else
+        self.longitude = nil
       end
     end
 
@@ -278,7 +314,10 @@ module LicenseManager
           license_id == o.license_id &&
           machine_id == o.machine_id &&
           machine == o.machine &&
-          actor == o.actor
+          actor == o.actor &&
+          country == o.country &&
+          latitude == o.latitude &&
+          longitude == o.longitude
     end
 
     # @see the `==` method
@@ -290,7 +329,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, type, created_at, payload, policy_id, license_id, machine_id, machine, actor].hash
+      [id, type, created_at, payload, policy_id, license_id, machine_id, machine, actor, country, latitude, longitude].hash
     end
 
     # Builds the object from hash

@@ -44,6 +44,12 @@ docs/EventMachine.md
 docs/EventType.md
 docs/EventsApi.md
 docs/FixedMaxVersion.md
+docs/ImportLicense.md
+docs/ImportLicenseResult.md
+docs/ImportLicenseResultError.md
+docs/ImportLicenseSubscription.md
+docs/ImportLicenses.md
+docs/ImportLicensesResult.md
 docs/Integration.md
 docs/IntegrationMapping.md
 docs/IntegrationMappingRecurring.md
@@ -100,6 +106,7 @@ docs/Product.md
 docs/ProductList.md
 docs/ProductStats.md
 docs/ProductStatsActivationsByVersionInner.md
+docs/ProductStatsActiveMachinesByCountryInner.md
 docs/ProductStatsActiveMachinesByPlatformInner.md
 docs/ProductStatsActiveMachinesByVersionInner.md
 docs/ProductStatsNewLicensesByPolicyInner.md
@@ -185,6 +192,12 @@ lib/license_manager/models/event_list.rb
 lib/license_manager/models/event_machine.rb
 lib/license_manager/models/event_type.rb
 lib/license_manager/models/fixed_max_version.rb
+lib/license_manager/models/import_license.rb
+lib/license_manager/models/import_license_result.rb
+lib/license_manager/models/import_license_result_error.rb
+lib/license_manager/models/import_license_subscription.rb
+lib/license_manager/models/import_licenses.rb
+lib/license_manager/models/import_licenses_result.rb
 lib/license_manager/models/integration.rb
 lib/license_manager/models/integration_mapping.rb
 lib/license_manager/models/integration_mapping_recurring.rb
@@ -236,6 +249,7 @@ lib/license_manager/models/product.rb
 lib/license_manager/models/product_list.rb
 lib/license_manager/models/product_stats.rb
 lib/license_manager/models/product_stats_activations_by_version_inner.rb
+lib/license_manager/models/product_stats_active_machines_by_country_inner.rb
 lib/license_manager/models/product_stats_active_machines_by_platform_inner.rb
 lib/license_manager/models/product_stats_active_machines_by_version_inner.rb
 lib/license_manager/models/product_stats_new_licenses_by_policy_inner.rb
@@ -314,6 +328,12 @@ spec/models/event_machine_spec.rb
 spec/models/event_spec.rb
 spec/models/event_type_spec.rb
 spec/models/fixed_max_version_spec.rb
+spec/models/import_license_result_error_spec.rb
+spec/models/import_license_result_spec.rb
+spec/models/import_license_spec.rb
+spec/models/import_license_subscription_spec.rb
+spec/models/import_licenses_result_spec.rb
+spec/models/import_licenses_spec.rb
 spec/models/integration_mapping_recurring_spec.rb
 spec/models/integration_mapping_spec.rb
 spec/models/integration_spec.rb
@@ -364,6 +384,7 @@ spec/models/price_spec.rb
 spec/models/product_list_spec.rb
 spec/models/product_spec.rb
 spec/models/product_stats_activations_by_version_inner_spec.rb
+spec/models/product_stats_active_machines_by_country_inner_spec.rb
 spec/models/product_stats_active_machines_by_platform_inner_spec.rb
 spec/models/product_stats_active_machines_by_version_inner_spec.rb
 spec/models/product_stats_new_licenses_by_policy_inner_spec.rb

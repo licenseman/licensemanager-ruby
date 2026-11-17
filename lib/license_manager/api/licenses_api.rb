@@ -413,6 +413,80 @@ module LicenseManager
       return data, status_code, headers
     end
 
+    # Import licenses
+    # Creates up to 500 licenses with their current keys, like when moving from another license manager or Lemon Squeezy, in one request. Each license is created like with `createLicense`, which describes the defaults, and never emails its key. The licenses are imported one by one: one that fails doesn't stop the others, and the response tells the result of each.  A key already used by a license of the product is skipped, so an interrupted import can be sent again.  With a `subscription`, the license is kept valid by the Stripe or Paddle subscription, rather than one created by its next payment.  **Required role permission**: `license:create` when called with a session, granted by the member's role. API keys aren't limited by roles.
+    # @param product_id [String] 
+    # @param import_licenses [ImportLicenses] 
+    # @param [Hash] opts the optional parameters
+    # @return [ImportLicensesResult]
+    def import_licenses(product_id, import_licenses, opts = {})
+      data, _status_code, _headers = import_licenses_with_http_info(product_id, import_licenses, opts)
+      data
+    end
+
+    # Import licenses
+    # Creates up to 500 licenses with their current keys, like when moving from another license manager or Lemon Squeezy, in one request. Each license is created like with &#x60;createLicense&#x60;, which describes the defaults, and never emails its key. The licenses are imported one by one: one that fails doesn&#39;t stop the others, and the response tells the result of each.  A key already used by a license of the product is skipped, so an interrupted import can be sent again.  With a &#x60;subscription&#x60;, the license is kept valid by the Stripe or Paddle subscription, rather than one created by its next payment.  **Required role permission**: &#x60;license:create&#x60; when called with a session, granted by the member&#39;s role. API keys aren&#39;t limited by roles.
+    # @param product_id [String] 
+    # @param import_licenses [ImportLicenses] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(ImportLicensesResult, Integer, Hash)>] ImportLicensesResult data, response status code and response headers
+    def import_licenses_with_http_info(product_id, import_licenses, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: LicensesApi.import_licenses ...'
+      end
+      # verify the required parameter 'product_id' is set
+      if @api_client.config.client_side_validation && product_id.nil?
+        fail ArgumentError, "Missing the required parameter 'product_id' when calling LicensesApi.import_licenses"
+      end
+      # verify the required parameter 'import_licenses' is set
+      if @api_client.config.client_side_validation && import_licenses.nil?
+        fail ArgumentError, "Missing the required parameter 'import_licenses' when calling LicensesApi.import_licenses"
+      end
+      # resource path
+      local_var_path = '/v1/products/{productId}/licenses/import'.sub('{productId}', CGI.escape(product_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(import_licenses)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'ImportLicensesResult'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['apiKey']
+
+      new_options = opts.merge(
+        :operation => :"LicensesApi.import_licenses",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: LicensesApi#import_licenses\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # List the licenses of a customer
     # Sorting by `lastActivatedAt` puts the licenses never activated last in both orders. Sorting by `price` compares the amounts whatever their currency, and puts the licenses without a price last in both orders.  **Token access**: customer tokens with the `license:read` permission (or the matching write one). A customer token reaches its own licenses.
     # @param customer_id [String] 

@@ -10,6 +10,7 @@ All URIs are relative to *https://api.licensemanager.dev*
 | [**get_license**](LicensesApi.md#get_license) | **GET** /v1/licenses/{id} | Get a license |
 | [**get_license_stats**](LicensesApi.md#get_license_stats) | **GET** /v1/licenses/{id}/stats | Get the stats of a license |
 | [**get_signing_key**](LicensesApi.md#get_signing_key) | **GET** /v1/signing-key | Get the organization&#39;s signing key |
+| [**import_licenses**](LicensesApi.md#import_licenses) | **POST** /v1/products/{productId}/licenses/import | Import licenses |
 | [**list_customer_licenses**](LicensesApi.md#list_customer_licenses) | **GET** /v1/customers/{customerId}/licenses | List the licenses of a customer |
 | [**list_licenses**](LicensesApi.md#list_licenses) | **GET** /v1/products/{productId}/licenses | List the licenses of a product |
 | [**send_license_keys**](LicensesApi.md#send_license_keys) | **POST** /v1/licenses/send-keys | Email license keys to their customers |
@@ -446,6 +447,79 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## import_licenses
+
+> <ImportLicensesResult> import_licenses(product_id, import_licenses)
+
+Import licenses
+
+Creates up to 500 licenses with their current keys, like when moving from another license manager or Lemon Squeezy, in one request. Each license is created like with `createLicense`, which describes the defaults, and never emails its key. The licenses are imported one by one: one that fails doesn't stop the others, and the response tells the result of each.  A key already used by a license of the product is skipped, so an interrupted import can be sent again.  With a `subscription`, the license is kept valid by the Stripe or Paddle subscription, rather than one created by its next payment.  **Required role permission**: `license:create` when called with a session, granted by the member's role. API keys aren't limited by roles.
+
+### Examples
+
+```ruby
+require 'time'
+require 'license_manager'
+# setup authorization
+LicenseManager.configure do |config|
+  # Configure API key authorization: apiKey
+  config.api_key['x-api-key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['x-api-key'] = 'Bearer'
+end
+
+api_instance = LicenseManager::LicensesApi.new
+product_id = 'x7Kp2QaZ' # String | 
+import_licenses = LicenseManager::ImportLicenses.new({licenses: [LicenseManager::ImportLicense.new({email: 'jane@example.com', key: '7KQ2M-X9ZPA-H4TRC-WN6EY-B3JDF'})]}) # ImportLicenses | 
+
+begin
+  # Import licenses
+  result = api_instance.import_licenses(product_id, import_licenses)
+  p result
+rescue LicenseManager::ApiError => e
+  puts "Error when calling LicensesApi->import_licenses: #{e}"
+end
+```
+
+#### Using the import_licenses_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<ImportLicensesResult>, Integer, Hash)> import_licenses_with_http_info(product_id, import_licenses)
+
+```ruby
+begin
+  # Import licenses
+  data, status_code, headers = api_instance.import_licenses_with_http_info(product_id, import_licenses)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <ImportLicensesResult>
+rescue LicenseManager::ApiError => e
+  puts "Error when calling LicensesApi->import_licenses_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **product_id** | **String** |  |  |
+| **import_licenses** | [**ImportLicenses**](ImportLicenses.md) |  |  |
+
+### Return type
+
+[**ImportLicensesResult**](ImportLicensesResult.md)
+
+### Authorization
+
+[apiKey](../README.md#apiKey)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 
