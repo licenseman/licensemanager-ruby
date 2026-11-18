@@ -45,12 +45,6 @@ describe LicenseManager::PortalSettings do
     end
   end
 
-  describe 'test attribute "return_url"' do
-    it 'should work' do
-      # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/
-    end
-  end
-
   describe 'test attribute "return_domains"' do
     it 'should work' do
       # assertion here. ref: https://rspec.info/features/3-12/rspec-expectations/built-in-matchers/

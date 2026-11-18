@@ -30,7 +30,7 @@ module LicenseManager
     # Color of the inputs and buttons, as `#rrggbb`. `null` for the default color.
     attr_accessor :accent_color
 
-    # Link back to the product's website: the requested `returnUrl` when its domain is allowed, the product's default return link otherwise. `null` for no link.
+    # Link back to the product's website: the requested `returnUrl` when its domain is allowed, the product's website otherwise. `null` for no link.
     attr_accessor :return_url
 
     # Attribute mapping from ruby-style variable name to JSON key.

@@ -27,6 +27,12 @@ module LicenseManager
     # Public URL of the product's logo, shown in the web app and the customer portal. `null` without a logo.
     attr_accessor :logo_url
 
+    # The product's website, linked from the customer portal, when its URL has no allowed `return_url`, and from the emails sent to customers. `null` for no link.
+    attr_accessor :website_url
+
+    # Where customers download the product, linked from the email sending their license keys. `null` for no link.
+    attr_accessor :download_url
+
     attr_accessor :portal
 
     # Whether a new machine validating a license already on its max machines takes the place of the license's machine validated the longest ago, rather than being refused with `machine_limit_reached`. When the replaced machine is validated again, it takes its place back and the machine that replaced it is locked. See `validateKey`.
@@ -44,6 +50,8 @@ module LicenseManager
         :'name' => :'name',
         :'is_test_from_product_id' => :'isTestFromProductId',
         :'logo_url' => :'logoUrl',
+        :'website_url' => :'websiteUrl',
+        :'download_url' => :'downloadUrl',
         :'portal' => :'portal',
         :'auto_machine_change' => :'autoMachineChange',
         :'created_at' => :'createdAt',
@@ -69,6 +77,8 @@ module LicenseManager
         :'name' => :'String',
         :'is_test_from_product_id' => :'String',
         :'logo_url' => :'String',
+        :'website_url' => :'String',
+        :'download_url' => :'String',
         :'portal' => :'PortalSettings',
         :'auto_machine_change' => :'Boolean',
         :'created_at' => :'Time',
@@ -81,6 +91,8 @@ module LicenseManager
       Set.new([
         :'is_test_from_product_id',
         :'logo_url',
+        :'website_url',
+        :'download_url',
       ])
     end
 
@@ -140,6 +152,18 @@ module LicenseManager
         self.logo_url = nil
       end
 
+      if attributes.key?(:'website_url')
+        self.website_url = attributes[:'website_url']
+      else
+        self.website_url = nil
+      end
+
+      if attributes.key?(:'download_url')
+        self.download_url = attributes[:'download_url']
+      else
+        self.download_url = nil
+      end
+
       if attributes.key?(:'portal')
         self.portal = attributes[:'portal']
       else
@@ -182,6 +206,14 @@ module LicenseManager
         invalid_properties.push('invalid value for "name", name cannot be nil.')
       end
 
+      if @website_url.to_s.length > 2000
+        invalid_properties.push('invalid value for "website_url", the character length must be smaller than or equal to 2000.')
+      end
+
+      if @download_url.to_s.length > 2000
+        invalid_properties.push('invalid value for "download_url", the character length must be smaller than or equal to 2000.')
+      end
+
       if @portal.nil?
         invalid_properties.push('invalid value for "portal", portal cannot be nil.')
       end
@@ -208,6 +240,8 @@ module LicenseManager
       return false if @id.nil?
       return false if @slug.nil?
       return false if @name.nil?
+      return false if @website_url.to_s.length > 2000
+      return false if @download_url.to_s.length > 2000
       return false if @portal.nil?
       return false if @auto_machine_change.nil?
       return false if @created_at.nil?
@@ -243,6 +277,26 @@ module LicenseManager
       end
 
       @name = name
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] website_url Value to be assigned
+    def website_url=(website_url)
+      if !website_url.nil? && website_url.to_s.length > 2000
+        fail ArgumentError, 'invalid value for "website_url", the character length must be smaller than or equal to 2000.'
+      end
+
+      @website_url = website_url
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] download_url Value to be assigned
+    def download_url=(download_url)
+      if !download_url.nil? && download_url.to_s.length > 2000
+        fail ArgumentError, 'invalid value for "download_url", the character length must be smaller than or equal to 2000.'
+      end
+
+      @download_url = download_url
     end
 
     # Custom attribute writer method with validation
@@ -295,6 +349,8 @@ module LicenseManager
           name == o.name &&
           is_test_from_product_id == o.is_test_from_product_id &&
           logo_url == o.logo_url &&
+          website_url == o.website_url &&
+          download_url == o.download_url &&
           portal == o.portal &&
           auto_machine_change == o.auto_machine_change &&
           created_at == o.created_at &&
@@ -310,7 +366,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, slug, name, is_test_from_product_id, logo_url, portal, auto_machine_change, created_at, updated_at].hash
+      [id, slug, name, is_test_from_product_id, logo_url, website_url, download_url, portal, auto_machine_change, created_at, updated_at].hash
     end
 
     # Builds the object from hash

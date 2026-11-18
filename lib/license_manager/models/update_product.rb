@@ -20,6 +20,12 @@ module LicenseManager
     # Unique within the organization. Defaults to the name, lower cased, without accents and special characters. Starts with `test_` in test products, which is added when missing, and removed in live products.
     attr_accessor :slug
 
+    # The product's website, linked from the customer portal, when its URL has no allowed `return_url`, and from the emails sent to customers. `null` for no link.
+    attr_accessor :website_url
+
+    # Where customers download the product, linked from the email sending their license keys. `null` for no link.
+    attr_accessor :download_url
+
     attr_accessor :portal
 
     # Whether a new machine validating a license already on its max machines takes the place of the license's machine validated the longest ago, rather than being refused with `machine_limit_reached`. When the replaced machine is validated again, it takes its place back and the machine that replaced it is locked. See `validateKey`.
@@ -30,6 +36,8 @@ module LicenseManager
       {
         :'name' => :'name',
         :'slug' => :'slug',
+        :'website_url' => :'websiteUrl',
+        :'download_url' => :'downloadUrl',
         :'portal' => :'portal',
         :'auto_machine_change' => :'autoMachineChange'
       }
@@ -50,6 +58,8 @@ module LicenseManager
       {
         :'name' => :'String',
         :'slug' => :'String',
+        :'website_url' => :'String',
+        :'download_url' => :'String',
         :'portal' => :'UpdateProductPortal',
         :'auto_machine_change' => :'Boolean'
       }
@@ -58,6 +68,8 @@ module LicenseManager
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'website_url',
+        :'download_url',
       ])
     end
 
@@ -95,6 +107,14 @@ module LicenseManager
         self.slug = attributes[:'slug']
       end
 
+      if attributes.key?(:'website_url')
+        self.website_url = attributes[:'website_url']
+      end
+
+      if attributes.key?(:'download_url')
+        self.download_url = attributes[:'download_url']
+      end
+
       if attributes.key?(:'portal')
         self.portal = attributes[:'portal']
       end
@@ -130,6 +150,14 @@ module LicenseManager
         invalid_properties.push("invalid value for \"slug\", must conform to the pattern #{pattern}.")
       end
 
+      if !@website_url.nil? && @website_url.to_s.length > 2000
+        invalid_properties.push('invalid value for "website_url", the character length must be smaller than or equal to 2000.')
+      end
+
+      if !@download_url.nil? && @download_url.to_s.length > 2000
+        invalid_properties.push('invalid value for "download_url", the character length must be smaller than or equal to 2000.')
+      end
+
       invalid_properties
     end
 
@@ -142,6 +170,8 @@ module LicenseManager
       return false if !@slug.nil? && @slug.to_s.length > 100
       return false if !@slug.nil? && @slug.to_s.length < 1
       return false if !@slug.nil? && @slug !~ Regexp.new(/^(test_)?[a-z0-9]+(-[a-z0-9]+)*$/)
+      return false if !@website_url.nil? && @website_url.to_s.length > 2000
+      return false if !@download_url.nil? && @download_url.to_s.length > 2000
       true
     end
 
@@ -186,6 +216,26 @@ module LicenseManager
       @slug = slug
     end
 
+    # Custom attribute writer method with validation
+    # @param [Object] website_url Value to be assigned
+    def website_url=(website_url)
+      if !website_url.nil? && website_url.to_s.length > 2000
+        fail ArgumentError, 'invalid value for "website_url", the character length must be smaller than or equal to 2000.'
+      end
+
+      @website_url = website_url
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] download_url Value to be assigned
+    def download_url=(download_url)
+      if !download_url.nil? && download_url.to_s.length > 2000
+        fail ArgumentError, 'invalid value for "download_url", the character length must be smaller than or equal to 2000.'
+      end
+
+      @download_url = download_url
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -193,6 +243,8 @@ module LicenseManager
       self.class == o.class &&
           name == o.name &&
           slug == o.slug &&
+          website_url == o.website_url &&
+          download_url == o.download_url &&
           portal == o.portal &&
           auto_machine_change == o.auto_machine_change
     end
@@ -206,7 +258,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, slug, portal, auto_machine_change].hash
+      [name, slug, website_url, download_url, portal, auto_machine_change].hash
     end
 
     # Builds the object from hash

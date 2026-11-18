@@ -24,10 +24,7 @@ module LicenseManager
     # Color of the portal's inputs and buttons, as `#rrggbb`, stored lower cased. `null` for the default color.
     attr_accessor :accent_color
 
-    # Link back to your website shown in the portal, when the portal's URL has no allowed `return_url`. `null` for no link.
-    attr_accessor :return_url
-
-    # Domains the portal's `return_url` query parameter may point to, their subdomains included. Other return URLs are ignored, in favor of `returnUrl`.
+    # Domains the portal's `return_url` query parameter may point to, their subdomains included. Other return URLs are ignored, in favor of the product's `websiteUrl`.
     attr_accessor :return_domains
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -36,7 +33,6 @@ module LicenseManager
         :'enabled' => :'enabled',
         :'brand_color' => :'brandColor',
         :'accent_color' => :'accentColor',
-        :'return_url' => :'returnUrl',
         :'return_domains' => :'returnDomains'
       }
     end
@@ -57,7 +53,6 @@ module LicenseManager
         :'enabled' => :'Boolean',
         :'brand_color' => :'String',
         :'accent_color' => :'String',
-        :'return_url' => :'String',
         :'return_domains' => :'Array<String>'
       }
     end
@@ -67,7 +62,6 @@ module LicenseManager
       Set.new([
         :'brand_color',
         :'accent_color',
-        :'return_url',
       ])
     end
 
@@ -109,10 +103,6 @@ module LicenseManager
         self.accent_color = attributes[:'accent_color']
       end
 
-      if attributes.key?(:'return_url')
-        self.return_url = attributes[:'return_url']
-      end
-
       if attributes.key?(:'return_domains')
         if (value = attributes[:'return_domains']).is_a?(Array)
           self.return_domains = value
@@ -135,10 +125,6 @@ module LicenseManager
         invalid_properties.push("invalid value for \"accent_color\", must conform to the pattern #{pattern}.")
       end
 
-      if !@return_url.nil? && @return_url.to_s.length > 2000
-        invalid_properties.push('invalid value for "return_url", the character length must be smaller than or equal to 2000.')
-      end
-
       if !@return_domains.nil? && @return_domains.length > 20
         invalid_properties.push('invalid value for "return_domains", number of items must be less than or equal to 20.')
       end
@@ -152,7 +138,6 @@ module LicenseManager
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if !@brand_color.nil? && @brand_color !~ Regexp.new(/^#[0-9a-f]{6}$\/i/)
       return false if !@accent_color.nil? && @accent_color !~ Regexp.new(/^#[0-9a-f]{6}$\/i/)
-      return false if !@return_url.nil? && @return_url.to_s.length > 2000
       return false if !@return_domains.nil? && @return_domains.length > 20
       true
     end
@@ -180,16 +165,6 @@ module LicenseManager
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] return_url Value to be assigned
-    def return_url=(return_url)
-      if !return_url.nil? && return_url.to_s.length > 2000
-        fail ArgumentError, 'invalid value for "return_url", the character length must be smaller than or equal to 2000.'
-      end
-
-      @return_url = return_url
-    end
-
-    # Custom attribute writer method with validation
     # @param [Object] return_domains Value to be assigned
     def return_domains=(return_domains)
       if return_domains.nil?
@@ -211,7 +186,6 @@ module LicenseManager
           enabled == o.enabled &&
           brand_color == o.brand_color &&
           accent_color == o.accent_color &&
-          return_url == o.return_url &&
           return_domains == o.return_domains
     end
 
@@ -224,7 +198,7 @@ module LicenseManager
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [enabled, brand_color, accent_color, return_url, return_domains].hash
+      [enabled, brand_color, accent_color, return_domains].hash
     end
 
     # Builds the object from hash
